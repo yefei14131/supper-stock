@@ -42,6 +42,8 @@ public class StockScoreServiceImpl implements IStockScoreService {
 
     final private String gogoalHost = "https://ggservice.go-goal.cn/";
 
+    final static int LEVEL_RATE = 1000;
+
     StockScoreServiceImpl() throws IOException {
 
         // 读取签名算法代码
@@ -166,18 +168,18 @@ public class StockScoreServiceImpl implements IStockScoreService {
         int stockValuationScore = scoreList.getIntValue(12);
 
         tblStockScore.setStockName(stockName);
-        tblStockScore.setCompanyHonorScore(companyHonorScore * 100 / gogoalDataWeight.getCompanyHonorScore());
-        tblStockScore.setBusinessStatusScore(businessStatusScore * 100 / gogoalDataWeight.getBusinessStatusScore());
-        tblStockScore.setAchievementsAppraisalScore(achievementsAppraisalScore * 100 /gogoalDataWeight.getAchievementsAppraisalScore());
-        tblStockScore.setAchievementsGrowupScore(achievementsGrowupScore * 100 / gogoalDataWeight.getProfitAbilityScore());
-        tblStockScore.setProfitAbilityScore(profitAbilityScore * 100 / gogoalDataWeight.getProfitAbilityScore());
-        tblStockScore.setAchievementsClueScore(achievementsClueScore * 100 / gogoalDataWeight.getAchievementsClueScore());
-        tblStockScore.setMarketplaceStyleScore(marketplaceStyleScore * 100 / gogoalDataWeight.getMarketplaceStyleScore());
-        tblStockScore.setOrganizationHoldScore( organizationHoldScore * 100 / gogoalDataWeight.getOrganizationHoldScore());
-        tblStockScore.setOrganizationEmotionScore(organizationEmotionScore * 100 / gogoalDataWeight.getOrganizationEmotionScore());
-        tblStockScore.setBusinessPreferenceScore( businessPreferenceScore * 100 / gogoalDataWeight.getBusinessPreferenceScore());
-        tblStockScore.setSuccessRateStatisticsScore( successRateStatisticsScore * 100 / gogoalDataWeight.getStockValuationScore());
-        tblStockScore.setStockValuationScore(stockValuationScore * 100 / gogoalDataWeight.getStockValuationScore());
+        tblStockScore.setCompanyHonorScore(companyHonorScore * LEVEL_RATE / gogoalDataWeight.getCompanyHonorScore());
+        tblStockScore.setBusinessStatusScore(businessStatusScore * LEVEL_RATE / gogoalDataWeight.getBusinessStatusScore());
+        tblStockScore.setAchievementsAppraisalScore(achievementsAppraisalScore * LEVEL_RATE /gogoalDataWeight.getAchievementsAppraisalScore());
+        tblStockScore.setAchievementsGrowupScore(achievementsGrowupScore * LEVEL_RATE / gogoalDataWeight.getProfitAbilityScore());
+        tblStockScore.setProfitAbilityScore(profitAbilityScore * LEVEL_RATE / gogoalDataWeight.getProfitAbilityScore());
+        tblStockScore.setAchievementsClueScore(achievementsClueScore * LEVEL_RATE / gogoalDataWeight.getAchievementsClueScore());
+        tblStockScore.setMarketplaceStyleScore(marketplaceStyleScore * LEVEL_RATE / gogoalDataWeight.getMarketplaceStyleScore());
+        tblStockScore.setOrganizationHoldScore( organizationHoldScore * LEVEL_RATE / gogoalDataWeight.getOrganizationHoldScore());
+        tblStockScore.setOrganizationEmotionScore(organizationEmotionScore * LEVEL_RATE / gogoalDataWeight.getOrganizationEmotionScore());
+        tblStockScore.setBusinessPreferenceScore( businessPreferenceScore * LEVEL_RATE / gogoalDataWeight.getBusinessPreferenceScore());
+        tblStockScore.setSuccessRateStatisticsScore( successRateStatisticsScore * LEVEL_RATE / gogoalDataWeight.getStockValuationScore());
+        tblStockScore.setStockValuationScore(stockValuationScore * LEVEL_RATE / gogoalDataWeight.getStockValuationScore());
 
         // 获取当前总得分
         tblStockScore.setTotalScore(data.getJSONObject("week_change").getDoubleValue("total_score"));
