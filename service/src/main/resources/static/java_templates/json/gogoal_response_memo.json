@@ -1,0 +1,308 @@
+{
+    "code":0,
+    "data":{
+    "appraisal_list":{
+        "status":[
+            2612,   // 全市场排名
+            3606,   // 总股票数
+            "光学光电子",
+            51,     // 当前行业排名
+            67,     // 行业股票数
+            2510,   // 周市场排名
+            3024,   // 月市场排名
+            3022,   // 季市场排名
+            222,    // 年市场排名
+            48,     // 周行业排名
+            57,     // 月行业排名
+            57,     // 季行业排名
+            3       // 年行业排名
+        ],
+            "score":[
+            "三安光电",
+            15,     // 公司品质
+            4.5,    // 行业龙头
+            0,      // 超预期鉴定
+            1.2,    // 业绩成长性
+            4,      // 盈利能力
+            0,      // 业绩线索
+            8,      // 业绩驱动性
+            1,      // 机构持仓
+            0,      // 分析师情绪
+            10,     // 全市场情绪
+            4,      // 胜率统计
+            10.8,   // 个股估值
+            53.3,   // 周分数
+            48.6,   // 月分数
+            38.3,   // 季分数
+            64.4    // 年分数
+        ]
+    },
+    "week_change":{
+        "change_organization_hold":1,       // 机构持仓变化
+        "change_company_honor":0,           // 公司品质
+        "change_success_rate_statistics":0, // 胜率统计
+        "change_stock_valuation":0,         // 个股估值
+        "change_profit_ability":0,          // 盈利能力
+        "total_score":58.5,                 // 当前得分
+        "change_business_status":0,         // 行业龙头
+        "change_business_preference":0,     // 全市场情绪
+        "change_achievements_growup":1.2,   // 业绩成长性
+        "change_achievements_clue":0,       // 超预期鉴定
+        "change_marketplace_style":3,       // 业绩驱动性
+        "change_total_score":5.200000000000003, // 周得分变化
+        "change_organization_emotion":0,    // 分析师情绪
+        "up_company_honor_detail":"平凡",    // 上周公司品质描述
+        "up_total_score":53.3,              // 上周得分
+        "company_honor_detail":"平凡",       // 公司品质描述
+        "change_achievements_appraisal":0   // 超预期鉴定
+    },
+    "kine":{
+        "total_score":[ // 评分走势
+            38.3,
+            37.3,
+            37.3,
+            37.3,
+            37.3,
+            38.3,
+            42.3,
+            42.3,
+            47.3,
+            47.3,
+            48.3,
+            47.3,
+            47.3,
+            47.3,
+            47.3,
+            48.3,
+            44.6,
+            44.6,
+            47.3,
+            47.3,
+            48.3,
+            47.3,
+            44.6,
+            44.6,
+            47.3,
+            48.6,
+            47.6,
+            47.6,
+            48.6,
+            48.6,
+            48.6,
+            48.6,
+            47.6,
+            48.6,
+            48.6,
+            53.6,
+            53.6,
+            50.6,
+            53.3,
+            53.3,
+            53.3,
+            54.3,
+            54.6,
+            54.6,
+            51.6,
+            51.6,
+            54.3,
+            54.3,
+            54.3,
+            54.3,
+            54.3,
+            54.3,
+            54.3,
+            54.3,
+            53.3,
+            53.3,
+            54.3,
+            54.3,
+            57.3
+        ],
+            "close_price":[ // 收盘价走势
+            10.27,
+            9.88,
+            9.73,
+            9.75,
+            9.81,
+            10.48,
+            10.91,
+            11.69,
+            11.93,
+            11.91,
+            12.01,
+            12.85,
+            13.55,
+            13.4,
+            13.4,
+            13.85,
+            15.24,
+            14.83,
+            14.31,
+            14.4,
+            14.03,
+            14.18,
+            15.05,
+            14.79,
+            14.57,
+            15.51,
+            15.78,
+            16.16,
+            15.25,
+            14.76,
+            14.85,
+            15.45,
+            15.56,
+            15.66,
+            15.65,
+            15.33,
+            14.71,
+            14.12,
+            14.13,
+            14.15,
+            14.67,
+            15.3,
+            15.1,
+            15.23,
+            15.04,
+            14.42,
+            14.43,
+            14.3,
+            13.9,
+            14.01,
+            12.9,
+            13.31,
+            13.4,
+            13.23,
+            13.15,
+            13.18,
+            13.5,
+            14.33,
+            14.1
+        ],
+            "week_score":[
+            38.3,
+            null,
+            null,
+            null,
+            null,
+            38.3,
+            null,
+            null,
+            null,
+            null,
+            48.3,
+            null,
+            null,
+            null,
+            null,
+            48.3,
+            null,
+            null,
+            null,
+            null,
+            48.3,
+            null,
+            null,
+            null,
+            null,
+            48.6,
+            null,
+            null,
+            null,
+            null,
+            48.6,
+            null,
+            null,
+            null,
+            null,
+            53.6,
+            null,
+            null,
+            null,
+            null,
+            53.3,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            54.3,
+            null,
+            null,
+            null,
+            null,
+            53.3,
+            null,
+            null,
+            null,
+            null
+        ],
+            "catalyst":[
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+        ]
+    }
+},
+    "message":"成功"
+}
+

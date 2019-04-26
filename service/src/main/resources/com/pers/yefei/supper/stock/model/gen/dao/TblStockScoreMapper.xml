@@ -1,0 +1,469 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pers.yefei.supper.stock.model.gen.dao.TblStockScoreMapper">
+  <resultMap id="BaseResultMap" type="com.pers.yefei.supper.stock.model.gen.pojo.TblStockScore">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="stockCode" jdbcType="VARCHAR" property="stockCode" />
+    <result column="stockName" jdbcType="VARCHAR" property="stockName" />
+    <result column="companyHonorScore" jdbcType="INTEGER" property="companyHonorScore" />
+    <result column="businessStatusScore" jdbcType="INTEGER" property="businessStatusScore" />
+    <result column="achievementsAppraisalScore" jdbcType="INTEGER" property="achievementsAppraisalScore" />
+    <result column="achievementsGrowupScore" jdbcType="INTEGER" property="achievementsGrowupScore" />
+    <result column="profitAbilityScore" jdbcType="INTEGER" property="profitAbilityScore" />
+    <result column="achievementsClueScore" jdbcType="INTEGER" property="achievementsClueScore" />
+    <result column="marketplaceStyleScore" jdbcType="INTEGER" property="marketplaceStyleScore" />
+    <result column="organizationHoldScore" jdbcType="INTEGER" property="organizationHoldScore" />
+    <result column="organizationEmotionScore" jdbcType="INTEGER" property="organizationEmotionScore" />
+    <result column="businessPreferenceScore" jdbcType="INTEGER" property="businessPreferenceScore" />
+    <result column="successRateStatisticsScore" jdbcType="INTEGER" property="successRateStatisticsScore" />
+    <result column="stockValuationScore" jdbcType="INTEGER" property="stockValuationScore" />
+    <result column="totalScore" jdbcType="DOUBLE" property="totalScore" />
+    <result column="marketRank" jdbcType="INTEGER" property="marketRank" />
+    <result column="industryRank" jdbcType="INTEGER" property="industryRank" />
+    <result column="industryDetail" jdbcType="VARCHAR" property="industryDetail" />
+    <result column="date" jdbcType="DATE" property="date" />
+    <result column="updateTime" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, stockCode, stockName, companyHonorScore, businessStatusScore, achievementsAppraisalScore, 
+    achievementsGrowupScore, profitAbilityScore, achievementsClueScore, marketplaceStyleScore, 
+    organizationHoldScore, organizationEmotionScore, businessPreferenceScore, successRateStatisticsScore, 
+    stockValuationScore, totalScore, marketRank, industryRank, industryDetail, date, 
+    updateTime
+  </sql>
+  <select id="selectByExample" parameterType="com.pers.yefei.supper.stock.model.gen.pojo.TblStockScoreExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_stock_score
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_stock_score
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tbl_stock_score
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pers.yefei.supper.stock.model.gen.pojo.TblStockScoreExample">
+    delete from tbl_stock_score
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pers.yefei.supper.stock.model.gen.pojo.TblStockScore">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tbl_stock_score (stockCode, stockName, companyHonorScore, 
+      businessStatusScore, achievementsAppraisalScore, 
+      achievementsGrowupScore, profitAbilityScore, 
+      achievementsClueScore, marketplaceStyleScore, 
+      organizationHoldScore, organizationEmotionScore, 
+      businessPreferenceScore, successRateStatisticsScore, 
+      stockValuationScore, totalScore, marketRank, 
+      industryRank, industryDetail, date, 
+      updateTime)
+    values (#{stockCode,jdbcType=VARCHAR}, #{stockName,jdbcType=VARCHAR}, #{companyHonorScore,jdbcType=INTEGER}, 
+      #{businessStatusScore,jdbcType=INTEGER}, #{achievementsAppraisalScore,jdbcType=INTEGER}, 
+      #{achievementsGrowupScore,jdbcType=INTEGER}, #{profitAbilityScore,jdbcType=INTEGER}, 
+      #{achievementsClueScore,jdbcType=INTEGER}, #{marketplaceStyleScore,jdbcType=INTEGER}, 
+      #{organizationHoldScore,jdbcType=INTEGER}, #{organizationEmotionScore,jdbcType=INTEGER}, 
+      #{businessPreferenceScore,jdbcType=INTEGER}, #{successRateStatisticsScore,jdbcType=INTEGER}, 
+      #{stockValuationScore,jdbcType=INTEGER}, #{totalScore,jdbcType=DOUBLE}, #{marketRank,jdbcType=INTEGER}, 
+      #{industryRank,jdbcType=INTEGER}, #{industryDetail,jdbcType=VARCHAR}, #{date,jdbcType=DATE}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pers.yefei.supper.stock.model.gen.pojo.TblStockScore">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tbl_stock_score
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="stockCode != null">
+        stockCode,
+      </if>
+      <if test="stockName != null">
+        stockName,
+      </if>
+      <if test="companyHonorScore != null">
+        companyHonorScore,
+      </if>
+      <if test="businessStatusScore != null">
+        businessStatusScore,
+      </if>
+      <if test="achievementsAppraisalScore != null">
+        achievementsAppraisalScore,
+      </if>
+      <if test="achievementsGrowupScore != null">
+        achievementsGrowupScore,
+      </if>
+      <if test="profitAbilityScore != null">
+        profitAbilityScore,
+      </if>
+      <if test="achievementsClueScore != null">
+        achievementsClueScore,
+      </if>
+      <if test="marketplaceStyleScore != null">
+        marketplaceStyleScore,
+      </if>
+      <if test="organizationHoldScore != null">
+        organizationHoldScore,
+      </if>
+      <if test="organizationEmotionScore != null">
+        organizationEmotionScore,
+      </if>
+      <if test="businessPreferenceScore != null">
+        businessPreferenceScore,
+      </if>
+      <if test="successRateStatisticsScore != null">
+        successRateStatisticsScore,
+      </if>
+      <if test="stockValuationScore != null">
+        stockValuationScore,
+      </if>
+      <if test="totalScore != null">
+        totalScore,
+      </if>
+      <if test="marketRank != null">
+        marketRank,
+      </if>
+      <if test="industryRank != null">
+        industryRank,
+      </if>
+      <if test="industryDetail != null">
+        industryDetail,
+      </if>
+      <if test="date != null">
+        date,
+      </if>
+      <if test="updateTime != null">
+        updateTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="stockCode != null">
+        #{stockCode,jdbcType=VARCHAR},
+      </if>
+      <if test="stockName != null">
+        #{stockName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyHonorScore != null">
+        #{companyHonorScore,jdbcType=INTEGER},
+      </if>
+      <if test="businessStatusScore != null">
+        #{businessStatusScore,jdbcType=INTEGER},
+      </if>
+      <if test="achievementsAppraisalScore != null">
+        #{achievementsAppraisalScore,jdbcType=INTEGER},
+      </if>
+      <if test="achievementsGrowupScore != null">
+        #{achievementsGrowupScore,jdbcType=INTEGER},
+      </if>
+      <if test="profitAbilityScore != null">
+        #{profitAbilityScore,jdbcType=INTEGER},
+      </if>
+      <if test="achievementsClueScore != null">
+        #{achievementsClueScore,jdbcType=INTEGER},
+      </if>
+      <if test="marketplaceStyleScore != null">
+        #{marketplaceStyleScore,jdbcType=INTEGER},
+      </if>
+      <if test="organizationHoldScore != null">
+        #{organizationHoldScore,jdbcType=INTEGER},
+      </if>
+      <if test="organizationEmotionScore != null">
+        #{organizationEmotionScore,jdbcType=INTEGER},
+      </if>
+      <if test="businessPreferenceScore != null">
+        #{businessPreferenceScore,jdbcType=INTEGER},
+      </if>
+      <if test="successRateStatisticsScore != null">
+        #{successRateStatisticsScore,jdbcType=INTEGER},
+      </if>
+      <if test="stockValuationScore != null">
+        #{stockValuationScore,jdbcType=INTEGER},
+      </if>
+      <if test="totalScore != null">
+        #{totalScore,jdbcType=DOUBLE},
+      </if>
+      <if test="marketRank != null">
+        #{marketRank,jdbcType=INTEGER},
+      </if>
+      <if test="industryRank != null">
+        #{industryRank,jdbcType=INTEGER},
+      </if>
+      <if test="industryDetail != null">
+        #{industryDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null">
+        #{date,jdbcType=DATE},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pers.yefei.supper.stock.model.gen.pojo.TblStockScoreExample" resultType="java.lang.Long">
+    select count(*) from tbl_stock_score
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tbl_stock_score
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.stockCode != null">
+        stockCode = #{record.stockCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stockName != null">
+        stockName = #{record.stockName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyHonorScore != null">
+        companyHonorScore = #{record.companyHonorScore,jdbcType=INTEGER},
+      </if>
+      <if test="record.businessStatusScore != null">
+        businessStatusScore = #{record.businessStatusScore,jdbcType=INTEGER},
+      </if>
+      <if test="record.achievementsAppraisalScore != null">
+        achievementsAppraisalScore = #{record.achievementsAppraisalScore,jdbcType=INTEGER},
+      </if>
+      <if test="record.achievementsGrowupScore != null">
+        achievementsGrowupScore = #{record.achievementsGrowupScore,jdbcType=INTEGER},
+      </if>
+      <if test="record.profitAbilityScore != null">
+        profitAbilityScore = #{record.profitAbilityScore,jdbcType=INTEGER},
+      </if>
+      <if test="record.achievementsClueScore != null">
+        achievementsClueScore = #{record.achievementsClueScore,jdbcType=INTEGER},
+      </if>
+      <if test="record.marketplaceStyleScore != null">
+        marketplaceStyleScore = #{record.marketplaceStyleScore,jdbcType=INTEGER},
+      </if>
+      <if test="record.organizationHoldScore != null">
+        organizationHoldScore = #{record.organizationHoldScore,jdbcType=INTEGER},
+      </if>
+      <if test="record.organizationEmotionScore != null">
+        organizationEmotionScore = #{record.organizationEmotionScore,jdbcType=INTEGER},
+      </if>
+      <if test="record.businessPreferenceScore != null">
+        businessPreferenceScore = #{record.businessPreferenceScore,jdbcType=INTEGER},
+      </if>
+      <if test="record.successRateStatisticsScore != null">
+        successRateStatisticsScore = #{record.successRateStatisticsScore,jdbcType=INTEGER},
+      </if>
+      <if test="record.stockValuationScore != null">
+        stockValuationScore = #{record.stockValuationScore,jdbcType=INTEGER},
+      </if>
+      <if test="record.totalScore != null">
+        totalScore = #{record.totalScore,jdbcType=DOUBLE},
+      </if>
+      <if test="record.marketRank != null">
+        marketRank = #{record.marketRank,jdbcType=INTEGER},
+      </if>
+      <if test="record.industryRank != null">
+        industryRank = #{record.industryRank,jdbcType=INTEGER},
+      </if>
+      <if test="record.industryDetail != null">
+        industryDetail = #{record.industryDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.date != null">
+        date = #{record.date,jdbcType=DATE},
+      </if>
+      <if test="record.updateTime != null">
+        updateTime = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tbl_stock_score
+    set id = #{record.id,jdbcType=INTEGER},
+      stockCode = #{record.stockCode,jdbcType=VARCHAR},
+      stockName = #{record.stockName,jdbcType=VARCHAR},
+      companyHonorScore = #{record.companyHonorScore,jdbcType=INTEGER},
+      businessStatusScore = #{record.businessStatusScore,jdbcType=INTEGER},
+      achievementsAppraisalScore = #{record.achievementsAppraisalScore,jdbcType=INTEGER},
+      achievementsGrowupScore = #{record.achievementsGrowupScore,jdbcType=INTEGER},
+      profitAbilityScore = #{record.profitAbilityScore,jdbcType=INTEGER},
+      achievementsClueScore = #{record.achievementsClueScore,jdbcType=INTEGER},
+      marketplaceStyleScore = #{record.marketplaceStyleScore,jdbcType=INTEGER},
+      organizationHoldScore = #{record.organizationHoldScore,jdbcType=INTEGER},
+      organizationEmotionScore = #{record.organizationEmotionScore,jdbcType=INTEGER},
+      businessPreferenceScore = #{record.businessPreferenceScore,jdbcType=INTEGER},
+      successRateStatisticsScore = #{record.successRateStatisticsScore,jdbcType=INTEGER},
+      stockValuationScore = #{record.stockValuationScore,jdbcType=INTEGER},
+      totalScore = #{record.totalScore,jdbcType=DOUBLE},
+      marketRank = #{record.marketRank,jdbcType=INTEGER},
+      industryRank = #{record.industryRank,jdbcType=INTEGER},
+      industryDetail = #{record.industryDetail,jdbcType=VARCHAR},
+      date = #{record.date,jdbcType=DATE},
+      updateTime = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pers.yefei.supper.stock.model.gen.pojo.TblStockScore">
+    update tbl_stock_score
+    <set>
+      <if test="stockCode != null">
+        stockCode = #{stockCode,jdbcType=VARCHAR},
+      </if>
+      <if test="stockName != null">
+        stockName = #{stockName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyHonorScore != null">
+        companyHonorScore = #{companyHonorScore,jdbcType=INTEGER},
+      </if>
+      <if test="businessStatusScore != null">
+        businessStatusScore = #{businessStatusScore,jdbcType=INTEGER},
+      </if>
+      <if test="achievementsAppraisalScore != null">
+        achievementsAppraisalScore = #{achievementsAppraisalScore,jdbcType=INTEGER},
+      </if>
+      <if test="achievementsGrowupScore != null">
+        achievementsGrowupScore = #{achievementsGrowupScore,jdbcType=INTEGER},
+      </if>
+      <if test="profitAbilityScore != null">
+        profitAbilityScore = #{profitAbilityScore,jdbcType=INTEGER},
+      </if>
+      <if test="achievementsClueScore != null">
+        achievementsClueScore = #{achievementsClueScore,jdbcType=INTEGER},
+      </if>
+      <if test="marketplaceStyleScore != null">
+        marketplaceStyleScore = #{marketplaceStyleScore,jdbcType=INTEGER},
+      </if>
+      <if test="organizationHoldScore != null">
+        organizationHoldScore = #{organizationHoldScore,jdbcType=INTEGER},
+      </if>
+      <if test="organizationEmotionScore != null">
+        organizationEmotionScore = #{organizationEmotionScore,jdbcType=INTEGER},
+      </if>
+      <if test="businessPreferenceScore != null">
+        businessPreferenceScore = #{businessPreferenceScore,jdbcType=INTEGER},
+      </if>
+      <if test="successRateStatisticsScore != null">
+        successRateStatisticsScore = #{successRateStatisticsScore,jdbcType=INTEGER},
+      </if>
+      <if test="stockValuationScore != null">
+        stockValuationScore = #{stockValuationScore,jdbcType=INTEGER},
+      </if>
+      <if test="totalScore != null">
+        totalScore = #{totalScore,jdbcType=DOUBLE},
+      </if>
+      <if test="marketRank != null">
+        marketRank = #{marketRank,jdbcType=INTEGER},
+      </if>
+      <if test="industryRank != null">
+        industryRank = #{industryRank,jdbcType=INTEGER},
+      </if>
+      <if test="industryDetail != null">
+        industryDetail = #{industryDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null">
+        date = #{date,jdbcType=DATE},
+      </if>
+      <if test="updateTime != null">
+        updateTime = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pers.yefei.supper.stock.model.gen.pojo.TblStockScore">
+    update tbl_stock_score
+    set stockCode = #{stockCode,jdbcType=VARCHAR},
+      stockName = #{stockName,jdbcType=VARCHAR},
+      companyHonorScore = #{companyHonorScore,jdbcType=INTEGER},
+      businessStatusScore = #{businessStatusScore,jdbcType=INTEGER},
+      achievementsAppraisalScore = #{achievementsAppraisalScore,jdbcType=INTEGER},
+      achievementsGrowupScore = #{achievementsGrowupScore,jdbcType=INTEGER},
+      profitAbilityScore = #{profitAbilityScore,jdbcType=INTEGER},
+      achievementsClueScore = #{achievementsClueScore,jdbcType=INTEGER},
+      marketplaceStyleScore = #{marketplaceStyleScore,jdbcType=INTEGER},
+      organizationHoldScore = #{organizationHoldScore,jdbcType=INTEGER},
+      organizationEmotionScore = #{organizationEmotionScore,jdbcType=INTEGER},
+      businessPreferenceScore = #{businessPreferenceScore,jdbcType=INTEGER},
+      successRateStatisticsScore = #{successRateStatisticsScore,jdbcType=INTEGER},
+      stockValuationScore = #{stockValuationScore,jdbcType=INTEGER},
+      totalScore = #{totalScore,jdbcType=DOUBLE},
+      marketRank = #{marketRank,jdbcType=INTEGER},
+      industryRank = #{industryRank,jdbcType=INTEGER},
+      industryDetail = #{industryDetail,jdbcType=VARCHAR},
+      date = #{date,jdbcType=DATE},
+      updateTime = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
