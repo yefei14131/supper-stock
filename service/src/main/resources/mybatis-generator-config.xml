@@ -63,6 +63,17 @@
         </table>
 
 
+        <table tableName="tbl_stock_score_change"
+               enableCountByExample="true"
+               enableDeleteByExample="true"
+               enableSelectByExample="true"
+               enableUpdateByExample="true"
+               enableUpdateByPrimaryKey="true">
+            <property name="useActualColumnNames" value="true" />
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+
+
 
     </context>
 </generatorConfiguration>

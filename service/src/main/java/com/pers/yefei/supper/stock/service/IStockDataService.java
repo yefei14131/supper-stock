@@ -2,7 +2,9 @@ package com.pers.yefei.supper.stock.service;
 
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockInfo;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockScore;
+import com.pers.yefei.supper.stock.model.gen.pojo.TblStockScoreChange;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -18,8 +20,11 @@ public interface IStockDataService {
 
     void saveStockScore(TblStockScore tblStockScore);
 
-
-
     void saveStockInfo(TblStockInfo tblStockInfo);
 
+    List<TblStockScore> queryStockScoreByDate(Date date);
+
+    void insertStockScoreChange(TblStockScoreChange stockScoreChange);
+
+    Date queryPrevDate();
 }

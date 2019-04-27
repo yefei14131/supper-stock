@@ -5,17 +5,17 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="stockCode" jdbcType="VARCHAR" property="stockCode" />
     <result column="stockName" jdbcType="VARCHAR" property="stockName" />
-    <result column="price" jdbcType="DECIMAL" property="price" />
-    <result column="syl" jdbcType="DECIMAL" property="syl" />
+    <result column="price" jdbcType="DOUBLE" property="price" />
+    <result column="syl" jdbcType="DOUBLE" property="syl" />
     <result column="totalValue" jdbcType="VARCHAR" property="totalValue" />
     <result column="flowValue" jdbcType="VARCHAR" property="flowValue" />
-    <result column="score" jdbcType="DECIMAL" property="score" />
+    <result column="totalScore" jdbcType="DOUBLE" property="totalScore" />
     <result column="marketRank" jdbcType="INTEGER" property="marketRank" />
     <result column="industryName" jdbcType="VARCHAR" property="industryName" />
     <result column="industryRank" jdbcType="INTEGER" property="industryRank" />
     <result column="organizationHoldScore" jdbcType="INTEGER" property="organizationHoldScore" />
     <result column="businessPreferenceScore" jdbcType="INTEGER" property="businessPreferenceScore" />
-    <result column="createTime" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="isActive" jdbcType="BIT" property="isActive" />
     <result column="updateTime" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -77,8 +77,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, stockCode, stockName, price, syl, totalValue, flowValue, score, marketRank, industryName, 
-    industryRank, organizationHoldScore, businessPreferenceScore, createTime, updateTime
+    id, stockCode, stockName, price, syl, totalValue, flowValue, totalScore, marketRank, 
+    industryName, industryRank, organizationHoldScore, businessPreferenceScore, isActive, 
+    updateTime
   </sql>
   <select id="selectByExample" parameterType="com.pers.yefei.supper.stock.model.gen.pojo.TblStockInfoExample" resultMap="BaseResultMap">
     select
@@ -116,14 +117,14 @@
     </selectKey>
     insert into tbl_stock_info (stockCode, stockName, price, 
       syl, totalValue, flowValue, 
-      score, marketRank, industryName, 
+      totalScore, marketRank, industryName, 
       industryRank, organizationHoldScore, businessPreferenceScore, 
-      createTime, updateTime)
-    values (#{stockCode,jdbcType=VARCHAR}, #{stockName,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, 
-      #{syl,jdbcType=DECIMAL}, #{totalValue,jdbcType=VARCHAR}, #{flowValue,jdbcType=VARCHAR}, 
-      #{score,jdbcType=DECIMAL}, #{marketRank,jdbcType=INTEGER}, #{industryName,jdbcType=VARCHAR}, 
+      isActive, updateTime)
+    values (#{stockCode,jdbcType=VARCHAR}, #{stockName,jdbcType=VARCHAR}, #{price,jdbcType=DOUBLE}, 
+      #{syl,jdbcType=DOUBLE}, #{totalValue,jdbcType=VARCHAR}, #{flowValue,jdbcType=VARCHAR}, 
+      #{totalScore,jdbcType=DOUBLE}, #{marketRank,jdbcType=INTEGER}, #{industryName,jdbcType=VARCHAR}, 
       #{industryRank,jdbcType=INTEGER}, #{organizationHoldScore,jdbcType=INTEGER}, #{businessPreferenceScore,jdbcType=INTEGER}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+      #{isActive,jdbcType=BIT}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.pers.yefei.supper.stock.model.gen.pojo.TblStockInfo">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -149,8 +150,8 @@
       <if test="flowValue != null">
         flowValue,
       </if>
-      <if test="score != null">
-        score,
+      <if test="totalScore != null">
+        totalScore,
       </if>
       <if test="marketRank != null">
         marketRank,
@@ -167,8 +168,8 @@
       <if test="businessPreferenceScore != null">
         businessPreferenceScore,
       </if>
-      <if test="createTime != null">
-        createTime,
+      <if test="isActive != null">
+        isActive,
       </if>
       <if test="updateTime != null">
         updateTime,
@@ -182,10 +183,10 @@
         #{stockName,jdbcType=VARCHAR},
       </if>
       <if test="price != null">
-        #{price,jdbcType=DECIMAL},
+        #{price,jdbcType=DOUBLE},
       </if>
       <if test="syl != null">
-        #{syl,jdbcType=DECIMAL},
+        #{syl,jdbcType=DOUBLE},
       </if>
       <if test="totalValue != null">
         #{totalValue,jdbcType=VARCHAR},
@@ -193,8 +194,8 @@
       <if test="flowValue != null">
         #{flowValue,jdbcType=VARCHAR},
       </if>
-      <if test="score != null">
-        #{score,jdbcType=DECIMAL},
+      <if test="totalScore != null">
+        #{totalScore,jdbcType=DOUBLE},
       </if>
       <if test="marketRank != null">
         #{marketRank,jdbcType=INTEGER},
@@ -211,8 +212,8 @@
       <if test="businessPreferenceScore != null">
         #{businessPreferenceScore,jdbcType=INTEGER},
       </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
+      <if test="isActive != null">
+        #{isActive,jdbcType=BIT},
       </if>
       <if test="updateTime != null">
         #{updateTime,jdbcType=TIMESTAMP},
@@ -238,10 +239,10 @@
         stockName = #{record.stockName,jdbcType=VARCHAR},
       </if>
       <if test="record.price != null">
-        price = #{record.price,jdbcType=DECIMAL},
+        price = #{record.price,jdbcType=DOUBLE},
       </if>
       <if test="record.syl != null">
-        syl = #{record.syl,jdbcType=DECIMAL},
+        syl = #{record.syl,jdbcType=DOUBLE},
       </if>
       <if test="record.totalValue != null">
         totalValue = #{record.totalValue,jdbcType=VARCHAR},
@@ -249,8 +250,8 @@
       <if test="record.flowValue != null">
         flowValue = #{record.flowValue,jdbcType=VARCHAR},
       </if>
-      <if test="record.score != null">
-        score = #{record.score,jdbcType=DECIMAL},
+      <if test="record.totalScore != null">
+        totalScore = #{record.totalScore,jdbcType=DOUBLE},
       </if>
       <if test="record.marketRank != null">
         marketRank = #{record.marketRank,jdbcType=INTEGER},
@@ -267,8 +268,8 @@
       <if test="record.businessPreferenceScore != null">
         businessPreferenceScore = #{record.businessPreferenceScore,jdbcType=INTEGER},
       </if>
-      <if test="record.createTime != null">
-        createTime = #{record.createTime,jdbcType=TIMESTAMP},
+      <if test="record.isActive != null">
+        isActive = #{record.isActive,jdbcType=BIT},
       </if>
       <if test="record.updateTime != null">
         updateTime = #{record.updateTime,jdbcType=TIMESTAMP},
@@ -283,17 +284,17 @@
     set id = #{record.id,jdbcType=INTEGER},
       stockCode = #{record.stockCode,jdbcType=VARCHAR},
       stockName = #{record.stockName,jdbcType=VARCHAR},
-      price = #{record.price,jdbcType=DECIMAL},
-      syl = #{record.syl,jdbcType=DECIMAL},
+      price = #{record.price,jdbcType=DOUBLE},
+      syl = #{record.syl,jdbcType=DOUBLE},
       totalValue = #{record.totalValue,jdbcType=VARCHAR},
       flowValue = #{record.flowValue,jdbcType=VARCHAR},
-      score = #{record.score,jdbcType=DECIMAL},
+      totalScore = #{record.totalScore,jdbcType=DOUBLE},
       marketRank = #{record.marketRank,jdbcType=INTEGER},
       industryName = #{record.industryName,jdbcType=VARCHAR},
       industryRank = #{record.industryRank,jdbcType=INTEGER},
       organizationHoldScore = #{record.organizationHoldScore,jdbcType=INTEGER},
       businessPreferenceScore = #{record.businessPreferenceScore,jdbcType=INTEGER},
-      createTime = #{record.createTime,jdbcType=TIMESTAMP},
+      isActive = #{record.isActive,jdbcType=BIT},
       updateTime = #{record.updateTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -309,10 +310,10 @@
         stockName = #{stockName,jdbcType=VARCHAR},
       </if>
       <if test="price != null">
-        price = #{price,jdbcType=DECIMAL},
+        price = #{price,jdbcType=DOUBLE},
       </if>
       <if test="syl != null">
-        syl = #{syl,jdbcType=DECIMAL},
+        syl = #{syl,jdbcType=DOUBLE},
       </if>
       <if test="totalValue != null">
         totalValue = #{totalValue,jdbcType=VARCHAR},
@@ -320,8 +321,8 @@
       <if test="flowValue != null">
         flowValue = #{flowValue,jdbcType=VARCHAR},
       </if>
-      <if test="score != null">
-        score = #{score,jdbcType=DECIMAL},
+      <if test="totalScore != null">
+        totalScore = #{totalScore,jdbcType=DOUBLE},
       </if>
       <if test="marketRank != null">
         marketRank = #{marketRank,jdbcType=INTEGER},
@@ -338,8 +339,8 @@
       <if test="businessPreferenceScore != null">
         businessPreferenceScore = #{businessPreferenceScore,jdbcType=INTEGER},
       </if>
-      <if test="createTime != null">
-        createTime = #{createTime,jdbcType=TIMESTAMP},
+      <if test="isActive != null">
+        isActive = #{isActive,jdbcType=BIT},
       </if>
       <if test="updateTime != null">
         updateTime = #{updateTime,jdbcType=TIMESTAMP},
@@ -351,17 +352,17 @@
     update tbl_stock_info
     set stockCode = #{stockCode,jdbcType=VARCHAR},
       stockName = #{stockName,jdbcType=VARCHAR},
-      price = #{price,jdbcType=DECIMAL},
-      syl = #{syl,jdbcType=DECIMAL},
+      price = #{price,jdbcType=DOUBLE},
+      syl = #{syl,jdbcType=DOUBLE},
       totalValue = #{totalValue,jdbcType=VARCHAR},
       flowValue = #{flowValue,jdbcType=VARCHAR},
-      score = #{score,jdbcType=DECIMAL},
+      totalScore = #{totalScore,jdbcType=DOUBLE},
       marketRank = #{marketRank,jdbcType=INTEGER},
       industryName = #{industryName,jdbcType=VARCHAR},
       industryRank = #{industryRank,jdbcType=INTEGER},
       organizationHoldScore = #{organizationHoldScore,jdbcType=INTEGER},
       businessPreferenceScore = #{businessPreferenceScore,jdbcType=INTEGER},
-      createTime = #{createTime,jdbcType=TIMESTAMP},
+      isActive = #{isActive,jdbcType=BIT},
       updateTime = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>

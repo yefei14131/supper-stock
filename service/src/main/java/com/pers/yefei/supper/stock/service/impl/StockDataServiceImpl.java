@@ -1,9 +1,11 @@
 package com.pers.yefei.supper.stock.service.impl;
 
 import com.pers.yefei.supper.stock.dao.IStockInfoDao;
+import com.pers.yefei.supper.stock.dao.IStockScoreChangeDao;
 import com.pers.yefei.supper.stock.dao.IStockScoreDao;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockInfo;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockScore;
+import com.pers.yefei.supper.stock.model.gen.pojo.TblStockScoreChange;
 import com.pers.yefei.supper.stock.service.IStockDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,10 @@ public class StockDataServiceImpl implements IStockDataService {
 
     @Autowired
     private IStockScoreDao stockScoreDao;
+
+
+    @Autowired
+    private IStockScoreChangeDao stockScoreChangeDao;
 
 
     @Override
@@ -56,4 +62,18 @@ public class StockDataServiceImpl implements IStockDataService {
         }
     }
 
+    @Override
+    public List<TblStockScore> queryStockScoreByDate(Date date){
+        return stockScoreDao.queryStockScoreByDate(date);
+    }
+
+    @Override
+    public void insertStockScoreChange(TblStockScoreChange stockScoreChange){
+        stockScoreChangeDao.insertStockScoreChange(stockScoreChange);
+    }
+
+    @Override
+    public Date queryPrevDate(){
+        return stockScoreDao.queryPrevDate();
+    }
 }

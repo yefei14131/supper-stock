@@ -1,6 +1,5 @@
 package com.pers.yefei.supper.stock.model.gen.pojo;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 public class TblStockInfo {
@@ -10,15 +9,15 @@ public class TblStockInfo {
 
     private String stockName;
 
-    private BigDecimal price;
+    private Double price;
 
-    private BigDecimal syl;
+    private Double syl;
 
     private String totalValue;
 
     private String flowValue;
 
-    private BigDecimal score;
+    private Double totalScore;
 
     private Integer marketRank;
 
@@ -30,7 +29,7 @@ public class TblStockInfo {
 
     private Integer businessPreferenceScore;
 
-    private Date createTime;
+    private Boolean isActive;
 
     private Date updateTime;
 
@@ -58,19 +57,19 @@ public class TblStockInfo {
         this.stockName = stockName == null ? null : stockName.trim();
     }
 
-    public BigDecimal getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
-    public BigDecimal getSyl() {
+    public Double getSyl() {
         return syl;
     }
 
-    public void setSyl(BigDecimal syl) {
+    public void setSyl(Double syl) {
         this.syl = syl;
     }
 
@@ -90,12 +89,12 @@ public class TblStockInfo {
         this.flowValue = flowValue == null ? null : flowValue.trim();
     }
 
-    public BigDecimal getScore() {
-        return score;
+    public Double getTotalScore() {
+        return totalScore;
     }
 
-    public void setScore(BigDecimal score) {
-        this.score = score;
+    public void setTotalScore(Double totalScore) {
+        this.totalScore = totalScore;
     }
 
     public Integer getMarketRank() {
@@ -138,12 +137,12 @@ public class TblStockInfo {
         this.businessPreferenceScore = businessPreferenceScore;
     }
 
-    public Date getCreateTime() {
-        return createTime;
+    public Boolean getIsActive() {
+        return isActive;
     }
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+    public void setIsActive(Boolean isActive) {
+        this.isActive = isActive;
     }
 
     public Date getUpdateTime() {

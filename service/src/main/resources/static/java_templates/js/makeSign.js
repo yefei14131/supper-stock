@@ -5802,6 +5802,6 @@ function(e) {
         e.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAARZJREFUSA3tk78KwkAMxm0HJ8GnEgQfwcHFtoOTq646K279swq6CM4+27V+nxCo7fUunRxsoNxdLvl+udCMRoP9ugNBs4A0TbfwHfGZMAzXURTdmzHNc1EUc2PMDf5xEATnOI53EhPKRtYkSU7YEzCpquqaZdlS7mwrClqUZfnE3RRfWhdnfOsFdNKQuMdyQEUG6wqJV/rrRnHcP1DIGP4ziuPrv6wTwCgXRCNODSegC6IVVwEskAt8G1dbmCPmfYEESrvkjNXa89r9Z6sGMLoGUYkzpwWAiHMO8jyfYTZeTBZzzUELwCSp1PWLijhinb+qFaCF+MSp0wnwQTTiXkAXRCuuAlggfzYH7EAv4xz0ShiCfR14A2BavF1EiZDdAAAAAElFTkSuQmCC"
     }]);
 
-var signInfo = signInfoMap.makeSign('VzNQumNMxCmPcbD', 'SYRyCEmkmZsMm8xnN5VrLQLXfc7C9GB1', 'GET', 'v1/alipay/get_zyyx_appraisal', {stock_code: "STOCK_CODE", type: 1})
+var signInfo = signInfoMap.makeSign('VzNQumNMxCmPcbD', 'SYRyCEmkmZsMm8xnN5VrLQLXfc7C9GB1', 'GET', 'v1/alipay/get_zyyx_appraisal', {stock_code: signInfoMap['stockCode'], type: 1})
 signInfoMap['reqString']=signInfo['reqString'];
 signInfo['reqString'];

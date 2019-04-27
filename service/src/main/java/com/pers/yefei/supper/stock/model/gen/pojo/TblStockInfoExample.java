@@ -1,6 +1,5 @@
 package com.pers.yefei.supper.stock.model.gen.pojo;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -316,52 +315,52 @@ public class TblStockInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andPriceEqualTo(BigDecimal value) {
+        public Criteria andPriceEqualTo(Double value) {
             addCriterion("price =", value, "price");
             return (Criteria) this;
         }
 
-        public Criteria andPriceNotEqualTo(BigDecimal value) {
+        public Criteria andPriceNotEqualTo(Double value) {
             addCriterion("price <>", value, "price");
             return (Criteria) this;
         }
 
-        public Criteria andPriceGreaterThan(BigDecimal value) {
+        public Criteria andPriceGreaterThan(Double value) {
             addCriterion("price >", value, "price");
             return (Criteria) this;
         }
 
-        public Criteria andPriceGreaterThanOrEqualTo(BigDecimal value) {
+        public Criteria andPriceGreaterThanOrEqualTo(Double value) {
             addCriterion("price >=", value, "price");
             return (Criteria) this;
         }
 
-        public Criteria andPriceLessThan(BigDecimal value) {
+        public Criteria andPriceLessThan(Double value) {
             addCriterion("price <", value, "price");
             return (Criteria) this;
         }
 
-        public Criteria andPriceLessThanOrEqualTo(BigDecimal value) {
+        public Criteria andPriceLessThanOrEqualTo(Double value) {
             addCriterion("price <=", value, "price");
             return (Criteria) this;
         }
 
-        public Criteria andPriceIn(List<BigDecimal> values) {
+        public Criteria andPriceIn(List<Double> values) {
             addCriterion("price in", values, "price");
             return (Criteria) this;
         }
 
-        public Criteria andPriceNotIn(List<BigDecimal> values) {
+        public Criteria andPriceNotIn(List<Double> values) {
             addCriterion("price not in", values, "price");
             return (Criteria) this;
         }
 
-        public Criteria andPriceBetween(BigDecimal value1, BigDecimal value2) {
+        public Criteria andPriceBetween(Double value1, Double value2) {
             addCriterion("price between", value1, value2, "price");
             return (Criteria) this;
         }
 
-        public Criteria andPriceNotBetween(BigDecimal value1, BigDecimal value2) {
+        public Criteria andPriceNotBetween(Double value1, Double value2) {
             addCriterion("price not between", value1, value2, "price");
             return (Criteria) this;
         }
@@ -376,52 +375,52 @@ public class TblStockInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andSylEqualTo(BigDecimal value) {
+        public Criteria andSylEqualTo(Double value) {
             addCriterion("syl =", value, "syl");
             return (Criteria) this;
         }
 
-        public Criteria andSylNotEqualTo(BigDecimal value) {
+        public Criteria andSylNotEqualTo(Double value) {
             addCriterion("syl <>", value, "syl");
             return (Criteria) this;
         }
 
-        public Criteria andSylGreaterThan(BigDecimal value) {
+        public Criteria andSylGreaterThan(Double value) {
             addCriterion("syl >", value, "syl");
             return (Criteria) this;
         }
 
-        public Criteria andSylGreaterThanOrEqualTo(BigDecimal value) {
+        public Criteria andSylGreaterThanOrEqualTo(Double value) {
             addCriterion("syl >=", value, "syl");
             return (Criteria) this;
         }
 
-        public Criteria andSylLessThan(BigDecimal value) {
+        public Criteria andSylLessThan(Double value) {
             addCriterion("syl <", value, "syl");
             return (Criteria) this;
         }
 
-        public Criteria andSylLessThanOrEqualTo(BigDecimal value) {
+        public Criteria andSylLessThanOrEqualTo(Double value) {
             addCriterion("syl <=", value, "syl");
             return (Criteria) this;
         }
 
-        public Criteria andSylIn(List<BigDecimal> values) {
+        public Criteria andSylIn(List<Double> values) {
             addCriterion("syl in", values, "syl");
             return (Criteria) this;
         }
 
-        public Criteria andSylNotIn(List<BigDecimal> values) {
+        public Criteria andSylNotIn(List<Double> values) {
             addCriterion("syl not in", values, "syl");
             return (Criteria) this;
         }
 
-        public Criteria andSylBetween(BigDecimal value1, BigDecimal value2) {
+        public Criteria andSylBetween(Double value1, Double value2) {
             addCriterion("syl between", value1, value2, "syl");
             return (Criteria) this;
         }
 
-        public Criteria andSylNotBetween(BigDecimal value1, BigDecimal value2) {
+        public Criteria andSylNotBetween(Double value1, Double value2) {
             addCriterion("syl not between", value1, value2, "syl");
             return (Criteria) this;
         }
@@ -566,63 +565,63 @@ public class TblStockInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andScoreIsNull() {
-            addCriterion("score is null");
+        public Criteria andTotalScoreIsNull() {
+            addCriterion("totalScore is null");
             return (Criteria) this;
         }
 
-        public Criteria andScoreIsNotNull() {
-            addCriterion("score is not null");
+        public Criteria andTotalScoreIsNotNull() {
+            addCriterion("totalScore is not null");
             return (Criteria) this;
         }
 
-        public Criteria andScoreEqualTo(BigDecimal value) {
-            addCriterion("score =", value, "score");
+        public Criteria andTotalScoreEqualTo(Double value) {
+            addCriterion("totalScore =", value, "totalScore");
             return (Criteria) this;
         }
 
-        public Criteria andScoreNotEqualTo(BigDecimal value) {
-            addCriterion("score <>", value, "score");
+        public Criteria andTotalScoreNotEqualTo(Double value) {
+            addCriterion("totalScore <>", value, "totalScore");
             return (Criteria) this;
         }
 
-        public Criteria andScoreGreaterThan(BigDecimal value) {
-            addCriterion("score >", value, "score");
+        public Criteria andTotalScoreGreaterThan(Double value) {
+            addCriterion("totalScore >", value, "totalScore");
             return (Criteria) this;
         }
 
-        public Criteria andScoreGreaterThanOrEqualTo(BigDecimal value) {
-            addCriterion("score >=", value, "score");
+        public Criteria andTotalScoreGreaterThanOrEqualTo(Double value) {
+            addCriterion("totalScore >=", value, "totalScore");
             return (Criteria) this;
         }
 
-        public Criteria andScoreLessThan(BigDecimal value) {
-            addCriterion("score <", value, "score");
+        public Criteria andTotalScoreLessThan(Double value) {
+            addCriterion("totalScore <", value, "totalScore");
             return (Criteria) this;
         }
 
-        public Criteria andScoreLessThanOrEqualTo(BigDecimal value) {
-            addCriterion("score <=", value, "score");
+        public Criteria andTotalScoreLessThanOrEqualTo(Double value) {
+            addCriterion("totalScore <=", value, "totalScore");
             return (Criteria) this;
         }
 
-        public Criteria andScoreIn(List<BigDecimal> values) {
-            addCriterion("score in", values, "score");
+        public Criteria andTotalScoreIn(List<Double> values) {
+            addCriterion("totalScore in", values, "totalScore");
             return (Criteria) this;
         }
 
-        public Criteria andScoreNotIn(List<BigDecimal> values) {
-            addCriterion("score not in", values, "score");
+        public Criteria andTotalScoreNotIn(List<Double> values) {
+            addCriterion("totalScore not in", values, "totalScore");
             return (Criteria) this;
         }
 
-        public Criteria andScoreBetween(BigDecimal value1, BigDecimal value2) {
-            addCriterion("score between", value1, value2, "score");
+        public Criteria andTotalScoreBetween(Double value1, Double value2) {
+            addCriterion("totalScore between", value1, value2, "totalScore");
             return (Criteria) this;
         }
 
-        public Criteria andScoreNotBetween(BigDecimal value1, BigDecimal value2) {
-            addCriterion("score not between", value1, value2, "score");
+        public Criteria andTotalScoreNotBetween(Double value1, Double value2) {
+            addCriterion("totalScore not between", value1, value2, "totalScore");
             return (Criteria) this;
         }
 
@@ -936,63 +935,63 @@ public class TblStockInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andCreateTimeIsNull() {
-            addCriterion("createTime is null");
+        public Criteria andIsActiveIsNull() {
+            addCriterion("isActive is null");
             return (Criteria) this;
         }
 
-        public Criteria andCreateTimeIsNotNull() {
-            addCriterion("createTime is not null");
+        public Criteria andIsActiveIsNotNull() {
+            addCriterion("isActive is not null");
             return (Criteria) this;
         }
 
-        public Criteria andCreateTimeEqualTo(Date value) {
-            addCriterion("createTime =", value, "createTime");
+        public Criteria andIsActiveEqualTo(Boolean value) {
+            addCriterion("isActive =", value, "isActive");
             return (Criteria) this;
         }
 
-        public Criteria andCreateTimeNotEqualTo(Date value) {
-            addCriterion("createTime <>", value, "createTime");
+        public Criteria andIsActiveNotEqualTo(Boolean value) {
+            addCriterion("isActive <>", value, "isActive");
             return (Criteria) this;
         }
 
-        public Criteria andCreateTimeGreaterThan(Date value) {
-            addCriterion("createTime >", value, "createTime");
+        public Criteria andIsActiveGreaterThan(Boolean value) {
+            addCriterion("isActive >", value, "isActive");
             return (Criteria) this;
         }
 
-        public Criteria andCreateTimeGreaterThanOrEqualTo(Date value) {
-            addCriterion("createTime >=", value, "createTime");
+        public Criteria andIsActiveGreaterThanOrEqualTo(Boolean value) {
+            addCriterion("isActive >=", value, "isActive");
             return (Criteria) this;
         }
 
-        public Criteria andCreateTimeLessThan(Date value) {
-            addCriterion("createTime <", value, "createTime");
+        public Criteria andIsActiveLessThan(Boolean value) {
+            addCriterion("isActive <", value, "isActive");
             return (Criteria) this;
         }
 
-        public Criteria andCreateTimeLessThanOrEqualTo(Date value) {
-            addCriterion("createTime <=", value, "createTime");
+        public Criteria andIsActiveLessThanOrEqualTo(Boolean value) {
+            addCriterion("isActive <=", value, "isActive");
             return (Criteria) this;
         }
 
-        public Criteria andCreateTimeIn(List<Date> values) {
-            addCriterion("createTime in", values, "createTime");
+        public Criteria andIsActiveIn(List<Boolean> values) {
+            addCriterion("isActive in", values, "isActive");
             return (Criteria) this;
         }
 
-        public Criteria andCreateTimeNotIn(List<Date> values) {
-            addCriterion("createTime not in", values, "createTime");
+        public Criteria andIsActiveNotIn(List<Boolean> values) {
+            addCriterion("isActive not in", values, "isActive");
             return (Criteria) this;
         }
 
-        public Criteria andCreateTimeBetween(Date value1, Date value2) {
-            addCriterion("createTime between", value1, value2, "createTime");
+        public Criteria andIsActiveBetween(Boolean value1, Boolean value2) {
+            addCriterion("isActive between", value1, value2, "isActive");
             return (Criteria) this;
         }
 
-        public Criteria andCreateTimeNotBetween(Date value1, Date value2) {
-            addCriterion("createTime not between", value1, value2, "createTime");
+        public Criteria andIsActiveNotBetween(Boolean value1, Boolean value2) {
+            addCriterion("isActive not between", value1, value2, "isActive");
             return (Criteria) this;
         }
 

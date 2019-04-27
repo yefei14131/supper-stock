@@ -91,17 +91,19 @@ public class StockScoreServiceImpl implements IStockScoreService {
 
 
     private String getReqString(String stockCode) throws ScriptException {
-        String makeSignJsCode = this.makeSignJsCodeTemplate.replace("STOCK_CODE", stockCode);
+//        String makeSignJsCode = this.makeSignJsCodeTemplate.replace("STOCK_CODE", stockCode);
 
         HashMap<String, String> signInfo = new HashMap<>();
+        signInfo.put("stockCode", stockCode);
         Bindings bings = jsEngine.createBindings();
         bings.put("signInfoMap", signInfo);
 
         long startTime = System.currentTimeMillis();
         log.info("开始执行js脚本,{}", startTime);
 
-        Object result =  jsEngine.eval(makeSignJsCode, bings);
-        log.info("执行js脚本结束,{}, {}", System.currentTimeMillis(), result);
+        Object result =  jsEngine.eval(makeSignJsCodeTemplate, bings);
+        long endTime = System.currentTimeMillis();
+        log.info("执行js脚本结束,{}, 耗时：{}ms, {}", endTime, endTime-startTime , result);
 
         if(signInfo.containsKey("reqString")){
             return signInfo.get("reqString");
@@ -115,7 +117,7 @@ public class StockScoreServiceImpl implements IStockScoreService {
     private JSONObject getStockScoreInfo(String gogalUrl) throws IOException {
         URL url = new URL(gogalUrl);
         JSONObject response = jacksonFormatter.readValue(url, JSONObject.class);
-        log.info("\n调用接口{},执行结果：\n{}", gogalUrl, response.toJSONString());
+        log.info("\n调用接口 {},执行结果：\n{}", gogalUrl, response.toJSONString());
 
         if (response.getIntValue("code") != 0){
             log.error("获取gogal接口出错");
@@ -136,6 +138,13 @@ public class StockScoreServiceImpl implements IStockScoreService {
         JSONObject data = response.getJSONObject("data");
 
         JSONObject appraisalList = data.getJSONObject("appraisal_list");
+
+        JSONArray status = appraisalList.getJSONArray("status");
+
+        if (appraisalList == null || appraisalList.size() == 0 || status == null || status.size() == 0){
+            log.info("{} gogoal接口没有数据。", tblStockScore.getStockCode());
+            return;
+        }
         JSONArray scoreList = appraisalList.getJSONArray("score");
 /**
  `stockCode` varchar(255) NOT NULL DEFAULT '' COMMENT '股票代码',
@@ -184,12 +193,10 @@ public class StockScoreServiceImpl implements IStockScoreService {
         // 获取当前总得分
         tblStockScore.setTotalScore(data.getJSONObject("week_change").getDoubleValue("total_score"));
 
-        JSONArray status = appraisalList.getJSONArray("status");
-
         // 获取当前总排名
         tblStockScore.setMarketRank(status.getIntValue(0));
 
-        tblStockScore.setIndustryDetail(status.getString(2));
+        tblStockScore.setIndustryDetail(status.getString(2) == null ? "" : status.getString(2));
 
         tblStockScore.setIndustryRank(status.getIntValue(3));
 

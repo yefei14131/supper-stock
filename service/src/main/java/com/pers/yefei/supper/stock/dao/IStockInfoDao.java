@@ -15,4 +15,5 @@ public interface IStockInfoDao {
     void updateStockInfo(TblStockInfo tblStockInfo);
 
     List<TblStockInfo> getStockListNeedConllectScore();
+
 }
