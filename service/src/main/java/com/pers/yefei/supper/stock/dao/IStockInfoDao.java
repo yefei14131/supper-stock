@@ -2,6 +2,7 @@ package com.pers.yefei.supper.stock.dao;
 
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockInfo;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,4 +17,9 @@ public interface IStockInfoDao {
 
     List<TblStockInfo> getStockListNeedConllectScore();
 
+    List<TblStockInfo> getActiveStockInfoList();
+
+    TblStockInfo getStockInfo(String stockCode);
+
+    List<TblStockInfo> getNewUnActiveStockList(Date lessDate);
 }

@@ -180,7 +180,7 @@ public class StockScoreServiceImpl implements IStockScoreService {
         tblStockScore.setCompanyHonorScore(companyHonorScore * LEVEL_RATE / gogoalDataWeight.getCompanyHonorScore());
         tblStockScore.setBusinessStatusScore(businessStatusScore * LEVEL_RATE / gogoalDataWeight.getBusinessStatusScore());
         tblStockScore.setAchievementsAppraisalScore(achievementsAppraisalScore * LEVEL_RATE /gogoalDataWeight.getAchievementsAppraisalScore());
-        tblStockScore.setAchievementsGrowupScore(achievementsGrowupScore * LEVEL_RATE / gogoalDataWeight.getProfitAbilityScore());
+        tblStockScore.setAchievementsGrowupScore(achievementsGrowupScore * LEVEL_RATE / gogoalDataWeight.getAchievementsGrowupScore());
         tblStockScore.setProfitAbilityScore(profitAbilityScore * LEVEL_RATE / gogoalDataWeight.getProfitAbilityScore());
         tblStockScore.setAchievementsClueScore(achievementsClueScore * LEVEL_RATE / gogoalDataWeight.getAchievementsClueScore());
         tblStockScore.setMarketplaceStyleScore(marketplaceStyleScore * LEVEL_RATE / gogoalDataWeight.getMarketplaceStyleScore());

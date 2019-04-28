@@ -18,6 +18,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.locks.Lock;
 
 /**
  * @author: yefei
@@ -33,76 +34,163 @@ public class StockScoreConllectBiz {
     @Autowired
     private IStockScoreService stockScoreService;
 
+    private boolean collectorRunning = false;
+
 
     /**
-     * @desc 批量更新股票得分
-     *
+     * @desc 批量更新股票得分, 全量更新
      *
      */
     public void batchConllectStockScore(){
+        try {
 
-        // 获取需要更新的股票列表，目前取全量
-        // TODO 调整取的策略
-        List<TblStockInfo> stockListNeedConllectScore = stockDataService.getStockListNeedConllectScore();
-
-
-        stockListNeedConllectScore.forEach( tblStockInfo -> {
-            try {
-
-                TblStockScore stockScore = stockDataService.getStockScoreToday(tblStockInfo.getStockCode());
-                if (stockScore == null){
-                    stockScore = new TblStockScore();
-                    stockScore.setStockCode(tblStockInfo.getStockCode());
-//                    stockScore.setStockName(tblStockInfo.getStockName());
-                }
-
-                stockScoreService.getCurrentStockScore(stockScore);
-
-                if(stockScore.getTotalScore() == null){
-                    log.info("{}, {} 接口没有评分数据", tblStockInfo.getStockCode(), tblStockInfo.getStockName());
-                    tblStockInfo.setIsActive(false);
-                    stockDataService.saveStockInfo(tblStockInfo);
-//                    return;
-                }else{
-
-                    stockDataService.saveStockScore(stockScore);
-
-                    // 得分
-                    tblStockInfo.setTotalScore(stockScore.getTotalScore());
-
-                    // 机构持仓
-                    tblStockInfo.setOrganizationHoldScore(stockScore.getOrganizationHoldScore());
-
-                    // 全市场情绪
-                    tblStockInfo.setBusinessPreferenceScore(stockScore.getBusinessPreferenceScore());
-
-                    // 全市场排名
-                    tblStockInfo.setMarketRank(stockScore.getMarketRank());
-
-                    // 行业排名
-                    tblStockInfo.setIndustryRank(stockScore.getIndustryRank());
-
-                    // 行业名称
-                    tblStockInfo.setIndustryName(stockScore.getIndustryDetail());
-
-                    stockDataService.saveStockInfo(tblStockInfo);
-                }
-
-                Thread.sleep((long)(RandomUtils.nextInt(1000, 10000)));
-            } catch (ScriptException e) {
-                log.error(ExceptionUtils.getStackTrace(e));
-
-            } catch (Exception e) {
-                log.error(ExceptionUtils.getStackTrace(e));
+            if (collectorRunning == true){
+                log.error("采集任务正在执行，不可重复执行");
+                return;
             }
 
-        });
+            collectorRunning = true;
 
-        log.info("采集任务执行完成");
+            // 获取需要更新的股票列表，目前取全量
+            // TODO 调整取的策略
+            List<TblStockInfo> stockListNeedConllectScore = stockDataService.getActiveStockInfoList();
+
+            stockListNeedConllectScore.forEach( tblStockInfo -> {
+                conllectStockScore(tblStockInfo);
+            });
+
+            this.conllectStockScoreByNewUnActiveStock();
+
+            log.info("采集任务执行完成");
+
+        }catch (Exception e){
+            log.error(ExceptionUtils.getStackTrace(e));
+        }finally {
+            collectorRunning = false;
+        }
+
+    }
+
+    /**
+     * @desc 增量更新股票得分
+     *
+     */
+    public void patchConllectStockScore(){
+        try {
+
+            if (collectorRunning == true){
+                log.error("采集任务正在执行，不可重复执行");
+                return;
+            }
+
+            collectorRunning = true;
+
+            // 获取需要更新的股票列表，排除当天已经更新的
+            List<TblStockInfo> stockListNeedConllectScore = stockDataService.getStockListNeedConllectScore();
+
+            stockListNeedConllectScore.forEach( tblStockInfo -> {
+                conllectStockScore(tblStockInfo);
+            });
+
+            this.conllectStockScoreByNewUnActiveStock();
+
+            log.info("采集任务执行完成");
+
+        }catch (Exception e){
+            log.error(ExceptionUtils.getStackTrace(e));
+        }finally {
+            collectorRunning = false;
+        }
+
+    }
+
+
+    /**
+     * @desc 更新股票得分，取最近被更新为无效的
+     *
+     */
+    public void conllectStockScoreByNewUnActiveStock(){
+        try {
+
+            // 获取昨天到今天被更新成无效的股票
+            List<TblStockInfo> stockListNeedConllectScore = stockDataService.getNewUnActiveStockList(DateUtils.getZeroDate(DateUtils.getDateAfterDays(-1)));
+
+            stockListNeedConllectScore.forEach( tblStockInfo -> {
+                conllectStockScore(tblStockInfo);
+            });
+
+            log.info("采集任务执行完成");
+
+        }catch (Exception e){
+            log.error(ExceptionUtils.getStackTrace(e));
+        }
+
+    }
+
+
+
+    public TblStockScore conllectStockScore(TblStockInfo stockInfo){
+        try {
+
+            TblStockScore stockScore = stockDataService.getStockScoreToday(stockInfo.getStockCode());
+            if (stockScore == null){
+                stockScore = new TblStockScore();
+                stockScore.setStockCode(stockInfo.getStockCode());
+            }
+
+            stockScoreService.getCurrentStockScore(stockScore);
+
+            if(stockScore.getTotalScore() == null){
+                log.info("{}, {} 接口没有评分数据", stockInfo.getStockCode(), stockInfo.getStockName());
+                stockInfo.setIsActive(false);
+                stockDataService.saveStockInfo(stockInfo);
+//                    return;
+            }else{
+
+                stockDataService.saveStockScore(stockScore);
+
+                // 得分
+                stockInfo.setTotalScore(stockScore.getTotalScore());
+
+                // 机构持仓
+                stockInfo.setOrganizationHoldScore(stockScore.getOrganizationHoldScore());
+
+                // 全市场情绪
+                stockInfo.setBusinessPreferenceScore(stockScore.getBusinessPreferenceScore());
+
+                // 全市场排名
+                stockInfo.setMarketRank(stockScore.getMarketRank());
+
+                // 行业排名
+                stockInfo.setIndustryRank(stockScore.getIndustryRank());
+
+                // 行业名称
+                stockInfo.setIndustryName(stockScore.getIndustryDetail());
+                stockInfo.setIsActive(true);
+
+                stockDataService.saveStockInfo(stockInfo);
+
+                return stockScore;
+            }
+
+            Thread.sleep((long)(RandomUtils.nextInt(1000, 8000)));
+        } catch (ScriptException e) {
+            log.error(ExceptionUtils.getStackTrace(e));
+
+        } catch (Exception e) {
+            log.error(ExceptionUtils.getStackTrace(e));
+        }
+        return null;
     }
 
 
     public void calculateStockScoreChangeByDay(){
+
+        if (collectorRunning == true){
+            log.error("采集任务正在执行，不可执行分析任务");
+            return;
+        }
+
         log.info("开始计算股票得分变化");
         int dayForWeek = DateUtils.dayForWeek(new Date());
         if (dayForWeek > 5 ){

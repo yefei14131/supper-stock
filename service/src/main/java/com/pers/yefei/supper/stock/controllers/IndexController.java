@@ -2,7 +2,9 @@ package com.pers.yefei.supper.stock.controllers;
 
 import com.pers.yefei.supper.stock.biz.StockScoreConllectBiz;
 import com.pers.yefei.supper.stock.config.ResponseAdapter;
+import com.pers.yefei.supper.stock.model.gen.pojo.TblStockInfo;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockScore;
+import com.pers.yefei.supper.stock.service.IStockDataService;
 import com.pers.yefei.supper.stock.service.IStockScoreService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -24,6 +26,10 @@ import java.io.IOException;
 @Slf4j
 public class IndexController {
 
+
+    @Autowired
+    private IStockDataService stockDataService;
+
     @Autowired
     private ResponseAdapter responseAdapter;
 
@@ -35,27 +41,61 @@ public class IndexController {
     @Autowired
     private StockScoreConllectBiz stockScoreConllectBiz;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public ModelAndView mappingList() throws IOException {
 
-        ModelAndView view = new ModelAndView("/test");
-        return view;
-
-    }
-
-
-    @RequestMapping(value = "/test")
+    @RequestMapping(value = "/stock/score/get")
     @ResponseBody
-    public Object test(String stockCode) {
+    public Object getStockScore(String stockCode) {
         try {
-//            String stockCode = "002563";
-//            TblStockScore stockScore = stockScoreService.getStockScore(stockCode);
-            stockScoreConllectBiz.batchConllectStockScore();
-            return responseAdapter.success(null);
+            TblStockInfo stockInfo = stockDataService.getStockInfo(stockCode);
+            TblStockScore stockScore = stockScoreConllectBiz.conllectStockScore(stockInfo);
+
+            return responseAdapter.success(stockScore);
+
+
         } catch (Exception e) {
             log.error(ExceptionUtils.getStackTrace(e));
             return responseAdapter.failure(ExceptionUtils.getStackTrace(e));
         }
 
     }
+
+    @RequestMapping(value = "/stock/collect/start/full")
+    @ResponseBody
+    public Object startCollectJob() {
+        try {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    stockScoreConllectBiz.batchConllectStockScore();
+                }
+            }).start();
+
+            return responseAdapter.success();
+
+        } catch (Exception e) {
+            log.error(ExceptionUtils.getStackTrace(e));
+            return responseAdapter.failure(ExceptionUtils.getStackTrace(e));
+        }
+
+    }
+
+    @RequestMapping(value = "/stock/collect/start/patch")
+    @ResponseBody
+    public Object patchStartCollectJob() {
+        try {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    stockScoreConllectBiz.patchConllectStockScore();
+                }
+            }).start();
+
+            return responseAdapter.success();
+
+        } catch (Exception e) {
+            log.error(ExceptionUtils.getStackTrace(e));
+            return responseAdapter.failure(ExceptionUtils.getStackTrace(e));
+        }
+    }
+
 }

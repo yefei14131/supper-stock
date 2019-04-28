@@ -16,6 +16,10 @@ public interface IStockDataService {
 
     List<TblStockInfo> getStockListNeedConllectScore();
 
+    List<TblStockInfo> getActiveStockInfoList();
+
+    TblStockInfo getStockInfo(String stockCode);
+
     TblStockScore getStockScoreToday(String stockCode);
 
     void saveStockScore(TblStockScore tblStockScore);
@@ -27,4 +31,6 @@ public interface IStockDataService {
     void insertStockScoreChange(TblStockScoreChange stockScoreChange);
 
     Date queryPrevDate();
+
+    List<TblStockInfo> getNewUnActiveStockList(Date lessDate);
 }

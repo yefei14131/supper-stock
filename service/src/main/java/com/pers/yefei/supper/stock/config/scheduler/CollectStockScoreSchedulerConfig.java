@@ -35,15 +35,15 @@ public class CollectStockScoreSchedulerConfig {
     private StockScoreConllectBiz stockScoreConllectBiz;
 
 
-    @Scheduled(fixedRate = 60 * 60 * 1000, initialDelay =  1 * 1000)
-    private void process(){
-        log.info("spring boot scheduler running: CollectStockScoreSchedulerConfig ");
-        stockScoreConllectBiz.batchConllectStockScore();
+//    @Scheduled(fixedRate = 60 * 60 * 1000, initialDelay =  1 * 1000)
+//    private void process(){
+//        log.info("spring boot scheduler running: CollectStockScoreSchedulerConfig ");
+//        stockScoreConllectBiz.batchConllectStockScore();
 //        stockScoreConllectBiz.calculateStockScoreChangeByDay();
-    }
+//    }
 
 
-    @Scheduled(cron = "0 0 19 * * 2-6")
+    @Scheduled(cron = "0 0 18 * * 2-6")
     public void conllectStockScoreByCron() throws InterruptedException {
         // 随机延时 1s - 5min 执行
         int delay = RandomUtils.nextInt(1000, 5 * 60 * 1000);
@@ -51,17 +51,9 @@ public class CollectStockScoreSchedulerConfig {
         Thread.sleep((long)delay);
 
         stockScoreConllectBiz.batchConllectStockScore();
-//        stockScoreConllectBiz.calculateStockScoreChangeByDay();
+        stockScoreConllectBiz.calculateStockScoreChangeByDay();
     }
 
-//
-//    @Scheduled(cron = "0 */1 * * * * ")
-//    public void reportCurrentByCron(){
-//        System.out.println ("Scheduling Tasks Examples By Cron: The time is now " + dateFormat().format (new Date()));
-//    }
-//
-//    private SimpleDateFormat dateFormat(){
-//        return new SimpleDateFormat ("HH:mm:ss");
-//    }
+
 
 }

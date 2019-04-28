@@ -1,7 +1,7 @@
 package com.pers.yefei.supper.stock.dao.impl;
 
 import com.pers.yefei.supper.stock.dao.IStockScoreDao;
-import com.pers.yefei.supper.stock.model.gen.dao.StockScoreMapper;
+import com.pers.yefei.supper.stock.model.gen.dao.StockMapper;
 import com.pers.yefei.supper.stock.model.gen.dao.TblStockScoreMapper;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockScore;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockScoreExample;
@@ -23,12 +23,12 @@ public class StockScoreDaoImpl implements IStockScoreDao {
     private TblStockScoreMapper tblStockScoreMapper;
 
     @Autowired
-    private StockScoreMapper stockScoreMapper;
+    private StockMapper stockMapper;
 
     @Override
     public TblStockScore getStockScoreToday(String stockCode){
         TblStockScoreExample example = new TblStockScoreExample();
-        example.createCriteria().andStockCodeEqualTo(stockCode);
+        example.createCriteria().andStockCodeEqualTo(stockCode).andDateEqualTo(new Date());
 
         List<TblStockScore> tblStockScores = tblStockScoreMapper.selectByExample(example);
 
@@ -54,7 +54,7 @@ public class StockScoreDaoImpl implements IStockScoreDao {
 
     @Override
     public Date queryPrevDate(){
-        TblStockScore tblStockScore = stockScoreMapper.selectPrevDate(DateUtils.getZeroDate(new Date()));
+        TblStockScore tblStockScore = stockMapper.selectPrevDate(DateUtils.getZeroDate(new Date()));
 
         return tblStockScore == null ? null : tblStockScore.getDate();
     }

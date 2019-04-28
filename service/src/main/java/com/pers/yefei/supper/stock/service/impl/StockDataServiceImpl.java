@@ -37,6 +37,16 @@ public class StockDataServiceImpl implements IStockDataService {
     }
 
     @Override
+    public List<TblStockInfo> getActiveStockInfoList(){
+        return stockInfoDao.getActiveStockInfoList();
+    }
+
+    @Override
+    public TblStockInfo getStockInfo(String stockCode){
+        return stockInfoDao.getStockInfo(stockCode);
+    }
+
+    @Override
     public TblStockScore getStockScoreToday(String stockCode){
         return stockScoreDao.getStockScoreToday(stockCode);
     }
@@ -75,5 +85,10 @@ public class StockDataServiceImpl implements IStockDataService {
     @Override
     public Date queryPrevDate(){
         return stockScoreDao.queryPrevDate();
+    }
+
+    @Override
+    public List<TblStockInfo> getNewUnActiveStockList(Date lessDate){
+        return stockInfoDao.getNewUnActiveStockList(lessDate);
     }
 }
