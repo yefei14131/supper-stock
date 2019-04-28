@@ -35,7 +35,9 @@ public class StockInfoDaoImpl implements IStockInfoDao {
     @Override
     public List<TblStockInfo> getStockListNeedConllectScore(){
         TblStockInfoExample example = new TblStockInfoExample();
-        example.createCriteria().andMarketRankEqualTo(0).andIsActiveEqualTo(true);
+        example.createCriteria().andIsActiveEqualTo(true)
+//                .andMarketRankEqualTo(0)
+        ;
         example.setOrderByClause("rand()");
 
         return tblStockInfoMapper.selectByExample(example);

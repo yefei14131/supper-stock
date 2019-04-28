@@ -88,7 +88,7 @@ public class StockScoreConllectBiz {
                     stockDataService.saveStockInfo(tblStockInfo);
                 }
 
-                Thread.sleep((long)(RandomUtils.nextInt(1000, 2000)));
+                Thread.sleep((long)(RandomUtils.nextInt(1000, 10000)));
             } catch (ScriptException e) {
                 log.error(ExceptionUtils.getStackTrace(e));
 

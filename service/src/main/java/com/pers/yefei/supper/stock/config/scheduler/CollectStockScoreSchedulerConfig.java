@@ -34,13 +34,13 @@ public class CollectStockScoreSchedulerConfig {
     @Autowired
     private StockScoreConllectBiz stockScoreConllectBiz;
 
-//
-//    @Scheduled(fixedRate = 24 * 60 * 60 * 1000, initialDelay =  1 * 1000)
-//    private void process(){
-//        log.info("spring boot scheduler running: CollectStockScoreSchedulerConfig ");
-//        stockScoreConllectBiz.batchConllectStockScore();
+
+    @Scheduled(fixedRate = 60 * 60 * 1000, initialDelay =  1 * 1000)
+    private void process(){
+        log.info("spring boot scheduler running: CollectStockScoreSchedulerConfig ");
+        stockScoreConllectBiz.batchConllectStockScore();
 //        stockScoreConllectBiz.calculateStockScoreChangeByDay();
-//    }
+    }
 
 
     @Scheduled(cron = "0 0 19 * * 2-6")
@@ -51,7 +51,7 @@ public class CollectStockScoreSchedulerConfig {
         Thread.sleep((long)delay);
 
         stockScoreConllectBiz.batchConllectStockScore();
-        stockScoreConllectBiz.calculateStockScoreChangeByDay();
+//        stockScoreConllectBiz.calculateStockScoreChangeByDay();
     }
 
 //
