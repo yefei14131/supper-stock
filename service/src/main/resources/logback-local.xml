@@ -3,7 +3,7 @@
 
     <contextName>${HOSTNAME}</contextName>
 
-    <Property name="LOG_PROJECT" value="k8s-opn" />
+    <Property name="LOG_PROJECT" value="supper-stock" />
     <Property name="LOG_BASE_PATH" value="/tmp/logs/${LOG_PROJECT}" />
     <Property name="DEFAULT_PATTERN" value="%d{ISO8601}$$[%thread]$$[%logger]$$[%p]$$[%L]$$[%msg]%n" />
     <Property name="CONSOLE_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n" />
