@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pers.yefei.supper.stock.model.gen.dao.TblStockScoreChangeMapper">
+  <resultMap id="BaseResultMap" type="com.pers.yefei.supper.stock.model.gen.pojo.TblStockScoreChange">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <id column="stockName" jdbcType="VARCHAR" property="stockName" />
+    <result column="stockCode" jdbcType="VARCHAR" property="stockCode" />
+    <result column="fieldName" jdbcType="VARCHAR" property="fieldName" />
+    <result column="todayValue" jdbcType="INTEGER" property="todayValue" />
+    <result column="preValue" jdbcType="INTEGER" property="preValue" />
+    <result column="changeValue" jdbcType="INTEGER" property="changeValue" />
+    <result column="date" jdbcType="TIMESTAMP" property="date" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, stockName, stockCode, fieldName, todayValue, preValue, changeValue, date
+  </sql>
+  <select id="selectByExample" parameterType="com.pers.yefei.supper.stock.model.gen.pojo.TblStockScoreChangeExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_stock_score_change
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="com.pers.yefei.supper.stock.model.gen.pojo.TblStockScoreChangeKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_stock_score_change
+    where id = #{id,jdbcType=INTEGER}
+      and stockName = #{stockName,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.pers.yefei.supper.stock.model.gen.pojo.TblStockScoreChangeKey">
+    delete from tbl_stock_score_change
+    where id = #{id,jdbcType=INTEGER}
+      and stockName = #{stockName,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pers.yefei.supper.stock.model.gen.pojo.TblStockScoreChangeExample">
+    delete from tbl_stock_score_change
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pers.yefei.supper.stock.model.gen.pojo.TblStockScoreChange">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tbl_stock_score_change (stockName, stockCode, fieldName, 
+      todayValue, preValue, changeValue, 
+      date)
+    values (#{stockName,jdbcType=VARCHAR}, #{stockCode,jdbcType=VARCHAR}, #{fieldName,jdbcType=VARCHAR}, 
+      #{todayValue,jdbcType=INTEGER}, #{preValue,jdbcType=INTEGER}, #{changeValue,jdbcType=INTEGER}, 
+      #{date,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pers.yefei.supper.stock.model.gen.pojo.TblStockScoreChange">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tbl_stock_score_change
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="stockName != null">
+        stockName,
+      </if>
+      <if test="stockCode != null">
+        stockCode,
+      </if>
+      <if test="fieldName != null">
+        fieldName,
+      </if>
+      <if test="todayValue != null">
+        todayValue,
+      </if>
+      <if test="preValue != null">
+        preValue,
+      </if>
+      <if test="changeValue != null">
+        changeValue,
+      </if>
+      <if test="date != null">
+        date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="stockName != null">
+        #{stockName,jdbcType=VARCHAR},
+      </if>
+      <if test="stockCode != null">
+        #{stockCode,jdbcType=VARCHAR},
+      </if>
+      <if test="fieldName != null">
+        #{fieldName,jdbcType=VARCHAR},
+      </if>
+      <if test="todayValue != null">
+        #{todayValue,jdbcType=INTEGER},
+      </if>
+      <if test="preValue != null">
+        #{preValue,jdbcType=INTEGER},
+      </if>
+      <if test="changeValue != null">
+        #{changeValue,jdbcType=INTEGER},
+      </if>
+      <if test="date != null">
+        #{date,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pers.yefei.supper.stock.model.gen.pojo.TblStockScoreChangeExample" resultType="java.lang.Long">
+    select count(*) from tbl_stock_score_change
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tbl_stock_score_change
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.stockName != null">
+        stockName = #{record.stockName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stockCode != null">
+        stockCode = #{record.stockCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fieldName != null">
+        fieldName = #{record.fieldName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.todayValue != null">
+        todayValue = #{record.todayValue,jdbcType=INTEGER},
+      </if>
+      <if test="record.preValue != null">
+        preValue = #{record.preValue,jdbcType=INTEGER},
+      </if>
+      <if test="record.changeValue != null">
+        changeValue = #{record.changeValue,jdbcType=INTEGER},
+      </if>
+      <if test="record.date != null">
+        date = #{record.date,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tbl_stock_score_change
+    set id = #{record.id,jdbcType=INTEGER},
+      stockName = #{record.stockName,jdbcType=VARCHAR},
+      stockCode = #{record.stockCode,jdbcType=VARCHAR},
+      fieldName = #{record.fieldName,jdbcType=VARCHAR},
+      todayValue = #{record.todayValue,jdbcType=INTEGER},
+      preValue = #{record.preValue,jdbcType=INTEGER},
+      changeValue = #{record.changeValue,jdbcType=INTEGER},
+      date = #{record.date,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pers.yefei.supper.stock.model.gen.pojo.TblStockScoreChange">
+    update tbl_stock_score_change
+    <set>
+      <if test="stockCode != null">
+        stockCode = #{stockCode,jdbcType=VARCHAR},
+      </if>
+      <if test="fieldName != null">
+        fieldName = #{fieldName,jdbcType=VARCHAR},
+      </if>
+      <if test="todayValue != null">
+        todayValue = #{todayValue,jdbcType=INTEGER},
+      </if>
+      <if test="preValue != null">
+        preValue = #{preValue,jdbcType=INTEGER},
+      </if>
+      <if test="changeValue != null">
+        changeValue = #{changeValue,jdbcType=INTEGER},
+      </if>
+      <if test="date != null">
+        date = #{date,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+      and stockName = #{stockName,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pers.yefei.supper.stock.model.gen.pojo.TblStockScoreChange">
+    update tbl_stock_score_change
+    set stockCode = #{stockCode,jdbcType=VARCHAR},
+      fieldName = #{fieldName,jdbcType=VARCHAR},
+      todayValue = #{todayValue,jdbcType=INTEGER},
+      preValue = #{preValue,jdbcType=INTEGER},
+      changeValue = #{changeValue,jdbcType=INTEGER},
+      date = #{date,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+      and stockName = #{stockName,jdbcType=VARCHAR}
+  </update>
+</mapper>
