@@ -3,6 +3,7 @@ package com.pers.yefei.supper.stock.service;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockInfo;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockScore;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockScoreChange;
+import com.pers.yefei.supper.stock.model.gen.pojo.TblStockTrans;
 
 import java.util.Date;
 import java.util.List;
@@ -33,4 +34,8 @@ public interface IStockDataService {
     Date queryPrevDate();
 
     List<TblStockInfo> getNewUnActiveStockList(Date lessDate);
+
+    void insertStockTrans(TblStockTrans tblStockTrans);
+
+    List<TblStockTrans> queryTblStockTransByDate(Date date);
 }

@@ -3,9 +3,8 @@ package com.pers.yefei.supper.stock.service.impl;
 import com.pers.yefei.supper.stock.dao.IStockInfoDao;
 import com.pers.yefei.supper.stock.dao.IStockScoreChangeDao;
 import com.pers.yefei.supper.stock.dao.IStockScoreDao;
-import com.pers.yefei.supper.stock.model.gen.pojo.TblStockInfo;
-import com.pers.yefei.supper.stock.model.gen.pojo.TblStockScore;
-import com.pers.yefei.supper.stock.model.gen.pojo.TblStockScoreChange;
+import com.pers.yefei.supper.stock.dao.IStockTransDao;
+import com.pers.yefei.supper.stock.model.gen.pojo.*;
 import com.pers.yefei.supper.stock.service.IStockDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,10 +25,11 @@ public class StockDataServiceImpl implements IStockDataService {
     @Autowired
     private IStockScoreDao stockScoreDao;
 
-
     @Autowired
     private IStockScoreChangeDao stockScoreChangeDao;
 
+    @Autowired
+    private IStockTransDao stockTransDao;
 
     @Override
     public List<TblStockInfo> getStockListNeedConllectScore(){
@@ -90,5 +90,16 @@ public class StockDataServiceImpl implements IStockDataService {
     @Override
     public List<TblStockInfo> getNewUnActiveStockList(Date lessDate){
         return stockInfoDao.getNewUnActiveStockList(lessDate);
+    }
+
+
+    @Override
+    public void insertStockTrans(TblStockTrans tblStockTrans){
+        stockTransDao.insertStockTrans(tblStockTrans);
+    }
+
+    @Override
+    public List<TblStockTrans> queryTblStockTransByDate(Date date){
+        return stockTransDao.queryTblStockTransByDate(date);
     }
 }

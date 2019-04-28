@@ -58,4 +58,8 @@ public class StockScoreDaoImpl implements IStockScoreDao {
 
         return tblStockScore == null ? null : tblStockScore.getDate();
     }
+
+
+
+
 }

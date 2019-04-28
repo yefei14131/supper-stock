@@ -4,6 +4,7 @@ import com.pers.yefei.supper.stock.biz.StockScoreConllectBiz;
 import com.pers.yefei.supper.stock.config.ResponseAdapter;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockInfo;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockScore;
+import com.pers.yefei.supper.stock.model.gen.pojo.TblStockTrans;
 import com.pers.yefei.supper.stock.service.IStockDataService;
 import com.pers.yefei.supper.stock.service.IStockScoreService;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
+import java.util.Date;
 
 /**
  * @author: yefei
@@ -97,5 +99,31 @@ public class IndexController {
             return responseAdapter.failure(ExceptionUtils.getStackTrace(e));
         }
     }
+
+
+    @RequestMapping(value = "/stock/trans/add")
+    @ResponseBody
+    public Object ssetStockTans(String stockCode, double price,  int transType) {
+        try {
+
+            TblStockInfo stockInfo = stockDataService.getStockInfo(stockCode);
+            TblStockTrans tblStockTrans = new TblStockTrans();
+            tblStockTrans.setStockCode(stockCode);
+            tblStockTrans.setStockName(stockInfo.getStockName());
+            tblStockTrans.setStockPrice(price);
+            tblStockTrans.setDate(new Date());
+            tblStockTrans.setTransType(transType);
+
+            stockDataService.insertStockTrans(tblStockTrans);
+
+            return responseAdapter.success();
+
+        } catch (Exception e) {
+            log.error(ExceptionUtils.getStackTrace(e));
+            return responseAdapter.failure(ExceptionUtils.getStackTrace(e));
+        }
+    }
+
+
 
 }
