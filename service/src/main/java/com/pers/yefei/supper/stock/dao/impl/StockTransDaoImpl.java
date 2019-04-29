@@ -29,7 +29,7 @@ public class StockTransDaoImpl implements IStockTransDao {
     public List<TblStockTrans> queryTblStockTransByDate(Date date){
         TblStockTransExample example = new TblStockTransExample();
         example.createCriteria().andDateEqualTo(date);
-        example.setOrderByClause("actionType");
+        example.setOrderByClause("transType");
 
         return tblStockTransMapper.selectByExample(example);
     }

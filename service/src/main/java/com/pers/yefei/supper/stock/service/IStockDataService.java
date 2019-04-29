@@ -40,4 +40,6 @@ public interface IStockDataService {
     void insertStockTrans(TblStockTrans tblStockTrans);
 
     List<TblStockTrans> queryTblStockTransByDate(Date date);
+
+    List<TblStockScoreChange> queryScoreChangeByDay(Date date);
 }

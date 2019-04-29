@@ -1,12 +1,10 @@
 package com.pers.yefei.supper.stock.service.impl;
 
-import com.pers.yefei.supper.stock.dao.IStockInfoDao;
-import com.pers.yefei.supper.stock.dao.IStockScoreChangeDao;
-import com.pers.yefei.supper.stock.dao.IStockScoreDao;
-import com.pers.yefei.supper.stock.dao.IStockStatisticDao;
+import com.pers.yefei.supper.stock.dao.*;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockInfo;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockScore;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockScoreChange;
+import com.pers.yefei.supper.stock.model.gen.pojo.TblStockTrans;
 import com.pers.yefei.supper.stock.service.IStockDataService;
 import com.pers.yefei.supper.stock.service.IStockStatisticService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +34,9 @@ public class StockStatisticServiceImpl implements IStockStatisticService {
     @Autowired
     private IStockInfoDao stockInfoDao;
 
+    @Autowired
+    private IStockTransDao stockTransDao;
+
     @Override
     public List<TblStockScoreChange> queryStockScoreChangeByDate(Date date){
 
@@ -55,4 +56,8 @@ public class StockStatisticServiceImpl implements IStockStatisticService {
         return data;
     }
 
+    @Override
+    public List<TblStockTrans> queryStockTransByDay(Date date){
+        return stockTransDao.queryTblStockTransByDate(date);
+    }
 }

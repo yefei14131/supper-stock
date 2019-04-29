@@ -3,6 +3,7 @@ package com.pers.yefei.supper.stock.dao;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockScoreChange;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author: yefei
@@ -15,4 +16,6 @@ public interface IStockScoreChangeDao {
     void updateStockScoreChange(TblStockScoreChange stockScoreChange);
 
     TblStockScoreChange getStockScoreChangeByDate(String stockCode, Date date);
+
+    List<TblStockScoreChange> queryScoreChangeByDay(Date date);
 }

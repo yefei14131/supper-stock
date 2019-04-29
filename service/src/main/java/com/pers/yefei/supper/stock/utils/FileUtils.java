@@ -83,6 +83,10 @@ public class FileUtils {
 	}
 
 	public static String readContent(InputStream inputStream) throws IOException {
+		return readContent(inputStream, "utf-8");
+	}
+
+	public static String readContent(InputStream inputStream, String encode) throws IOException {
 		int totalLen = inputStream.available();
 		byte[] buf = new byte[totalLen];
 
@@ -91,7 +95,7 @@ public class FileUtils {
 			readlen += len;
 		}
 		inputStream.close();
-		return new String(buf, "utf-8");
+		return new String(buf, encode);
 	}
 
 	public static void writeFile(String filePath, String secKeyContent) throws IOException {

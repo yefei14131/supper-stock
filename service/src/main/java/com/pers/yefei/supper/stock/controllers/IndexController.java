@@ -9,17 +9,16 @@ import com.pers.yefei.supper.stock.model.gen.pojo.TblStockTrans;
 import com.pers.yefei.supper.stock.service.IStockDataService;
 import com.pers.yefei.supper.stock.service.IStockScoreService;
 import com.pers.yefei.supper.stock.service.IStockStatisticService;
+import com.pers.yefei.supper.stock.utils.DateUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
-import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -117,7 +116,7 @@ public class IndexController {
             TblStockTrans tblStockTrans = new TblStockTrans();
             tblStockTrans.setStockCode(stockCode);
             tblStockTrans.setStockName(stockInfo.getStockName());
-            tblStockTrans.setStockPrice(price);
+            tblStockTrans.setStockPrice(new BigDecimal(price));
             tblStockTrans.setDate(new Date());
             tblStockTrans.setTransType(transType);
 
@@ -132,14 +131,34 @@ public class IndexController {
     }
 
 
+    /**
+     * 计算当日变化并保存
+     * @return
+     */
     @RequestMapping(value = "/stock/calculate/start")
     @ResponseBody
     public Object calculateStockScoreChangeByDay() {
         try {
             stockScoreConllectBiz.calculateStockScoreChangeByDay();
 
-            List<TblStockScoreChange> stockScoreChanges = stockStatisticService.queryStockScoreChangeByDate(new Date());
+            List<TblStockScoreChange> stockScoreChanges = stockStatisticService.queryStockScoreChangeByDate(DateUtils.getZeroDate(new Date()));
             return responseAdapter.success(stockScoreChanges);
+
+        } catch (Exception e) {
+            log.error(ExceptionUtils.getStackTrace(e));
+            return responseAdapter.failure(ExceptionUtils.getStackTrace(e));
+        }
+    }
+
+    @RequestMapping(value = "/stock/mock/trans")
+    @ResponseBody
+    public Object mockTransToday(@RequestParam(name = "date", defaultValue = "") String date) {
+        try {
+            Date queryDate = date.equals("") ? DateUtils.getZeroDate(new Date()) : DateUtils.parseDate(date);
+
+            stockScoreConllectBiz.mockTrans();
+            List<TblStockTrans> stockTrans = stockStatisticService.queryStockTransByDay(queryDate);
+            return responseAdapter.success(stockTrans);
 
         } catch (Exception e) {
             log.error(ExceptionUtils.getStackTrace(e));

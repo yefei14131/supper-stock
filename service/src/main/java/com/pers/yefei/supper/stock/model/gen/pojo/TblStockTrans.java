@@ -1,5 +1,6 @@
 package com.pers.yefei.supper.stock.model.gen.pojo;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class TblStockTrans {
@@ -9,7 +10,9 @@ public class TblStockTrans {
 
     private String stockName;
 
-    private Double stockPrice;
+    private BigDecimal stockPrice;
+
+    private BigDecimal shCompositeStockPrice;
 
     private Integer transType;
 
@@ -39,12 +42,20 @@ public class TblStockTrans {
         this.stockName = stockName == null ? null : stockName.trim();
     }
 
-    public Double getStockPrice() {
+    public BigDecimal getStockPrice() {
         return stockPrice;
     }
 
-    public void setStockPrice(Double stockPrice) {
+    public void setStockPrice(BigDecimal stockPrice) {
         this.stockPrice = stockPrice;
+    }
+
+    public BigDecimal getShCompositeStockPrice() {
+        return shCompositeStockPrice;
+    }
+
+    public void setShCompositeStockPrice(BigDecimal shCompositeStockPrice) {
+        this.shCompositeStockPrice = shCompositeStockPrice;
     }
 
     public Integer getTransType() {

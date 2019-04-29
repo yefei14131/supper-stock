@@ -111,4 +111,10 @@ public class StockDataServiceImpl implements IStockDataService {
     public List<TblStockTrans> queryTblStockTransByDate(Date date){
         return stockTransDao.queryTblStockTransByDate(date);
     }
+
+
+    @Override
+    public List<TblStockScoreChange> queryScoreChangeByDay(Date date){
+        return stockScoreChangeDao.queryScoreChangeByDay(date);
+    }
 }

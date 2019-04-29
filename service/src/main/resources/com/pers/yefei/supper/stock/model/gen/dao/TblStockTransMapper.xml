@@ -5,7 +5,8 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="stockCode" jdbcType="VARCHAR" property="stockCode" />
     <result column="stockName" jdbcType="VARCHAR" property="stockName" />
-    <result column="stockPrice" jdbcType="DOUBLE" property="stockPrice" />
+    <result column="stockPrice" jdbcType="DECIMAL" property="stockPrice" />
+    <result column="shCompositeStockPrice" jdbcType="DECIMAL" property="shCompositeStockPrice" />
     <result column="transType" jdbcType="INTEGER" property="transType" />
     <result column="date" jdbcType="DATE" property="date" />
   </resultMap>
@@ -68,7 +69,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, stockCode, stockName, stockPrice, transType, date
+    id, stockCode, stockName, stockPrice, shCompositeStockPrice, transType, date
   </sql>
   <select id="selectByExample" parameterType="com.pers.yefei.supper.stock.model.gen.pojo.TblStockTransExample" resultMap="BaseResultMap">
     select
@@ -105,9 +106,11 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into tbl_stock_trans (stockCode, stockName, stockPrice, 
-      transType, date)
-    values (#{stockCode,jdbcType=VARCHAR}, #{stockName,jdbcType=VARCHAR}, #{stockPrice,jdbcType=DOUBLE}, 
-      #{transType,jdbcType=INTEGER}, #{date,jdbcType=DATE})
+      shCompositeStockPrice, transType, date
+      )
+    values (#{stockCode,jdbcType=VARCHAR}, #{stockName,jdbcType=VARCHAR}, #{stockPrice,jdbcType=DECIMAL}, 
+      #{shCompositeStockPrice,jdbcType=DECIMAL}, #{transType,jdbcType=INTEGER}, #{date,jdbcType=DATE}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.pers.yefei.supper.stock.model.gen.pojo.TblStockTrans">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -124,6 +127,9 @@
       <if test="stockPrice != null">
         stockPrice,
       </if>
+      <if test="shCompositeStockPrice != null">
+        shCompositeStockPrice,
+      </if>
       <if test="transType != null">
         transType,
       </if>
@@ -139,7 +145,10 @@
         #{stockName,jdbcType=VARCHAR},
       </if>
       <if test="stockPrice != null">
-        #{stockPrice,jdbcType=DOUBLE},
+        #{stockPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="shCompositeStockPrice != null">
+        #{shCompositeStockPrice,jdbcType=DECIMAL},
       </if>
       <if test="transType != null">
         #{transType,jdbcType=INTEGER},
@@ -168,7 +177,10 @@
         stockName = #{record.stockName,jdbcType=VARCHAR},
       </if>
       <if test="record.stockPrice != null">
-        stockPrice = #{record.stockPrice,jdbcType=DOUBLE},
+        stockPrice = #{record.stockPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.shCompositeStockPrice != null">
+        shCompositeStockPrice = #{record.shCompositeStockPrice,jdbcType=DECIMAL},
       </if>
       <if test="record.transType != null">
         transType = #{record.transType,jdbcType=INTEGER},
@@ -186,7 +198,8 @@
     set id = #{record.id,jdbcType=INTEGER},
       stockCode = #{record.stockCode,jdbcType=VARCHAR},
       stockName = #{record.stockName,jdbcType=VARCHAR},
-      stockPrice = #{record.stockPrice,jdbcType=DOUBLE},
+      stockPrice = #{record.stockPrice,jdbcType=DECIMAL},
+      shCompositeStockPrice = #{record.shCompositeStockPrice,jdbcType=DECIMAL},
       transType = #{record.transType,jdbcType=INTEGER},
       date = #{record.date,jdbcType=DATE}
     <if test="_parameter != null">
@@ -203,7 +216,10 @@
         stockName = #{stockName,jdbcType=VARCHAR},
       </if>
       <if test="stockPrice != null">
-        stockPrice = #{stockPrice,jdbcType=DOUBLE},
+        stockPrice = #{stockPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="shCompositeStockPrice != null">
+        shCompositeStockPrice = #{shCompositeStockPrice,jdbcType=DECIMAL},
       </if>
       <if test="transType != null">
         transType = #{transType,jdbcType=INTEGER},
@@ -218,7 +234,8 @@
     update tbl_stock_trans
     set stockCode = #{stockCode,jdbcType=VARCHAR},
       stockName = #{stockName,jdbcType=VARCHAR},
-      stockPrice = #{stockPrice,jdbcType=DOUBLE},
+      stockPrice = #{stockPrice,jdbcType=DECIMAL},
+      shCompositeStockPrice = #{shCompositeStockPrice,jdbcType=DECIMAL},
       transType = #{transType,jdbcType=INTEGER},
       date = #{date,jdbcType=DATE}
     where id = #{id,jdbcType=INTEGER}

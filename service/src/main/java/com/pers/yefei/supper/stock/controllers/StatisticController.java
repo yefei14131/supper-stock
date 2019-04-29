@@ -5,6 +5,7 @@ import com.pers.yefei.supper.stock.config.ResponseAdapter;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockInfo;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockScore;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockScoreChange;
+import com.pers.yefei.supper.stock.model.gen.pojo.TblStockTrans;
 import com.pers.yefei.supper.stock.service.IStockDataService;
 import com.pers.yefei.supper.stock.service.IStockScoreService;
 import com.pers.yefei.supper.stock.service.IStockStatisticService;
@@ -61,8 +62,25 @@ public class StatisticController {
     @ResponseBody
     public Object collectProgress() {
         try {
-            HashMap resp = stockStatisticService.collectProgress();
-            return responseAdapter.success(resp);
+            HashMap data = new HashMap<>();
+            stockStatisticService.collectProgress();
+            return responseAdapter.success(data);
+
+        } catch (Exception e) {
+            log.error(ExceptionUtils.getStackTrace(e));
+            return responseAdapter.failure(ExceptionUtils.getStackTrace(e));
+        }
+    }
+
+
+    @RequestMapping(value = "/stock/trans/list")
+    @ResponseBody
+    public Object mockTransToday(@RequestParam(name = "date", defaultValue = "") String date) {
+        try {
+            Date queryDate = date.equals("") ? new Date() : DateUtils.parseDate(date);
+
+            List<TblStockTrans> stockTrans = stockStatisticService.queryStockTransByDay(queryDate);
+            return responseAdapter.success(stockTrans);
 
         } catch (Exception e) {
             log.error(ExceptionUtils.getStackTrace(e));

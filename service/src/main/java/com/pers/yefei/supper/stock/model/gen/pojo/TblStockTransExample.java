@@ -1,5 +1,6 @@
 package com.pers.yefei.supper.stock.model.gen.pojo;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -342,53 +343,113 @@ public class TblStockTransExample {
             return (Criteria) this;
         }
 
-        public Criteria andStockPriceEqualTo(Double value) {
+        public Criteria andStockPriceEqualTo(BigDecimal value) {
             addCriterion("stockPrice =", value, "stockPrice");
             return (Criteria) this;
         }
 
-        public Criteria andStockPriceNotEqualTo(Double value) {
+        public Criteria andStockPriceNotEqualTo(BigDecimal value) {
             addCriterion("stockPrice <>", value, "stockPrice");
             return (Criteria) this;
         }
 
-        public Criteria andStockPriceGreaterThan(Double value) {
+        public Criteria andStockPriceGreaterThan(BigDecimal value) {
             addCriterion("stockPrice >", value, "stockPrice");
             return (Criteria) this;
         }
 
-        public Criteria andStockPriceGreaterThanOrEqualTo(Double value) {
+        public Criteria andStockPriceGreaterThanOrEqualTo(BigDecimal value) {
             addCriterion("stockPrice >=", value, "stockPrice");
             return (Criteria) this;
         }
 
-        public Criteria andStockPriceLessThan(Double value) {
+        public Criteria andStockPriceLessThan(BigDecimal value) {
             addCriterion("stockPrice <", value, "stockPrice");
             return (Criteria) this;
         }
 
-        public Criteria andStockPriceLessThanOrEqualTo(Double value) {
+        public Criteria andStockPriceLessThanOrEqualTo(BigDecimal value) {
             addCriterion("stockPrice <=", value, "stockPrice");
             return (Criteria) this;
         }
 
-        public Criteria andStockPriceIn(List<Double> values) {
+        public Criteria andStockPriceIn(List<BigDecimal> values) {
             addCriterion("stockPrice in", values, "stockPrice");
             return (Criteria) this;
         }
 
-        public Criteria andStockPriceNotIn(List<Double> values) {
+        public Criteria andStockPriceNotIn(List<BigDecimal> values) {
             addCriterion("stockPrice not in", values, "stockPrice");
             return (Criteria) this;
         }
 
-        public Criteria andStockPriceBetween(Double value1, Double value2) {
+        public Criteria andStockPriceBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("stockPrice between", value1, value2, "stockPrice");
             return (Criteria) this;
         }
 
-        public Criteria andStockPriceNotBetween(Double value1, Double value2) {
+        public Criteria andStockPriceNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("stockPrice not between", value1, value2, "stockPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andShCompositeStockPriceIsNull() {
+            addCriterion("shCompositeStockPrice is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andShCompositeStockPriceIsNotNull() {
+            addCriterion("shCompositeStockPrice is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andShCompositeStockPriceEqualTo(BigDecimal value) {
+            addCriterion("shCompositeStockPrice =", value, "shCompositeStockPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andShCompositeStockPriceNotEqualTo(BigDecimal value) {
+            addCriterion("shCompositeStockPrice <>", value, "shCompositeStockPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andShCompositeStockPriceGreaterThan(BigDecimal value) {
+            addCriterion("shCompositeStockPrice >", value, "shCompositeStockPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andShCompositeStockPriceGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("shCompositeStockPrice >=", value, "shCompositeStockPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andShCompositeStockPriceLessThan(BigDecimal value) {
+            addCriterion("shCompositeStockPrice <", value, "shCompositeStockPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andShCompositeStockPriceLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("shCompositeStockPrice <=", value, "shCompositeStockPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andShCompositeStockPriceIn(List<BigDecimal> values) {
+            addCriterion("shCompositeStockPrice in", values, "shCompositeStockPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andShCompositeStockPriceNotIn(List<BigDecimal> values) {
+            addCriterion("shCompositeStockPrice not in", values, "shCompositeStockPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andShCompositeStockPriceBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("shCompositeStockPrice between", value1, value2, "shCompositeStockPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andShCompositeStockPriceNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("shCompositeStockPrice not between", value1, value2, "shCompositeStockPrice");
             return (Criteria) this;
         }
 

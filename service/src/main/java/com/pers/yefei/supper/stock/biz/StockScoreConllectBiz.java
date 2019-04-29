@@ -1,8 +1,12 @@
 package com.pers.yefei.supper.stock.biz;
 
+import com.pers.yefei.supper.stock.enums.StockTransType;
+import com.pers.yefei.supper.stock.model.bean.SinaStock;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockInfo;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockScore;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockScoreChange;
+import com.pers.yefei.supper.stock.model.gen.pojo.TblStockTrans;
+import com.pers.yefei.supper.stock.service.IStockBaseInfoService;
 import com.pers.yefei.supper.stock.service.IStockDataService;
 import com.pers.yefei.supper.stock.service.IStockScoreService;
 import com.pers.yefei.supper.stock.utils.DateUtils;
@@ -13,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.script.ScriptException;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -31,8 +37,10 @@ public class StockScoreConllectBiz {
     @Autowired
     private IStockScoreService stockScoreService;
 
-    private boolean collectorRunning = false;
+    @Autowired
+    private IStockBaseInfoService stockBaseInfoService;
 
+    private boolean collectorRunning = false;
 
     /**
      * @desc 批量更新股票得分, 全量更新
@@ -213,7 +221,7 @@ public class StockScoreConllectBiz {
                 if (diffOrganizationHoldScore != 0) {
                     log.info("{} {} 机构持仓变化：{}", todayStockScore.getStockCode(), todayStockScore.getStockName(), diffOrganizationHoldScore);
 
-                    TblStockScoreChange stockScoreChange = stockDataService.getStockScoreChangeByDate(todayStockScore.getStockCode(), new Date());
+                    TblStockScoreChange stockScoreChange = stockDataService.getStockScoreChangeByDate(todayStockScore.getStockCode(), DateUtils.getZeroDate(new Date()));
 
                     if (stockScoreChange == null){
                         stockScoreChange = new TblStockScoreChange();
@@ -237,4 +245,32 @@ public class StockScoreConllectBiz {
     }
 
 
+
+    public void mockTrans(){
+        List<TblStockScoreChange> tblStockScoreChanges = stockDataService.queryScoreChangeByDay(DateUtils.getZeroDate(new Date()));
+        List<String> stockCodeList = new ArrayList<>();
+        List<TblStockTrans> stockTransList = new ArrayList<>();
+
+        tblStockScoreChanges.stream().filter(stockScoreChange-> stockScoreChange.getChangeValue() == 100 || stockScoreChange.getChangeValue() <= -60 ).forEach(stockScoreChange->{
+            stockCodeList.add(stockScoreChange.getStockCode());
+
+            TblStockTrans tblStockTrans = new TblStockTrans();
+            tblStockTrans.setStockCode(stockScoreChange.getStockCode());
+            tblStockTrans.setStockName(stockScoreChange.getStockName());
+            tblStockTrans.setTransType(stockScoreChange.getChangeValue() > 0 ? StockTransType.BUY.getType() : StockTransType.SELL.getType());
+
+            stockTransList.add(tblStockTrans);
+
+        });
+
+        HashMap<String, SinaStock> sinaStockHashMap = stockBaseInfoService.batchFetchStockInfo(stockCodeList);
+        String shCompositeStockPrice = stockBaseInfoService.fetchSHCompositeStockPrice();
+        stockTransList.forEach(tblStockTrans->{
+            SinaStock sinaStock = sinaStockHashMap.get(tblStockTrans.getStockCode());
+            tblStockTrans.setStockPrice(new BigDecimal(sinaStock == null ? "0" : sinaStock.getCurrentPrice()));
+            tblStockTrans.setShCompositeStockPrice(new BigDecimal(shCompositeStockPrice == null ? "0" : shCompositeStockPrice));
+            tblStockTrans.setDate(DateUtils.getZeroDate(new Date()));
+            stockDataService.insertStockTrans(tblStockTrans);
+        });
+    }
 }

@@ -40,4 +40,13 @@ public class StockScoreChangeDaoImpl implements IStockScoreChangeDao {
         List<TblStockScoreChange> stockScoreChanges = tblStockScoreChangeMapper.selectByExample(example);
         return stockScoreChanges.size() > 0 ? stockScoreChanges.get(0) : null;
     }
+
+
+    @Override
+    public List<TblStockScoreChange> queryScoreChangeByDay(Date date){
+        TblStockScoreChangeExample example = new TblStockScoreChangeExample();
+        example.createCriteria().andDateEqualTo(date);
+
+        return tblStockScoreChangeMapper.selectByExample(example);
+    }
 }
