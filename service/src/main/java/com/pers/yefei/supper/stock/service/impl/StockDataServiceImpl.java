@@ -78,8 +78,17 @@ public class StockDataServiceImpl implements IStockDataService {
     }
 
     @Override
-    public void insertStockScoreChange(TblStockScoreChange stockScoreChange){
-        stockScoreChangeDao.insertStockScoreChange(stockScoreChange);
+    public void saveStockScoreChange(TblStockScoreChange stockScoreChange){
+        if (stockScoreChange.getId() == null || stockScoreChange.getId() <= 0){
+            stockScoreChangeDao.updateStockScoreChange(stockScoreChange);
+        }else{
+            stockScoreChangeDao.insertStockScoreChange(stockScoreChange);
+        }
+    }
+
+    @Override
+    public TblStockScoreChange getStockScoreChangeByDate(String stockCode, Date date){
+        return stockScoreChangeDao.getStockScoreChangeByDate(stockCode, date);
     }
 
     @Override

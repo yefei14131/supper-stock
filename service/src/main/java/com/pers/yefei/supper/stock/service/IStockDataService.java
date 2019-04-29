@@ -29,7 +29,9 @@ public interface IStockDataService {
 
     List<TblStockScore> queryStockScoreByDate(Date date);
 
-    void insertStockScoreChange(TblStockScoreChange stockScoreChange);
+    void saveStockScoreChange(TblStockScoreChange stockScoreChange);
+
+    TblStockScoreChange getStockScoreChangeByDate(String stockCode, Date date);
 
     Date queryPrevDate();
 

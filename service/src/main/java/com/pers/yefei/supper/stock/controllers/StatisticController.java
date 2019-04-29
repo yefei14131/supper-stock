@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -39,12 +40,13 @@ public class StatisticController {
     private IStockStatisticService stockStatisticService;
 
 
-    @RequestMapping(value = "/stock/score/change")
+    @RequestMapping(value = "/stock/change/list")
     @ResponseBody
-    public Object getStockScore(String date) {
+    public Object getStockScore(@RequestParam(name = "date", defaultValue = "") String date) {
         try {
 
-            List<TblStockScoreChange> stockScoreChanges = stockStatisticService.queryStockScoreChangeByDate(DateUtils.parseDate(date));
+            Date queryDate = date.equals("") ? new Date() : DateUtils.parseDate(date);
+            List<TblStockScoreChange> stockScoreChanges = stockStatisticService.queryStockScoreChangeByDate(queryDate);
             return responseAdapter.success(stockScoreChanges);
 
         } catch (Exception e) {

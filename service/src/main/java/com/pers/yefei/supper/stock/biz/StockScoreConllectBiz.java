@@ -13,12 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.script.ScriptException;
-import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
-import java.util.concurrent.locks.Lock;
 
 /**
  * @author: yefei
@@ -187,11 +184,6 @@ public class StockScoreConllectBiz {
 
     public void calculateStockScoreChangeByDay(){
 
-        if (collectorRunning == true){
-            log.error("采集任务正在执行，不可执行分析任务");
-            return;
-        }
-
         log.info("开始计算股票得分变化");
         int dayForWeek = DateUtils.dayForWeek(new Date());
         if (dayForWeek > 5 ){
@@ -220,17 +212,22 @@ public class StockScoreConllectBiz {
 
                 if (diffOrganizationHoldScore != 0) {
                     log.info("{} {} 机构持仓变化：{}", todayStockScore.getStockCode(), todayStockScore.getStockName(), diffOrganizationHoldScore);
-                    TblStockScoreChange tblStockScoreChange = new TblStockScoreChange();
 
-                    tblStockScoreChange.setChangeValue(diffOrganizationHoldScore);
-                    tblStockScoreChange.setDate(new Date());
-                    tblStockScoreChange.setFieldName("organizationHoldScore");
-                    tblStockScoreChange.setPreValue(prevDayStockScore.getOrganizationHoldScore());
-                    tblStockScoreChange.setTodayValue(todayStockScore.getOrganizationHoldScore());
-                    tblStockScoreChange.setStockCode(todayStockScore.getStockCode());
-                    tblStockScoreChange.setStockName(todayStockScore.getStockName());
+                    TblStockScoreChange stockScoreChange = stockDataService.getStockScoreChangeByDate(todayStockScore.getStockCode(), new Date());
 
-                    stockDataService.insertStockScoreChange(tblStockScoreChange);
+                    if (stockScoreChange == null){
+                        stockScoreChange = new TblStockScoreChange();
+                    }
+
+                    stockScoreChange.setChangeValue(diffOrganizationHoldScore);
+                    stockScoreChange.setDate(new Date());
+                    stockScoreChange.setFieldName("organizationHoldScore");
+                    stockScoreChange.setPreValue(prevDayStockScore.getOrganizationHoldScore());
+                    stockScoreChange.setTodayValue(todayStockScore.getOrganizationHoldScore());
+                    stockScoreChange.setStockCode(todayStockScore.getStockCode());
+                    stockScoreChange.setStockName(todayStockScore.getStockName());
+
+                    stockDataService.saveStockScoreChange(stockScoreChange);
                 }
             }
         });

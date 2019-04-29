@@ -4,6 +4,7 @@ import com.pers.yefei.supper.stock.biz.StockScoreConllectBiz;
 import com.pers.yefei.supper.stock.config.ResponseAdapter;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockInfo;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockScore;
+import com.pers.yefei.supper.stock.model.gen.pojo.TblStockScoreChange;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockTrans;
 import com.pers.yefei.supper.stock.service.IStockDataService;
 import com.pers.yefei.supper.stock.service.IStockScoreService;
@@ -20,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author: yefei
@@ -136,8 +138,8 @@ public class IndexController {
         try {
             stockScoreConllectBiz.calculateStockScoreChangeByDay();
 
-            stockStatisticService.queryStockScoreChangeByDate(new Date());
-            return responseAdapter.success();
+            List<TblStockScoreChange> stockScoreChanges = stockStatisticService.queryStockScoreChangeByDate(new Date());
+            return responseAdapter.success(stockScoreChanges);
 
         } catch (Exception e) {
             log.error(ExceptionUtils.getStackTrace(e));
