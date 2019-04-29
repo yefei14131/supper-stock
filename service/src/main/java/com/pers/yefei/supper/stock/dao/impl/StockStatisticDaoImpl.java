@@ -36,7 +36,7 @@ public class StockStatisticDaoImpl implements IStockStatisticDao {
     public List<TblStockScoreChange> queryStockScoreChangeByDate(Date date){
         TblStockScoreChangeExample example = new TblStockScoreChangeExample();
         example.createCriteria().andDateEqualTo(date);
-        example.setOrderByClause("changeValue desc");
+        example.setOrderByClause("abs(changeValue) desc, changeValue desc");
 
         return tblStockScoreChangeMapper.selectByExample(example);
     }

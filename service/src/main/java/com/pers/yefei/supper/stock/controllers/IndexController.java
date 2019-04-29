@@ -7,6 +7,7 @@ import com.pers.yefei.supper.stock.model.gen.pojo.TblStockScore;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockTrans;
 import com.pers.yefei.supper.stock.service.IStockDataService;
 import com.pers.yefei.supper.stock.service.IStockScoreService;
+import com.pers.yefei.supper.stock.service.IStockStatisticService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,10 @@ public class IndexController {
 
     @Autowired
     private StockScoreConllectBiz stockScoreConllectBiz;
+
+
+    @Autowired
+    private IStockStatisticService stockStatisticService;
 
 
     @RequestMapping(value = "/stock/score/get")
@@ -103,7 +108,7 @@ public class IndexController {
 
     @RequestMapping(value = "/stock/trans/add")
     @ResponseBody
-    public Object ssetStockTans(String stockCode, double price,  int transType) {
+    public Object setStockTans(String stockCode, double price,  int transType) {
         try {
 
             TblStockInfo stockInfo = stockDataService.getStockInfo(stockCode);
@@ -116,6 +121,22 @@ public class IndexController {
 
             stockDataService.insertStockTrans(tblStockTrans);
 
+            return responseAdapter.success();
+
+        } catch (Exception e) {
+            log.error(ExceptionUtils.getStackTrace(e));
+            return responseAdapter.failure(ExceptionUtils.getStackTrace(e));
+        }
+    }
+
+
+    @RequestMapping(value = "/stock/calculate/start")
+    @ResponseBody
+    public Object calculateStockScoreChangeByDay() {
+        try {
+            stockScoreConllectBiz.calculateStockScoreChangeByDay();
+
+            stockStatisticService.queryStockScoreChangeByDate(new Date());
             return responseAdapter.success();
 
         } catch (Exception e) {

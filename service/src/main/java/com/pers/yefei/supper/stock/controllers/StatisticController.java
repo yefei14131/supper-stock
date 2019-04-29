@@ -51,7 +51,6 @@ public class StatisticController {
             log.error(ExceptionUtils.getStackTrace(e));
             return responseAdapter.failure(ExceptionUtils.getStackTrace(e));
         }
-
     }
 
 }
