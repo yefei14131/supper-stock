@@ -170,10 +170,11 @@ public class StockScoreConllectBiz {
 
                 stockDataService.saveStockInfo(stockInfo);
 
-                return stockScore;
             }
 
             Thread.sleep((long)(RandomUtils.nextInt(1000, 8000)));
+            return stockScore;
+
         } catch (ScriptException e) {
             log.error(ExceptionUtils.getStackTrace(e));
 
