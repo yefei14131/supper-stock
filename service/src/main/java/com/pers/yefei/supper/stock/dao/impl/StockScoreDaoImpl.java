@@ -60,6 +60,12 @@ public class StockScoreDaoImpl implements IStockScoreDao {
     }
 
 
+    @Override
+    public long countStockScoreByDate(Date date){
+        TblStockScoreExample example = new TblStockScoreExample();
+        example.createCriteria().andDateEqualTo(date);
+        return tblStockScoreMapper.countByExample(example);
+    }
 
 
 }

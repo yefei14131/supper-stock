@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -29,9 +30,29 @@ public class StockStatisticServiceImpl implements IStockStatisticService {
     @Autowired
     private IStockScoreChangeDao stockScoreChangeDao;
 
+    @Autowired
+    private IStockScoreDao stockScoreDao;
+
+    @Autowired
+    private IStockInfoDao stockInfoDao;
+
     @Override
     public List<TblStockScoreChange> queryStockScoreChangeByDate(Date date){
 
         return stockStatisticDao.queryStockScoreChangeByDate(date);
     }
+
+    @Override
+    public HashMap collectProgress(){
+        long activeStockTotal = stockInfoDao.countActiveStock();
+        long stockScoreTotalToday = stockScoreDao.countStockScoreByDate(new Date());
+
+        HashMap data = new HashMap<>();
+        data.put("activeStockTotal", activeStockTotal);
+        data.put("stockScoreTotalToday", stockScoreTotalToday);
+        data.put("finishRate", stockScoreTotalToday * 100 / activeStockTotal + "%");
+
+        return data;
+    }
+
 }

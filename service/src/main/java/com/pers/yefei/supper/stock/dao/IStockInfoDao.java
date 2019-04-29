@@ -22,4 +22,7 @@ public interface IStockInfoDao {
     TblStockInfo getStockInfo(String stockCode);
 
     List<TblStockInfo> getNewUnActiveStockList(Date lessDate);
+
+    long countActiveStock();
+
 }

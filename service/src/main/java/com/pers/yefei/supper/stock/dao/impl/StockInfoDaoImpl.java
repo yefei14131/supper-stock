@@ -66,4 +66,11 @@ public class StockInfoDaoImpl implements IStockInfoDao {
     public List<TblStockInfo> getNewUnActiveStockList(Date lessDate){
         return stockMapper.getNewUnActiveStockList(lessDate);
     }
+
+
+    @Override
+    public long countActiveStock(){
+        TblStockInfoExample example = new TblStockInfoExample();
+        return tblStockInfoMapper.countByExample(example);
+    }
 }

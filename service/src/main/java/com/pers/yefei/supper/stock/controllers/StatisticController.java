@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -54,5 +55,20 @@ public class StatisticController {
             return responseAdapter.failure(ExceptionUtils.getStackTrace(e));
         }
     }
+
+
+    @RequestMapping(value = "/stock/collect/job/progress")
+    @ResponseBody
+    public Object collectProgress() {
+        try {
+            HashMap resp = stockStatisticService.collectProgress();
+            return responseAdapter.success(resp);
+
+        } catch (Exception e) {
+            log.error(ExceptionUtils.getStackTrace(e));
+            return responseAdapter.failure(ExceptionUtils.getStackTrace(e));
+        }
+    }
+
 
 }

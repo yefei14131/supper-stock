@@ -6,6 +6,7 @@ import com.pers.yefei.supper.stock.model.gen.pojo.TblStockScoreChange;
 import javax.script.ScriptException;
 import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -16,4 +17,6 @@ import java.util.List;
 public interface IStockStatisticService {
 
     List<TblStockScoreChange> queryStockScoreChangeByDate(Date date);
+
+    HashMap collectProgress();
 }
