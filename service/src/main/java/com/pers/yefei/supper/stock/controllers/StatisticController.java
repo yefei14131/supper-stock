@@ -62,8 +62,7 @@ public class StatisticController {
     @ResponseBody
     public Object collectProgress() {
         try {
-            HashMap data = new HashMap<>();
-            stockStatisticService.collectProgress();
+            HashMap data = stockStatisticService.collectProgress();
             return responseAdapter.success(data);
 
         } catch (Exception e) {
