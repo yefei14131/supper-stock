@@ -71,6 +71,7 @@ public class StockInfoDaoImpl implements IStockInfoDao {
     @Override
     public long countActiveStock(){
         TblStockInfoExample example = new TblStockInfoExample();
+        example.createCriteria().andIsActiveEqualTo(true);
         return tblStockInfoMapper.countByExample(example);
     }
 }
