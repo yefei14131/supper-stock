@@ -1,6 +1,7 @@
 package com.pers.yefei.supper.stock.dao.impl;
 
 import com.pers.yefei.supper.stock.dao.IStockTransDao;
+import com.pers.yefei.supper.stock.model.gen.dao.StockMapper;
 import com.pers.yefei.supper.stock.model.gen.dao.TblStockTransMapper;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockTrans;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockTransExample;
@@ -19,6 +20,9 @@ public class StockTransDaoImpl implements IStockTransDao {
 
     @Autowired
     private TblStockTransMapper tblStockTransMapper;
+
+    @Autowired
+    private StockMapper stockMapper;
 
     @Override
     public void insertStockTrans(TblStockTrans tblStockTrans){
@@ -45,6 +49,8 @@ public class StockTransDaoImpl implements IStockTransDao {
         return tblStockTransMapper.selectByExample(example);
     }
 
-
-
+    @Override
+    public void updateStockTransCurrentPrice(){
+        stockMapper.updateStockTransCurrentPrice();
+    }
 }

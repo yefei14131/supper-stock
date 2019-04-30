@@ -99,7 +99,7 @@ public class StockScoreServiceImpl implements IStockScoreService {
         bings.put("signInfoMap", signInfo);
 
         long startTime = System.currentTimeMillis();
-        log.info("开始执行js脚本,{}", startTime);
+//        log.info("开始执行js脚本,{}", startTime);
 
         Object result =  jsEngine.eval(makeSignJsCodeTemplate, bings);
         long endTime = System.currentTimeMillis();

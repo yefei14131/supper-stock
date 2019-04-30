@@ -244,64 +244,6 @@ public class StockScoreConllectBiz {
 
 
 
-    public void mockTrans(){
-        List<TblStockScoreChange> tblStockScoreChanges = stockDataService.queryScoreChangeByDay(DateUtils.getZeroDate(new Date()));
-        List<String> stockCodeList = new ArrayList<>();
-        List<TblStockTrans> stockTransList = new ArrayList<>();
-
-        tblStockScoreChanges.stream().filter(stockScoreChange-> stockScoreChange.getChangeValue() == 100 || stockScoreChange.getChangeValue() <= -60 ).forEach(stockScoreChange->{
-            stockCodeList.add(stockScoreChange.getStockCode());
-
-            TblStockTrans tblStockTrans = new TblStockTrans();
-            tblStockTrans.setStockCode(stockScoreChange.getStockCode());
-            tblStockTrans.setStockName(stockScoreChange.getStockName());
-            tblStockTrans.setTransType(stockScoreChange.getChangeValue() > 0 ? StockTransType.BUY.getType() : StockTransType.SELL.getType());
-
-            stockTransList.add(tblStockTrans);
-
-        });
-
-        HashMap<String, SinaStock> sinaStockHashMap = stockBaseInfoService.batchFetchStockInfo(stockCodeList);
-        String shCompositeStockPrice = stockBaseInfoService.fetchSHCompositeStockPrice();
-        stockTransList.forEach(tblStockTrans->{
-            SinaStock sinaStock = sinaStockHashMap.get(tblStockTrans.getStockCode());
-            tblStockTrans.setStockPrice(new BigDecimal(sinaStock == null ? "0" : sinaStock.getCurrentPrice()));
-            tblStockTrans.setShCompositeStockPrice(new BigDecimal(shCompositeStockPrice == null ? "0" : shCompositeStockPrice));
-            tblStockTrans.setDate(DateUtils.getZeroDate(new Date()));
-            stockDataService.saveStockTrans(tblStockTrans);
-        });
-    }
-
-
-    @Autowired
-    private IStockTransDao stockTransDao;
-
-
-    public void repareTransPrice(){
-        //queryScoreChange
-        TblStockTransExample example = new TblStockTransExample();
-        example.createCriteria().andDateEqualTo(DateUtils.getZeroDate(DateUtils.getDateAfterDays(0)))
-        .andStockPriceEqualTo(new BigDecimal(0));
-        ;
-        List<TblStockTrans> stockTransList = stockTransDao.queryTblStockTrans(example);
-
-        log.info("repare trans : {}", stockTransList.size());
-        List<String> stockCodeList = new ArrayList<>();
-
-        stockTransList.forEach(stockTrans->{
-            stockCodeList.add(stockTrans.getStockCode());
-        });
-
-        HashMap<String, SinaStock> sinaStockHashMap = stockBaseInfoService.batchFetchStockInfo(stockCodeList);
-        String shCompositeStockPrice = stockBaseInfoService.fetchSHCompositeStockPrice();
-        stockTransList.forEach(tblStockTrans->{
-            SinaStock sinaStock = sinaStockHashMap.get(tblStockTrans.getStockCode());
-            tblStockTrans.setStockPrice(new BigDecimal(sinaStock == null ? "0" : sinaStock.getCurrentPrice()));
-
-            stockDataService.saveStockTrans(tblStockTrans);
-        });
-    }
-
 
 
 }

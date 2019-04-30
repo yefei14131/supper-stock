@@ -12,6 +12,8 @@ public class TblStockTrans {
 
     private BigDecimal stockPrice;
 
+    private BigDecimal currentPrice;
+
     private BigDecimal shCompositeStockPrice;
 
     private Integer transType;
@@ -48,6 +50,14 @@ public class TblStockTrans {
 
     public void setStockPrice(BigDecimal stockPrice) {
         this.stockPrice = stockPrice;
+    }
+
+    public BigDecimal getCurrentPrice() {
+        return currentPrice;
+    }
+
+    public void setCurrentPrice(BigDecimal currentPrice) {
+        this.currentPrice = currentPrice;
     }
 
     public BigDecimal getShCompositeStockPrice() {

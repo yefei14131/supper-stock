@@ -80,9 +80,9 @@ public class StockDataServiceImpl implements IStockDataService {
     @Override
     public void saveStockScoreChange(TblStockScoreChange stockScoreChange){
         if (stockScoreChange.getId() == null || stockScoreChange.getId() <= 0){
-            stockScoreChangeDao.updateStockScoreChange(stockScoreChange);
-        }else{
             stockScoreChangeDao.insertStockScoreChange(stockScoreChange);
+        }else{
+            stockScoreChangeDao.updateStockScoreChange(stockScoreChange);
         }
     }
 
@@ -99,6 +99,11 @@ public class StockDataServiceImpl implements IStockDataService {
     @Override
     public List<TblStockInfo> getNewUnActiveStockList(Date lessDate){
         return stockInfoDao.getNewUnActiveStockList(lessDate);
+    }
+
+    @Override
+    public List<TblStockInfo> getUnActiveStockList(){
+        return stockInfoDao.getUnActiveStockList();
     }
 
 
@@ -120,5 +125,10 @@ public class StockDataServiceImpl implements IStockDataService {
     @Override
     public List<TblStockScoreChange> queryScoreChangeByDay(Date date){
         return stockScoreChangeDao.queryScoreChangeByDay(date);
+    }
+
+    @Override
+    public void updateStockTransCurrentPrice(){
+        stockTransDao.updateStockTransCurrentPrice();
     }
 }

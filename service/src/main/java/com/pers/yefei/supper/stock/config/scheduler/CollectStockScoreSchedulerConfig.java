@@ -2,6 +2,7 @@ package com.pers.yefei.supper.stock.config.scheduler;
 
 
 import com.pers.yefei.supper.stock.biz.StockScoreConllectBiz;
+import com.pers.yefei.supper.stock.biz.StockTacticsBiz;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockScore;
 import com.pers.yefei.supper.stock.service.IStockScoreService;
 import lombok.extern.slf4j.Slf4j;
@@ -30,9 +31,11 @@ public class CollectStockScoreSchedulerConfig {
     @Autowired
     private IStockScoreService stockScoreService;
 
-
     @Autowired
     private StockScoreConllectBiz stockScoreConllectBiz;
+
+    @Autowired
+    private StockTacticsBiz stockTacticsBiz;
 
 
     @Scheduled(fixedRate = 60 * 60 * 1000, initialDelay =  1 * 1000)
@@ -40,7 +43,7 @@ public class CollectStockScoreSchedulerConfig {
         log.info("spring boot scheduler running: CollectStockScoreSchedulerConfig ");
 //        stockScoreConllectBiz.batchConllectStockScore();
 //        stockScoreConllectBiz.calculateStockScoreChangeByDay();
-        stockScoreConllectBiz.repareTransPrice();
+        stockTacticsBiz.repareTransPrice();
 
     }
 

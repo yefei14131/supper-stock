@@ -393,6 +393,66 @@ public class TblStockTransExample {
             return (Criteria) this;
         }
 
+        public Criteria andCurrentPriceIsNull() {
+            addCriterion("currentPrice is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCurrentPriceIsNotNull() {
+            addCriterion("currentPrice is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCurrentPriceEqualTo(BigDecimal value) {
+            addCriterion("currentPrice =", value, "currentPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andCurrentPriceNotEqualTo(BigDecimal value) {
+            addCriterion("currentPrice <>", value, "currentPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andCurrentPriceGreaterThan(BigDecimal value) {
+            addCriterion("currentPrice >", value, "currentPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andCurrentPriceGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("currentPrice >=", value, "currentPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andCurrentPriceLessThan(BigDecimal value) {
+            addCriterion("currentPrice <", value, "currentPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andCurrentPriceLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("currentPrice <=", value, "currentPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andCurrentPriceIn(List<BigDecimal> values) {
+            addCriterion("currentPrice in", values, "currentPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andCurrentPriceNotIn(List<BigDecimal> values) {
+            addCriterion("currentPrice not in", values, "currentPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andCurrentPriceBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("currentPrice between", value1, value2, "currentPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andCurrentPriceNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("currentPrice not between", value1, value2, "currentPrice");
+            return (Criteria) this;
+        }
+
         public Criteria andShCompositeStockPriceIsNull() {
             addCriterion("shCompositeStockPrice is null");
             return (Criteria) this;

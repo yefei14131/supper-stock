@@ -20,4 +20,6 @@ public interface IStockTransDao {
     List<TblStockTrans> queryTblStockTransByDate(Date date);
 
     List<TblStockTrans> queryTblStockTrans(TblStockTransExample example);
+
+    void updateStockTransCurrentPrice();
 }

@@ -1,6 +1,8 @@
 package com.pers.yefei.supper.stock.controllers;
 
+import com.alibaba.fastjson.JSONObject;
 import com.pers.yefei.supper.stock.biz.StockScoreConllectBiz;
+import com.pers.yefei.supper.stock.biz.StockTacticsBiz;
 import com.pers.yefei.supper.stock.config.ResponseAdapter;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockInfo;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockScore;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -37,17 +40,12 @@ public class IndexController {
     @Autowired
     private ResponseAdapter responseAdapter;
 
-
-    @Autowired
-    private IStockScoreService stockScoreService;
-
-
     @Autowired
     private StockScoreConllectBiz stockScoreConllectBiz;
 
-
     @Autowired
     private IStockStatisticService stockStatisticService;
+    private JSONObject success;
 
 
     @RequestMapping(value = "/stock/score/get")
@@ -107,28 +105,27 @@ public class IndexController {
     }
 
 
-    @RequestMapping(value = "/stock/trans/add")
+    @RequestMapping(value = "/stock/unactive/collect")
     @ResponseBody
-    public Object setStockTans(String stockCode, double price,  int transType) {
+    public Object collectUnActiveStock() {
         try {
+            List<TblStockInfo> unActiveStockList = stockDataService.getUnActiveStockList();
+            List<TblStockInfo> activeStockList = new ArrayList<>();
+            unActiveStockList.forEach(stockInfo->{
+                stockScoreConllectBiz.conllectStockScore(stockInfo);
+                if (stockInfo.getIsActive() == true){
+                    activeStockList.add(stockInfo);
+                }
+            });
 
-            TblStockInfo stockInfo = stockDataService.getStockInfo(stockCode);
-            TblStockTrans tblStockTrans = new TblStockTrans();
-            tblStockTrans.setStockCode(stockCode);
-            tblStockTrans.setStockName(stockInfo.getStockName());
-            tblStockTrans.setStockPrice(new BigDecimal(price));
-            tblStockTrans.setDate(new Date());
-            tblStockTrans.setTransType(transType);
-
-            stockDataService.saveStockTrans(tblStockTrans);
-
-            return responseAdapter.success();
+            return success;
 
         } catch (Exception e) {
             log.error(ExceptionUtils.getStackTrace(e));
             return responseAdapter.failure(ExceptionUtils.getStackTrace(e));
         }
     }
+
 
 
     /**
@@ -149,23 +146,6 @@ public class IndexController {
             return responseAdapter.failure(ExceptionUtils.getStackTrace(e));
         }
     }
-
-    @RequestMapping(value = "/stock/mock/trans")
-    @ResponseBody
-    public Object mockTransToday(@RequestParam(name = "date", defaultValue = "") String date) {
-        try {
-            Date queryDate = date.equals("") ? DateUtils.getZeroDate(new Date()) : DateUtils.parseDate(date);
-
-            stockScoreConllectBiz.mockTrans();
-            List<TblStockTrans> stockTrans = stockStatisticService.queryStockTransByDay(queryDate);
-            return responseAdapter.success(stockTrans);
-
-        } catch (Exception e) {
-            log.error(ExceptionUtils.getStackTrace(e));
-            return responseAdapter.failure(ExceptionUtils.getStackTrace(e));
-        }
-    }
-
 
 
 }

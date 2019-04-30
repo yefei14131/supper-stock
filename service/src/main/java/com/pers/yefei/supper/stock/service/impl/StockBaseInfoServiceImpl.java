@@ -103,6 +103,8 @@ public class StockBaseInfoServiceImpl implements IStockBaseInfoService {
                     SinaStock sinaStock = transSinaStock(stockCode, stockInfo);
                     sinaStockMap.put(stockCode, sinaStock);
                 }
+                //暂停1s，防止被和谐
+                Thread.sleep(1000L);
             }
 
         }catch (Exception e){
