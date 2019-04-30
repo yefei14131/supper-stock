@@ -1,11 +1,9 @@
 package com.pers.yefei.supper.stock.biz;
 
+import com.pers.yefei.supper.stock.dao.IStockTransDao;
 import com.pers.yefei.supper.stock.enums.StockTransType;
 import com.pers.yefei.supper.stock.model.bean.SinaStock;
-import com.pers.yefei.supper.stock.model.gen.pojo.TblStockInfo;
-import com.pers.yefei.supper.stock.model.gen.pojo.TblStockScore;
-import com.pers.yefei.supper.stock.model.gen.pojo.TblStockScoreChange;
-import com.pers.yefei.supper.stock.model.gen.pojo.TblStockTrans;
+import com.pers.yefei.supper.stock.model.gen.pojo.*;
 import com.pers.yefei.supper.stock.service.IStockBaseInfoService;
 import com.pers.yefei.supper.stock.service.IStockDataService;
 import com.pers.yefei.supper.stock.service.IStockScoreService;
@@ -270,7 +268,40 @@ public class StockScoreConllectBiz {
             tblStockTrans.setStockPrice(new BigDecimal(sinaStock == null ? "0" : sinaStock.getCurrentPrice()));
             tblStockTrans.setShCompositeStockPrice(new BigDecimal(shCompositeStockPrice == null ? "0" : shCompositeStockPrice));
             tblStockTrans.setDate(DateUtils.getZeroDate(new Date()));
-            stockDataService.insertStockTrans(tblStockTrans);
+            stockDataService.saveStockTrans(tblStockTrans);
         });
     }
+
+
+    @Autowired
+    private IStockTransDao stockTransDao;
+
+
+    public void repareTransPrice(){
+        //queryScoreChange
+        TblStockTransExample example = new TblStockTransExample();
+        example.createCriteria().andDateEqualTo(DateUtils.getZeroDate(DateUtils.getDateAfterDays(0)))
+        .andStockPriceEqualTo(new BigDecimal(0));
+        ;
+        List<TblStockTrans> stockTransList = stockTransDao.queryTblStockTrans(example);
+
+        log.info("repare trans : {}", stockTransList.size());
+        List<String> stockCodeList = new ArrayList<>();
+
+        stockTransList.forEach(stockTrans->{
+            stockCodeList.add(stockTrans.getStockCode());
+        });
+
+        HashMap<String, SinaStock> sinaStockHashMap = stockBaseInfoService.batchFetchStockInfo(stockCodeList);
+        String shCompositeStockPrice = stockBaseInfoService.fetchSHCompositeStockPrice();
+        stockTransList.forEach(tblStockTrans->{
+            SinaStock sinaStock = sinaStockHashMap.get(tblStockTrans.getStockCode());
+            tblStockTrans.setStockPrice(new BigDecimal(sinaStock == null ? "0" : sinaStock.getCurrentPrice()));
+
+            stockDataService.saveStockTrans(tblStockTrans);
+        });
+    }
+
+
+
 }

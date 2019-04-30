@@ -26,6 +26,8 @@ import java.util.regex.Pattern;
 public class StockBaseInfoServiceImpl implements IStockBaseInfoService {
 
     final private String sinaStockApiPreffix = "http://hq.sinajs.cn/list=";
+    final private int sinaApiSize = 50;
+
 
     @Override
     public SinaStock fetchStockInfo(String stockCode) throws IOException {
@@ -75,24 +77,34 @@ public class StockBaseInfoServiceImpl implements IStockBaseInfoService {
         HashMap<String, SinaStock> sinaStockMap = new HashMap<>();
 
         try {
-
             List<String> fullStockCodeList = new ArrayList<>();
-            stockCodeList.forEach(stockCode->{
-                fullStockCodeList.add(fillStockCode(stockCode));
-            });
+            int loopCount = stockCodeList.size() % sinaApiSize == 0 ? stockCodeList.size() / sinaApiSize : stockCodeList.size() / sinaApiSize + 1;
 
-            String sinaStockApi = sinaStockApiPreffix + StringUtils.join(fullStockCodeList, ",");
-            String content = doGet(sinaStockApi);
 
-            Pattern p = Pattern.compile("([0-9]{6})=(\\\".*?\\\")");
-            Matcher m = p.matcher(content);
-            while(m.find()) {
-                String stockCode = m.group(1);
-                String stockInfo = m.group(2);
+            for (int i=0; i<loopCount; i++){
 
-                SinaStock sinaStock = transSinaStock(stockCode, stockInfo);
-                sinaStockMap.put(stockCode, sinaStock);
+                log.info("分步拉取实时股票信息，总记录数 {}， startIndex: {}, endIndex: {} ", stockCodeList.size(), i*sinaApiSize, i==loopCount-1 ? stockCodeList.size() : (i+1)*sinaApiSize);
+
+                fullStockCodeList.clear();
+
+                stockCodeList.subList(i*sinaApiSize, i==loopCount-1 ? stockCodeList.size() : (i+1)*sinaApiSize).forEach(stockCode->{
+                    fullStockCodeList.add(fillStockCode(stockCode));
+                });
+
+                String sinaStockApi = sinaStockApiPreffix + StringUtils.join(fullStockCodeList, ",");
+                String content = doGet(sinaStockApi);
+
+                Pattern p = Pattern.compile("([0-9]{6})=(\\\".*?\\\")");
+                Matcher m = p.matcher(content);
+                while(m.find()) {
+                    String stockCode = m.group(1);
+                    String stockInfo = m.group(2);
+
+                    SinaStock sinaStock = transSinaStock(stockCode, stockInfo);
+                    sinaStockMap.put(stockCode, sinaStock);
+                }
             }
+
         }catch (Exception e){
             log.error(ExceptionUtils.getStackTrace(e));
         }

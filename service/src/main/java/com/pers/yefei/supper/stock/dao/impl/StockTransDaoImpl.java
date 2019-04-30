@@ -26,6 +26,11 @@ public class StockTransDaoImpl implements IStockTransDao {
     }
 
     @Override
+    public void updateStockTrans(TblStockTrans tblStockTrans){
+        tblStockTransMapper.updateByPrimaryKey(tblStockTrans);
+    }
+
+    @Override
     public List<TblStockTrans> queryTblStockTransByDate(Date date){
         TblStockTransExample example = new TblStockTransExample();
         example.createCriteria().andDateEqualTo(date);
@@ -33,5 +38,13 @@ public class StockTransDaoImpl implements IStockTransDao {
 
         return tblStockTransMapper.selectByExample(example);
     }
+
+
+    @Override
+    public List<TblStockTrans> queryTblStockTrans(TblStockTransExample example){
+        return tblStockTransMapper.selectByExample(example);
+    }
+
+
 
 }

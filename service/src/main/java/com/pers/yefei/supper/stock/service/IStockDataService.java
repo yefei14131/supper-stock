@@ -37,7 +37,7 @@ public interface IStockDataService {
 
     List<TblStockInfo> getNewUnActiveStockList(Date lessDate);
 
-    void insertStockTrans(TblStockTrans tblStockTrans);
+    void saveStockTrans(TblStockTrans tblStockTrans);
 
     List<TblStockTrans> queryTblStockTransByDate(Date date);
 

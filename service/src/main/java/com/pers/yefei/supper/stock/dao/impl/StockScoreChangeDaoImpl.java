@@ -49,4 +49,12 @@ public class StockScoreChangeDaoImpl implements IStockScoreChangeDao {
 
         return tblStockScoreChangeMapper.selectByExample(example);
     }
+
+    @Override
+    public List<TblStockScoreChange> queryScoreChange(TblStockScoreChangeExample example){
+
+        return tblStockScoreChangeMapper.selectByExample(example);
+    }
+
+
 }

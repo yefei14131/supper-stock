@@ -35,15 +35,17 @@ public class CollectStockScoreSchedulerConfig {
     private StockScoreConllectBiz stockScoreConllectBiz;
 
 
-//    @Scheduled(fixedRate = 60 * 60 * 1000, initialDelay =  1 * 1000)
-//    private void process(){
-//        log.info("spring boot scheduler running: CollectStockScoreSchedulerConfig ");
+    @Scheduled(fixedRate = 60 * 60 * 1000, initialDelay =  1 * 1000)
+    private void process(){
+        log.info("spring boot scheduler running: CollectStockScoreSchedulerConfig ");
 //        stockScoreConllectBiz.batchConllectStockScore();
 //        stockScoreConllectBiz.calculateStockScoreChangeByDay();
-//    }
+        stockScoreConllectBiz.repareTransPrice();
+
+    }
 
 
-    @Scheduled(cron = "0 0 18 * * 2-6")
+    @Scheduled(cron = "0 0 16 * * 2-6")
     public void conllectStockScoreByCron() throws InterruptedException {
         // 随机延时 1s - 5min 执行
         int delay = RandomUtils.nextInt(1000, 5 * 60 * 1000);

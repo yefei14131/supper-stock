@@ -120,7 +120,7 @@ public class IndexController {
             tblStockTrans.setDate(new Date());
             tblStockTrans.setTransType(transType);
 
-            stockDataService.insertStockTrans(tblStockTrans);
+            stockDataService.saveStockTrans(tblStockTrans);
 
             return responseAdapter.success();
 

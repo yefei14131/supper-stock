@@ -103,8 +103,12 @@ public class StockDataServiceImpl implements IStockDataService {
 
 
     @Override
-    public void insertStockTrans(TblStockTrans tblStockTrans){
-        stockTransDao.insertStockTrans(tblStockTrans);
+    public void saveStockTrans(TblStockTrans tblStockTrans){
+        if (tblStockTrans.getId() == null || tblStockTrans.getId() == 0){
+            stockTransDao.insertStockTrans(tblStockTrans);
+        }else{
+            stockTransDao.updateStockTrans(tblStockTrans);
+        }
     }
 
     @Override
