@@ -60,4 +60,9 @@ public class StockStatisticServiceImpl implements IStockStatisticService {
     public List<TblStockTrans> queryStockTransByDay(Date date){
         return stockTransDao.queryTblStockTransByDate(date);
     }
+
+    @Override
+    public boolean isHolidays(Date date){
+        return stockStatisticDao.isHolidays(date);
+    }
 }

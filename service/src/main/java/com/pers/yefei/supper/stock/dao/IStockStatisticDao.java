@@ -15,4 +15,5 @@ public interface IStockStatisticDao {
 
     List<TblStockScoreChange> queryStockScoreChangeByDate(Date date);
 
+    boolean isHolidays(Date date);
 }

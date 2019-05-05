@@ -73,7 +73,17 @@
             <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
         <!--</table>-->
 
-        <table tableName="tbl_stock_trans"
+        <!--<table tableName="tbl_stock_trans"-->
+               <!--enableCountByExample="true"-->
+               <!--enableDeleteByExample="true"-->
+               <!--enableSelectByExample="true"-->
+               <!--enableUpdateByExample="true"-->
+               <!--enableUpdateByPrimaryKey="true">-->
+            <!--<property name="useActualColumnNames" value="true" />-->
+            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
+
+        <table tableName="tbl_holidays"
                enableCountByExample="true"
                enableDeleteByExample="true"
                enableSelectByExample="true"

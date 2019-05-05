@@ -26,4 +26,7 @@ public interface IStockStatisticService {
     HashMap collectProgress();
 
     List<TblStockTrans> queryStockTransByDay(Date date);
+
+
+    boolean isHolidays(Date date);
 }

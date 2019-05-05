@@ -3,12 +3,10 @@ package com.pers.yefei.supper.stock.dao.impl;
 import com.pers.yefei.supper.stock.dao.IStockScoreDao;
 import com.pers.yefei.supper.stock.dao.IStockStatisticDao;
 import com.pers.yefei.supper.stock.model.gen.dao.StockMapper;
+import com.pers.yefei.supper.stock.model.gen.dao.TblHolidaysMapper;
 import com.pers.yefei.supper.stock.model.gen.dao.TblStockScoreChangeMapper;
 import com.pers.yefei.supper.stock.model.gen.dao.TblStockScoreMapper;
-import com.pers.yefei.supper.stock.model.gen.pojo.TblStockScore;
-import com.pers.yefei.supper.stock.model.gen.pojo.TblStockScoreChange;
-import com.pers.yefei.supper.stock.model.gen.pojo.TblStockScoreChangeExample;
-import com.pers.yefei.supper.stock.model.gen.pojo.TblStockScoreExample;
+import com.pers.yefei.supper.stock.model.gen.pojo.*;
 import com.pers.yefei.supper.stock.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -32,6 +30,9 @@ public class StockStatisticDaoImpl implements IStockStatisticDao {
     @Autowired
     private StockMapper stockMapper;
 
+    @Autowired
+    private TblHolidaysMapper holidaysMapper;
+
     @Override
     public List<TblStockScoreChange> queryStockScoreChangeByDate(Date date){
         TblStockScoreChangeExample example = new TblStockScoreChangeExample();
@@ -42,5 +43,10 @@ public class StockStatisticDaoImpl implements IStockStatisticDao {
     }
 
 
-
+    @Override
+    public boolean isHolidays(Date date){
+        TblHolidaysExample example = new TblHolidaysExample();
+        example.createCriteria().andDateEqualTo(DateUtils.getZeroDate(date));
+        return holidaysMapper.countByExample(example) > 0;
+    }
 }

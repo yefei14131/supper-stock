@@ -5,6 +5,7 @@ import com.pers.yefei.supper.stock.biz.StockScoreConllectBiz;
 import com.pers.yefei.supper.stock.biz.StockTacticsBiz;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockScore;
 import com.pers.yefei.supper.stock.service.IStockScoreService;
+import com.pers.yefei.supper.stock.service.IStockStatisticService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ import java.util.Date;
 public class CollectStockScoreSchedulerConfig {
 
     @Autowired
-    private IStockScoreService stockScoreService;
+    private IStockStatisticService stockStatisticService;
 
     @Autowired
     private StockScoreConllectBiz stockScoreConllectBiz;
@@ -48,8 +49,13 @@ public class CollectStockScoreSchedulerConfig {
     }
 
 
-    @Scheduled(cron = "0 0 16 * * 2-6")
+    @Scheduled(cron = "0 0 16 * * 1-5")
     public void conllectStockScoreByCron() throws InterruptedException {
+
+        if (stockStatisticService.isHolidays(new Date())){
+            log.info("节假日休市，不执行定时任务");
+            return;
+        }
         // 随机延时 1s - 5min 执行
         int delay = RandomUtils.nextInt(1000, 5 * 60 * 1000);
         log.info("开始执行定时任务，延时 {}s 执行", delay / 1000);
