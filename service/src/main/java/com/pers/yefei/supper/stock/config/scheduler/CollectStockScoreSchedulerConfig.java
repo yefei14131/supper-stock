@@ -43,8 +43,8 @@ public class CollectStockScoreSchedulerConfig {
     private void process(){
         log.info("spring boot scheduler running: CollectStockScoreSchedulerConfig ");
 //        stockScoreConllectBiz.batchConllectStockScore();
-//        stockScoreConllectBiz.calculateStockScoreChangeByDay();
-        stockTacticsBiz.mockTrans();
+        stockScoreConllectBiz.calculateStockScoreChangeByDay();
+//        stockTacticsBiz.mockTrans();
 
     }
 
