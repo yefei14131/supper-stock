@@ -232,12 +232,12 @@ public class StockScoreConllectBiz {
                     stockScoreChange.setTodayValue(todayStockScore.getOrganizationHoldScore());
                     stockScoreChange.setStockCode(todayStockScore.getStockCode());
                     stockScoreChange.setStockName(todayStockScore.getStockName());
+                    stockScoreChange.setTotalScore(todayStockScore.getTotalScore());
 
                     stockDataService.saveStockScoreChange(stockScoreChange);
                 }
             }
         });
-
 
         log.info("计算股票得分变化完成");
     }

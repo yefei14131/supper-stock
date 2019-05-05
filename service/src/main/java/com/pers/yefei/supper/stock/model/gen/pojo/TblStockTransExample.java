@@ -333,63 +333,63 @@ public class TblStockTransExample {
             return (Criteria) this;
         }
 
-        public Criteria andStockPriceIsNull() {
-            addCriterion("stockPrice is null");
+        public Criteria andTransPriceIsNull() {
+            addCriterion("transPrice is null");
             return (Criteria) this;
         }
 
-        public Criteria andStockPriceIsNotNull() {
-            addCriterion("stockPrice is not null");
+        public Criteria andTransPriceIsNotNull() {
+            addCriterion("transPrice is not null");
             return (Criteria) this;
         }
 
-        public Criteria andStockPriceEqualTo(BigDecimal value) {
-            addCriterion("stockPrice =", value, "stockPrice");
+        public Criteria andTransPriceEqualTo(BigDecimal value) {
+            addCriterion("transPrice =", value, "transPrice");
             return (Criteria) this;
         }
 
-        public Criteria andStockPriceNotEqualTo(BigDecimal value) {
-            addCriterion("stockPrice <>", value, "stockPrice");
+        public Criteria andTransPriceNotEqualTo(BigDecimal value) {
+            addCriterion("transPrice <>", value, "transPrice");
             return (Criteria) this;
         }
 
-        public Criteria andStockPriceGreaterThan(BigDecimal value) {
-            addCriterion("stockPrice >", value, "stockPrice");
+        public Criteria andTransPriceGreaterThan(BigDecimal value) {
+            addCriterion("transPrice >", value, "transPrice");
             return (Criteria) this;
         }
 
-        public Criteria andStockPriceGreaterThanOrEqualTo(BigDecimal value) {
-            addCriterion("stockPrice >=", value, "stockPrice");
+        public Criteria andTransPriceGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("transPrice >=", value, "transPrice");
             return (Criteria) this;
         }
 
-        public Criteria andStockPriceLessThan(BigDecimal value) {
-            addCriterion("stockPrice <", value, "stockPrice");
+        public Criteria andTransPriceLessThan(BigDecimal value) {
+            addCriterion("transPrice <", value, "transPrice");
             return (Criteria) this;
         }
 
-        public Criteria andStockPriceLessThanOrEqualTo(BigDecimal value) {
-            addCriterion("stockPrice <=", value, "stockPrice");
+        public Criteria andTransPriceLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("transPrice <=", value, "transPrice");
             return (Criteria) this;
         }
 
-        public Criteria andStockPriceIn(List<BigDecimal> values) {
-            addCriterion("stockPrice in", values, "stockPrice");
+        public Criteria andTransPriceIn(List<BigDecimal> values) {
+            addCriterion("transPrice in", values, "transPrice");
             return (Criteria) this;
         }
 
-        public Criteria andStockPriceNotIn(List<BigDecimal> values) {
-            addCriterion("stockPrice not in", values, "stockPrice");
+        public Criteria andTransPriceNotIn(List<BigDecimal> values) {
+            addCriterion("transPrice not in", values, "transPrice");
             return (Criteria) this;
         }
 
-        public Criteria andStockPriceBetween(BigDecimal value1, BigDecimal value2) {
-            addCriterion("stockPrice between", value1, value2, "stockPrice");
+        public Criteria andTransPriceBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("transPrice between", value1, value2, "transPrice");
             return (Criteria) this;
         }
 
-        public Criteria andStockPriceNotBetween(BigDecimal value1, BigDecimal value2) {
-            addCriterion("stockPrice not between", value1, value2, "stockPrice");
+        public Criteria andTransPriceNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("transPrice not between", value1, value2, "transPrice");
             return (Criteria) this;
         }
 

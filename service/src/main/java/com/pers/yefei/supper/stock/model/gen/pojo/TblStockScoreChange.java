@@ -13,7 +13,11 @@ public class TblStockScoreChange extends TblStockScoreChangeKey {
 
     private Integer changeValue;
 
+    private Double totalScore;
+
     private Date date;
+
+    private Date updateTime;
 
     public String getStockCode() {
         return stockCode;
@@ -55,11 +59,27 @@ public class TblStockScoreChange extends TblStockScoreChangeKey {
         this.changeValue = changeValue;
     }
 
+    public Double getTotalScore() {
+        return totalScore;
+    }
+
+    public void setTotalScore(Double totalScore) {
+        this.totalScore = totalScore;
+    }
+
     public Date getDate() {
         return date;
     }
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 }

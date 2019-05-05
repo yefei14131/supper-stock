@@ -44,7 +44,11 @@ public class StockTacticsBiz {
 
 
     public void mockTrans(){
+        log.info("开始执行模拟交易");
+
         List<TblStockScoreChange> tblStockScoreChanges = stockDataService.queryScoreChangeByDay(DateUtils.getZeroDate(new Date()));
+        log.info("当日变化股票数量为：{}", tblStockScoreChanges.size());
+
         List<String> stockCodeList = new ArrayList<>();
         List<TblStockTrans> stockTransList = new ArrayList<>();
 
@@ -60,22 +64,26 @@ public class StockTacticsBiz {
 
         });
 
+        log.info("需要执行模拟交易的股票数量为：{}", stockTransList.size());
+
         HashMap<String, SinaStock> sinaStockHashMap = stockBaseInfoService.batchFetchStockInfo(stockCodeList);
         String shCompositeStockPrice = stockBaseInfoService.fetchSHCompositeStockPrice();
         stockTransList.forEach(tblStockTrans->{
             SinaStock sinaStock = sinaStockHashMap.get(tblStockTrans.getStockCode());
-            tblStockTrans.setStockPrice(new BigDecimal(sinaStock == null ? "0" : sinaStock.getCurrentPrice()));
+            tblStockTrans.setTransPrice(new BigDecimal(sinaStock == null ? "0" : sinaStock.getCurrentPrice()));
             tblStockTrans.setShCompositeStockPrice(new BigDecimal(shCompositeStockPrice == null ? "0" : shCompositeStockPrice));
             tblStockTrans.setDate(DateUtils.getZeroDate(new Date()));
             stockDataService.saveStockTrans(tblStockTrans);
         });
+
+        log.info("模拟交易执行结束");
     }
 
     public void repareTransPrice(){
         //queryScoreChange
         TblStockTransExample example = new TblStockTransExample();
         example.createCriteria().andDateEqualTo(DateUtils.getZeroDate(DateUtils.getDateAfterDays(0)))
-                .andStockPriceEqualTo(new BigDecimal(0));
+                .andTransPriceEqualTo(new BigDecimal(0));
         ;
         List<TblStockTrans> stockTransList = stockTransDao.queryTblStockTrans(example);
 
@@ -89,7 +97,7 @@ public class StockTacticsBiz {
         HashMap<String, SinaStock> sinaStockHashMap = stockBaseInfoService.batchFetchStockInfo(stockCodeList);
         stockTransList.forEach(tblStockTrans->{
             SinaStock sinaStock = sinaStockHashMap.get(tblStockTrans.getStockCode());
-            tblStockTrans.setStockPrice(new BigDecimal(sinaStock == null ? "0" : sinaStock.getCurrentPrice()));
+            tblStockTrans.setTransPrice(new BigDecimal(sinaStock == null ? "0" : sinaStock.getCurrentPrice()));
 
             stockDataService.saveStockTrans(tblStockTrans);
         });

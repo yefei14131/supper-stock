@@ -43,7 +43,7 @@ public class CollectStockScoreSchedulerConfig {
         log.info("spring boot scheduler running: CollectStockScoreSchedulerConfig ");
 //        stockScoreConllectBiz.batchConllectStockScore();
 //        stockScoreConllectBiz.calculateStockScoreChangeByDay();
-        stockTacticsBiz.repareTransPrice();
+        stockTacticsBiz.mockTrans();
 
     }
 
@@ -57,6 +57,7 @@ public class CollectStockScoreSchedulerConfig {
 
         stockScoreConllectBiz.batchConllectStockScore();
         stockScoreConllectBiz.calculateStockScoreChangeByDay();
+        stockTacticsBiz.mockTrans();
     }
 
 

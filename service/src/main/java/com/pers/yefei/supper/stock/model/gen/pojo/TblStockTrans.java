@@ -10,7 +10,7 @@ public class TblStockTrans {
 
     private String stockName;
 
-    private BigDecimal stockPrice;
+    private BigDecimal transPrice;
 
     private BigDecimal currentPrice;
 
@@ -44,12 +44,12 @@ public class TblStockTrans {
         this.stockName = stockName == null ? null : stockName.trim();
     }
 
-    public BigDecimal getStockPrice() {
-        return stockPrice;
+    public BigDecimal getTransPrice() {
+        return transPrice;
     }
 
-    public void setStockPrice(BigDecimal stockPrice) {
-        this.stockPrice = stockPrice;
+    public void setTransPrice(BigDecimal transPrice) {
+        this.transPrice = transPrice;
     }
 
     public BigDecimal getCurrentPrice() {

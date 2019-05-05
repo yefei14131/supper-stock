@@ -68,7 +68,7 @@
 
     <!-- print sql -->
     <!-- additivity="false" avoid duplicate log-->
-    <logger name="com.pers.yefei.supper.stock.model.gen.mapper.*" level="DEBUG" additivity="false">
+    <logger name="com.pers.yefei.supper.stock.model.gen.mapper.*" level="info" additivity="false">
         <appender-ref ref="STDOUT"/>
         <appender-ref ref="FILE_STDOUT" />
     </logger>
