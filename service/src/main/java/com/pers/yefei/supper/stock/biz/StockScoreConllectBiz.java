@@ -175,7 +175,7 @@ public class StockScoreConllectBiz {
 
             }
 
-            Thread.sleep((long)(RandomUtils.nextInt(1000, 5000)));
+            Thread.sleep((long)(RandomUtils.nextInt(500, 3500)));
             return stockScore;
 
         } catch (ScriptException e) {
