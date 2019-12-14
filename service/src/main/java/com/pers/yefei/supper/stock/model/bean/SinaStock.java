@@ -11,8 +11,9 @@ public class SinaStock {
     private String stockCode;
     private String stockName;
     private String todayOpenPrice;
-    private String yesterDayClosePrice;
+    private String priceChange;
     private String currentPrice;
-    private String maxPrice;
-    private String minPrice;
+    private String priceChangeRate;
+    private String dealQuantity;
+    private String dealAmount;
 }

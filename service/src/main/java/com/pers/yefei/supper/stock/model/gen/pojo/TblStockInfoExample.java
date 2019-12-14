@@ -11,6 +11,10 @@ public class TblStockInfoExample {
 
     protected List<Criteria> oredCriteria;
 
+    private Integer limit;
+
+    private Integer offset;
+
     public TblStockInfoExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
@@ -62,6 +66,22 @@ public class TblStockInfoExample {
         oredCriteria.clear();
         orderByClause = null;
         distinct = false;
+    }
+
+    public void setLimit(Integer limit) {
+        this.limit = limit;
+    }
+
+    public Integer getLimit() {
+        return limit;
+    }
+
+    public void setOffset(Integer offset) {
+        this.offset = offset;
+    }
+
+    public Integer getOffset() {
+        return offset;
     }
 
     protected abstract static class GeneratedCriteria {
@@ -435,62 +455,52 @@ public class TblStockInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andTotalValueEqualTo(String value) {
+        public Criteria andTotalValueEqualTo(Integer value) {
             addCriterion("totalValue =", value, "totalValue");
             return (Criteria) this;
         }
 
-        public Criteria andTotalValueNotEqualTo(String value) {
+        public Criteria andTotalValueNotEqualTo(Integer value) {
             addCriterion("totalValue <>", value, "totalValue");
             return (Criteria) this;
         }
 
-        public Criteria andTotalValueGreaterThan(String value) {
+        public Criteria andTotalValueGreaterThan(Integer value) {
             addCriterion("totalValue >", value, "totalValue");
             return (Criteria) this;
         }
 
-        public Criteria andTotalValueGreaterThanOrEqualTo(String value) {
+        public Criteria andTotalValueGreaterThanOrEqualTo(Integer value) {
             addCriterion("totalValue >=", value, "totalValue");
             return (Criteria) this;
         }
 
-        public Criteria andTotalValueLessThan(String value) {
+        public Criteria andTotalValueLessThan(Integer value) {
             addCriterion("totalValue <", value, "totalValue");
             return (Criteria) this;
         }
 
-        public Criteria andTotalValueLessThanOrEqualTo(String value) {
+        public Criteria andTotalValueLessThanOrEqualTo(Integer value) {
             addCriterion("totalValue <=", value, "totalValue");
             return (Criteria) this;
         }
 
-        public Criteria andTotalValueLike(String value) {
-            addCriterion("totalValue like", value, "totalValue");
-            return (Criteria) this;
-        }
-
-        public Criteria andTotalValueNotLike(String value) {
-            addCriterion("totalValue not like", value, "totalValue");
-            return (Criteria) this;
-        }
-
-        public Criteria andTotalValueIn(List<String> values) {
+        public Criteria andTotalValueIn(List<Integer> values) {
             addCriterion("totalValue in", values, "totalValue");
             return (Criteria) this;
         }
 
-        public Criteria andTotalValueNotIn(List<String> values) {
+        public Criteria andTotalValueNotIn(List<Integer> values) {
             addCriterion("totalValue not in", values, "totalValue");
             return (Criteria) this;
         }
 
-        public Criteria andTotalValueBetween(String value1, String value2) {
+        public Criteria andTotalValueBetween(Integer value1, Integer value2) {
             addCriterion("totalValue between", value1, value2, "totalValue");
             return (Criteria) this;
         }
 
-        public Criteria andTotalValueNotBetween(String value1, String value2) {
+        public Criteria andTotalValueNotBetween(Integer value1, Integer value2) {
             addCriterion("totalValue not between", value1, value2, "totalValue");
             return (Criteria) this;
         }
@@ -505,63 +515,173 @@ public class TblStockInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andFlowValueEqualTo(String value) {
+        public Criteria andFlowValueEqualTo(Integer value) {
             addCriterion("flowValue =", value, "flowValue");
             return (Criteria) this;
         }
 
-        public Criteria andFlowValueNotEqualTo(String value) {
+        public Criteria andFlowValueNotEqualTo(Integer value) {
             addCriterion("flowValue <>", value, "flowValue");
             return (Criteria) this;
         }
 
-        public Criteria andFlowValueGreaterThan(String value) {
+        public Criteria andFlowValueGreaterThan(Integer value) {
             addCriterion("flowValue >", value, "flowValue");
             return (Criteria) this;
         }
 
-        public Criteria andFlowValueGreaterThanOrEqualTo(String value) {
+        public Criteria andFlowValueGreaterThanOrEqualTo(Integer value) {
             addCriterion("flowValue >=", value, "flowValue");
             return (Criteria) this;
         }
 
-        public Criteria andFlowValueLessThan(String value) {
+        public Criteria andFlowValueLessThan(Integer value) {
             addCriterion("flowValue <", value, "flowValue");
             return (Criteria) this;
         }
 
-        public Criteria andFlowValueLessThanOrEqualTo(String value) {
+        public Criteria andFlowValueLessThanOrEqualTo(Integer value) {
             addCriterion("flowValue <=", value, "flowValue");
             return (Criteria) this;
         }
 
-        public Criteria andFlowValueLike(String value) {
-            addCriterion("flowValue like", value, "flowValue");
-            return (Criteria) this;
-        }
-
-        public Criteria andFlowValueNotLike(String value) {
-            addCriterion("flowValue not like", value, "flowValue");
-            return (Criteria) this;
-        }
-
-        public Criteria andFlowValueIn(List<String> values) {
+        public Criteria andFlowValueIn(List<Integer> values) {
             addCriterion("flowValue in", values, "flowValue");
             return (Criteria) this;
         }
 
-        public Criteria andFlowValueNotIn(List<String> values) {
+        public Criteria andFlowValueNotIn(List<Integer> values) {
             addCriterion("flowValue not in", values, "flowValue");
             return (Criteria) this;
         }
 
-        public Criteria andFlowValueBetween(String value1, String value2) {
+        public Criteria andFlowValueBetween(Integer value1, Integer value2) {
             addCriterion("flowValue between", value1, value2, "flowValue");
             return (Criteria) this;
         }
 
-        public Criteria andFlowValueNotBetween(String value1, String value2) {
+        public Criteria andFlowValueNotBetween(Integer value1, Integer value2) {
             addCriterion("flowValue not between", value1, value2, "flowValue");
+            return (Criteria) this;
+        }
+
+        public Criteria andPriceProfitAssetRatioIsNull() {
+            addCriterion("priceProfitAssetRatio is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPriceProfitAssetRatioIsNotNull() {
+            addCriterion("priceProfitAssetRatio is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPriceProfitAssetRatioEqualTo(Double value) {
+            addCriterion("priceProfitAssetRatio =", value, "priceProfitAssetRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andPriceProfitAssetRatioNotEqualTo(Double value) {
+            addCriterion("priceProfitAssetRatio <>", value, "priceProfitAssetRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andPriceProfitAssetRatioGreaterThan(Double value) {
+            addCriterion("priceProfitAssetRatio >", value, "priceProfitAssetRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andPriceProfitAssetRatioGreaterThanOrEqualTo(Double value) {
+            addCriterion("priceProfitAssetRatio >=", value, "priceProfitAssetRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andPriceProfitAssetRatioLessThan(Double value) {
+            addCriterion("priceProfitAssetRatio <", value, "priceProfitAssetRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andPriceProfitAssetRatioLessThanOrEqualTo(Double value) {
+            addCriterion("priceProfitAssetRatio <=", value, "priceProfitAssetRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andPriceProfitAssetRatioIn(List<Double> values) {
+            addCriterion("priceProfitAssetRatio in", values, "priceProfitAssetRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andPriceProfitAssetRatioNotIn(List<Double> values) {
+            addCriterion("priceProfitAssetRatio not in", values, "priceProfitAssetRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andPriceProfitAssetRatioBetween(Double value1, Double value2) {
+            addCriterion("priceProfitAssetRatio between", value1, value2, "priceProfitAssetRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andPriceProfitAssetRatioNotBetween(Double value1, Double value2) {
+            addCriterion("priceProfitAssetRatio not between", value1, value2, "priceProfitAssetRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andPriceNetAssetRatioIsNull() {
+            addCriterion("priceNetAssetRatio is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPriceNetAssetRatioIsNotNull() {
+            addCriterion("priceNetAssetRatio is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPriceNetAssetRatioEqualTo(Double value) {
+            addCriterion("priceNetAssetRatio =", value, "priceNetAssetRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andPriceNetAssetRatioNotEqualTo(Double value) {
+            addCriterion("priceNetAssetRatio <>", value, "priceNetAssetRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andPriceNetAssetRatioGreaterThan(Double value) {
+            addCriterion("priceNetAssetRatio >", value, "priceNetAssetRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andPriceNetAssetRatioGreaterThanOrEqualTo(Double value) {
+            addCriterion("priceNetAssetRatio >=", value, "priceNetAssetRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andPriceNetAssetRatioLessThan(Double value) {
+            addCriterion("priceNetAssetRatio <", value, "priceNetAssetRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andPriceNetAssetRatioLessThanOrEqualTo(Double value) {
+            addCriterion("priceNetAssetRatio <=", value, "priceNetAssetRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andPriceNetAssetRatioIn(List<Double> values) {
+            addCriterion("priceNetAssetRatio in", values, "priceNetAssetRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andPriceNetAssetRatioNotIn(List<Double> values) {
+            addCriterion("priceNetAssetRatio not in", values, "priceNetAssetRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andPriceNetAssetRatioBetween(Double value1, Double value2) {
+            addCriterion("priceNetAssetRatio between", value1, value2, "priceNetAssetRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andPriceNetAssetRatioNotBetween(Double value1, Double value2) {
+            addCriterion("priceNetAssetRatio not between", value1, value2, "priceNetAssetRatio");
             return (Criteria) this;
         }
 

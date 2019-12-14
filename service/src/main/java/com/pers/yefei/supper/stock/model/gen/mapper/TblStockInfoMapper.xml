@@ -7,8 +7,10 @@
     <result column="stockName" jdbcType="VARCHAR" property="stockName" />
     <result column="price" jdbcType="DOUBLE" property="price" />
     <result column="syl" jdbcType="DOUBLE" property="syl" />
-    <result column="totalValue" jdbcType="VARCHAR" property="totalValue" />
-    <result column="flowValue" jdbcType="VARCHAR" property="flowValue" />
+    <result column="totalValue" jdbcType="INTEGER" property="totalValue" />
+    <result column="flowValue" jdbcType="INTEGER" property="flowValue" />
+    <result column="priceProfitAssetRatio" jdbcType="DOUBLE" property="priceProfitAssetRatio" />
+    <result column="priceNetAssetRatio" jdbcType="DOUBLE" property="priceNetAssetRatio" />
     <result column="totalScore" jdbcType="DOUBLE" property="totalScore" />
     <result column="marketRank" jdbcType="INTEGER" property="marketRank" />
     <result column="industryName" jdbcType="VARCHAR" property="industryName" />
@@ -77,9 +79,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, stockCode, stockName, price, syl, totalValue, flowValue, totalScore, marketRank, 
-    industryName, industryRank, organizationHoldScore, businessPreferenceScore, isActive, 
-    updateTime
+    id, stockCode, stockName, price, syl, totalValue, flowValue, priceProfitAssetRatio, 
+    priceNetAssetRatio, totalScore, marketRank, industryName, industryRank, organizationHoldScore, 
+    businessPreferenceScore, isActive, updateTime
   </sql>
   <select id="selectByExample" parameterType="com.pers.yefei.supper.stock.model.gen.pojo.TblStockInfoExample" resultMap="BaseResultMap">
     select
@@ -93,6 +95,14 @@
     </if>
     <if test="orderByClause != null">
       order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -117,11 +127,13 @@
     </selectKey>
     insert into tbl_stock_info (stockCode, stockName, price, 
       syl, totalValue, flowValue, 
+      priceProfitAssetRatio, priceNetAssetRatio, 
       totalScore, marketRank, industryName, 
       industryRank, organizationHoldScore, businessPreferenceScore, 
       isActive, updateTime)
     values (#{stockCode,jdbcType=VARCHAR}, #{stockName,jdbcType=VARCHAR}, #{price,jdbcType=DOUBLE}, 
-      #{syl,jdbcType=DOUBLE}, #{totalValue,jdbcType=VARCHAR}, #{flowValue,jdbcType=VARCHAR}, 
+      #{syl,jdbcType=DOUBLE}, #{totalValue,jdbcType=INTEGER}, #{flowValue,jdbcType=INTEGER}, 
+      #{priceProfitAssetRatio,jdbcType=DOUBLE}, #{priceNetAssetRatio,jdbcType=DOUBLE}, 
       #{totalScore,jdbcType=DOUBLE}, #{marketRank,jdbcType=INTEGER}, #{industryName,jdbcType=VARCHAR}, 
       #{industryRank,jdbcType=INTEGER}, #{organizationHoldScore,jdbcType=INTEGER}, #{businessPreferenceScore,jdbcType=INTEGER}, 
       #{isActive,jdbcType=BIT}, #{updateTime,jdbcType=TIMESTAMP})
@@ -149,6 +161,12 @@
       </if>
       <if test="flowValue != null">
         flowValue,
+      </if>
+      <if test="priceProfitAssetRatio != null">
+        priceProfitAssetRatio,
+      </if>
+      <if test="priceNetAssetRatio != null">
+        priceNetAssetRatio,
       </if>
       <if test="totalScore != null">
         totalScore,
@@ -189,10 +207,16 @@
         #{syl,jdbcType=DOUBLE},
       </if>
       <if test="totalValue != null">
-        #{totalValue,jdbcType=VARCHAR},
+        #{totalValue,jdbcType=INTEGER},
       </if>
       <if test="flowValue != null">
-        #{flowValue,jdbcType=VARCHAR},
+        #{flowValue,jdbcType=INTEGER},
+      </if>
+      <if test="priceProfitAssetRatio != null">
+        #{priceProfitAssetRatio,jdbcType=DOUBLE},
+      </if>
+      <if test="priceNetAssetRatio != null">
+        #{priceNetAssetRatio,jdbcType=DOUBLE},
       </if>
       <if test="totalScore != null">
         #{totalScore,jdbcType=DOUBLE},
@@ -245,10 +269,16 @@
         syl = #{record.syl,jdbcType=DOUBLE},
       </if>
       <if test="record.totalValue != null">
-        totalValue = #{record.totalValue,jdbcType=VARCHAR},
+        totalValue = #{record.totalValue,jdbcType=INTEGER},
       </if>
       <if test="record.flowValue != null">
-        flowValue = #{record.flowValue,jdbcType=VARCHAR},
+        flowValue = #{record.flowValue,jdbcType=INTEGER},
+      </if>
+      <if test="record.priceProfitAssetRatio != null">
+        priceProfitAssetRatio = #{record.priceProfitAssetRatio,jdbcType=DOUBLE},
+      </if>
+      <if test="record.priceNetAssetRatio != null">
+        priceNetAssetRatio = #{record.priceNetAssetRatio,jdbcType=DOUBLE},
       </if>
       <if test="record.totalScore != null">
         totalScore = #{record.totalScore,jdbcType=DOUBLE},
@@ -286,8 +316,10 @@
       stockName = #{record.stockName,jdbcType=VARCHAR},
       price = #{record.price,jdbcType=DOUBLE},
       syl = #{record.syl,jdbcType=DOUBLE},
-      totalValue = #{record.totalValue,jdbcType=VARCHAR},
-      flowValue = #{record.flowValue,jdbcType=VARCHAR},
+      totalValue = #{record.totalValue,jdbcType=INTEGER},
+      flowValue = #{record.flowValue,jdbcType=INTEGER},
+      priceProfitAssetRatio = #{record.priceProfitAssetRatio,jdbcType=DOUBLE},
+      priceNetAssetRatio = #{record.priceNetAssetRatio,jdbcType=DOUBLE},
       totalScore = #{record.totalScore,jdbcType=DOUBLE},
       marketRank = #{record.marketRank,jdbcType=INTEGER},
       industryName = #{record.industryName,jdbcType=VARCHAR},
@@ -316,10 +348,16 @@
         syl = #{syl,jdbcType=DOUBLE},
       </if>
       <if test="totalValue != null">
-        totalValue = #{totalValue,jdbcType=VARCHAR},
+        totalValue = #{totalValue,jdbcType=INTEGER},
       </if>
       <if test="flowValue != null">
-        flowValue = #{flowValue,jdbcType=VARCHAR},
+        flowValue = #{flowValue,jdbcType=INTEGER},
+      </if>
+      <if test="priceProfitAssetRatio != null">
+        priceProfitAssetRatio = #{priceProfitAssetRatio,jdbcType=DOUBLE},
+      </if>
+      <if test="priceNetAssetRatio != null">
+        priceNetAssetRatio = #{priceNetAssetRatio,jdbcType=DOUBLE},
       </if>
       <if test="totalScore != null">
         totalScore = #{totalScore,jdbcType=DOUBLE},
@@ -354,8 +392,10 @@
       stockName = #{stockName,jdbcType=VARCHAR},
       price = #{price,jdbcType=DOUBLE},
       syl = #{syl,jdbcType=DOUBLE},
-      totalValue = #{totalValue,jdbcType=VARCHAR},
-      flowValue = #{flowValue,jdbcType=VARCHAR},
+      totalValue = #{totalValue,jdbcType=INTEGER},
+      flowValue = #{flowValue,jdbcType=INTEGER},
+      priceProfitAssetRatio = #{priceProfitAssetRatio,jdbcType=DOUBLE},
+      priceNetAssetRatio = #{priceNetAssetRatio,jdbcType=DOUBLE},
       totalScore = #{totalScore,jdbcType=DOUBLE},
       marketRank = #{marketRank,jdbcType=INTEGER},
       industryName = #{industryName,jdbcType=VARCHAR},

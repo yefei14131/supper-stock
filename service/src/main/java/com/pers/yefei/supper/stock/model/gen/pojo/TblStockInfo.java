@@ -13,9 +13,13 @@ public class TblStockInfo {
 
     private Double syl;
 
-    private String totalValue;
+    private Integer totalValue;
 
-    private String flowValue;
+    private Integer flowValue;
+
+    private Double priceProfitAssetRatio;
+
+    private Double priceNetAssetRatio;
 
     private Double totalScore;
 
@@ -73,20 +77,36 @@ public class TblStockInfo {
         this.syl = syl;
     }
 
-    public String getTotalValue() {
+    public Integer getTotalValue() {
         return totalValue;
     }
 
-    public void setTotalValue(String totalValue) {
-        this.totalValue = totalValue == null ? null : totalValue.trim();
+    public void setTotalValue(Integer totalValue) {
+        this.totalValue = totalValue;
     }
 
-    public String getFlowValue() {
+    public Integer getFlowValue() {
         return flowValue;
     }
 
-    public void setFlowValue(String flowValue) {
-        this.flowValue = flowValue == null ? null : flowValue.trim();
+    public void setFlowValue(Integer flowValue) {
+        this.flowValue = flowValue;
+    }
+
+    public Double getPriceProfitAssetRatio() {
+        return priceProfitAssetRatio;
+    }
+
+    public void setPriceProfitAssetRatio(Double priceProfitAssetRatio) {
+        this.priceProfitAssetRatio = priceProfitAssetRatio;
+    }
+
+    public Double getPriceNetAssetRatio() {
+        return priceNetAssetRatio;
+    }
+
+    public void setPriceNetAssetRatio(Double priceNetAssetRatio) {
+        this.priceNetAssetRatio = priceNetAssetRatio;
     }
 
     public Double getTotalScore() {

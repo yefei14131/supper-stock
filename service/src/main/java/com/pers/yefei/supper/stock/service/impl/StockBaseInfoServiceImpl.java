@@ -121,20 +121,22 @@ public class StockBaseInfoServiceImpl implements IStockBaseInfoService {
         String[] inputData = stockInfo.split(",");
 
         String stockName = inputData[0];
-        String todayOpenPrice = inputData[1];
-        String yesterDayClosePrice = inputData[2];
-        String currentPrice = inputData[3];
-        String maxPrice = inputData[4];
-        String minPrice = inputData[5];
+        String currentPrice = inputData[1];
+        String changePrice = inputData[2];
+        String changePriceRate = inputData[3];
+        String dealQuantity = inputData[4];
+        String dealAmount = inputData[5];
 
         SinaStock sinaStock = new SinaStock();
         sinaStock.setStockCode(stockCode);
         sinaStock.setStockName(stockName);
-        sinaStock.setTodayOpenPrice(todayOpenPrice);
-        sinaStock.setYesterDayClosePrice(yesterDayClosePrice);
+        sinaStock.setTodayOpenPrice(currentPrice);
+        sinaStock.setPriceChange(changePrice);
         sinaStock.setCurrentPrice(currentPrice);
-        sinaStock.setMaxPrice(maxPrice);
-        sinaStock.setMinPrice(minPrice);
+        sinaStock.setPriceChange(changePrice);
+        sinaStock.setPriceChangeRate(changePriceRate);
+        sinaStock.setDealQuantity(dealQuantity);
+        sinaStock.setDealAmount(dealAmount);
         return sinaStock;
     }
 

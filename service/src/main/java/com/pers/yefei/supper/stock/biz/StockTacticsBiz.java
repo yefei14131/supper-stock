@@ -7,6 +7,7 @@ import com.pers.yefei.supper.stock.model.gen.pojo.TblStockInfo;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockScoreChange;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockTrans;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockTransExample;
+import com.pers.yefei.supper.stock.service.IStockBaseInfoEastMoneyService;
 import com.pers.yefei.supper.stock.service.IStockBaseInfoService;
 import com.pers.yefei.supper.stock.service.IStockDataService;
 import com.pers.yefei.supper.stock.service.IStockScoreService;
@@ -42,6 +43,8 @@ public class StockTacticsBiz {
     @Autowired
     private IStockBaseInfoService stockBaseInfoService;
 
+    @Autowired
+    private IStockBaseInfoEastMoneyService stockBaseInfoEastMoneyService;
 
     public void mockTrans(){
         log.info("开始执行模拟交易");
@@ -66,11 +69,10 @@ public class StockTacticsBiz {
 
         log.info("需要执行模拟交易的股票数量为：{}", stockTransList.size());
 
-        HashMap<String, SinaStock> sinaStockHashMap = stockBaseInfoService.batchFetchStockInfo(stockCodeList);
-        String shCompositeStockPrice = stockBaseInfoService.fetchSHCompositeStockPrice();
+        String shCompositeStockPrice = stockBaseInfoEastMoneyService.fetchSHCompositeStockPrice();
         stockTransList.forEach(tblStockTrans->{
-            SinaStock sinaStock = sinaStockHashMap.get(tblStockTrans.getStockCode());
-            tblStockTrans.setTransPrice(new BigDecimal(sinaStock == null ? "0" : sinaStock.getCurrentPrice()));
+            TblStockInfo stockInfo = stockDataService.getStockInfo(tblStockTrans.getStockCode());
+            tblStockTrans.setTransPrice(new BigDecimal(stockInfo.getPrice()));
             tblStockTrans.setShCompositeStockPrice(new BigDecimal(shCompositeStockPrice == null ? "0" : shCompositeStockPrice));
             tblStockTrans.setDate(DateUtils.getZeroDate(new Date()));
             stockDataService.saveStockTrans(tblStockTrans);
@@ -94,10 +96,9 @@ public class StockTacticsBiz {
             stockCodeList.add(stockTrans.getStockCode());
         });
 
-        HashMap<String, SinaStock> sinaStockHashMap = stockBaseInfoService.batchFetchStockInfo(stockCodeList);
         stockTransList.forEach(tblStockTrans->{
-            SinaStock sinaStock = sinaStockHashMap.get(tblStockTrans.getStockCode());
-            tblStockTrans.setTransPrice(new BigDecimal(sinaStock == null ? "0" : sinaStock.getCurrentPrice()));
+            TblStockInfo stockInfo = stockDataService.getStockInfo(tblStockTrans.getStockCode());
+            tblStockTrans.setTransPrice(new BigDecimal(stockInfo.getPrice()));
 
             stockDataService.saveStockTrans(tblStockTrans);
         });
@@ -111,14 +112,9 @@ public class StockTacticsBiz {
             stockCodeList.add(stockInfo.getStockCode());
         });
         log.info("需要采集价格的股票数：{}", stockCodeList.size());
-        HashMap<String, SinaStock> sinaStockHashMap = stockBaseInfoService.batchFetchStockInfo(stockCodeList);
-        log.info("已采集价格的股票数：{}", sinaStockHashMap.size());
         activeStockInfoList.forEach(stockInfo->{
-            if (sinaStockHashMap.containsKey(stockInfo.getStockCode())){
-                SinaStock sinaStock = sinaStockHashMap.get(stockInfo.getStockCode());
-                stockInfo.setPrice(Double.valueOf(sinaStock.getCurrentPrice()));
-                stockDataService.saveStockInfo(stockInfo);
-            }
+            stockBaseInfoEastMoneyService.queryStockInfo(stockInfo);
+            stockDataService.saveStockInfo(stockInfo);
         });
 
         stockDataService.updateStockTransCurrentPrice();

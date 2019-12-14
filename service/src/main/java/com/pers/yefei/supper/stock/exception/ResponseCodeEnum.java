@@ -5,10 +5,9 @@ public enum ResponseCodeEnum {
 	
 	SUSCCESS(0,"success")
 	, FAIL(1001,"系统繁忙，请稍后重试！")
-	, WELCOME(2001, "欢迎使用MockServer")
-	, UnknownOperator(2011, "未知条件运算符，条件运算符只能是 && || ")
-	, CannotMatchRequest(2021, "请求不能匹配 ")
-	, DATA_NOT_IN_DB(2031, "数据库找不到对应的记录")
+	, Parse_EastMoney_Data_Error(2011, "解析东方财富数据异常")
+	, Get_EastMoney_Data_Error(2012, "获取东方财富数据异常")
+	, DATA_NOT_IN_DB(2021, "数据库找不到对应的记录")
 	;
 
 	

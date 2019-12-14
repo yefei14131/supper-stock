@@ -1,10 +1,7 @@
 package com.pers.yefei.supper.stock.biz;
 
-import com.pers.yefei.supper.stock.dao.IStockTransDao;
-import com.pers.yefei.supper.stock.enums.StockTransType;
-import com.pers.yefei.supper.stock.model.bean.SinaStock;
 import com.pers.yefei.supper.stock.model.gen.pojo.*;
-import com.pers.yefei.supper.stock.service.IStockBaseInfoService;
+import com.pers.yefei.supper.stock.service.IStockBaseInfoEastMoneyService;
 import com.pers.yefei.supper.stock.service.IStockDataService;
 import com.pers.yefei.supper.stock.service.IStockScoreService;
 import com.pers.yefei.supper.stock.utils.DateUtils;
@@ -15,8 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.script.ScriptException;
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -36,7 +31,7 @@ public class StockScoreConllectBiz {
     private IStockScoreService stockScoreService;
 
     @Autowired
-    private IStockBaseInfoService stockBaseInfoService;
+    private IStockBaseInfoEastMoneyService stockBaseInfoEastMoneyService;
 
     private boolean collectorRunning = false;
 
@@ -134,7 +129,6 @@ public class StockScoreConllectBiz {
 
     public TblStockScore conllectStockScore(TblStockInfo stockInfo){
         try {
-
             TblStockScore stockScore = stockDataService.getStockScoreToday(stockInfo.getStockCode());
             if (stockScore == null){
                 stockScore = new TblStockScore();
@@ -142,6 +136,7 @@ public class StockScoreConllectBiz {
             }
 
             stockScoreService.getCurrentStockScore(stockScore);
+            stockBaseInfoEastMoneyService.queryStockInfo(stockScore);
 
             if(stockScore.getTotalScore() == null){
                 log.info("{}, {} 接口没有评分数据", stockInfo.getStockCode(), stockInfo.getStockName());
@@ -170,6 +165,21 @@ public class StockScoreConllectBiz {
                 // 行业名称
                 stockInfo.setIndustryName(stockScore.getIndustryDetail());
                 stockInfo.setIsActive(true);
+
+                // 市净率
+                stockInfo.setPriceNetAssetRatio(stockScore.getPriceNetAssetRatio());
+
+                // 市盈率
+                stockInfo.setPriceProfitAssetRatio(stockScore.getPriceProfitAssetRatio());
+
+                // 总市值
+                stockInfo.setTotalValue(stockScore.getTotalValue());
+
+                // 流通市值
+                stockInfo.setFlowValue(stockScore.getFlowValue());
+
+                // 价格
+                stockInfo.setPrice(stockScore.getPrice());
 
                 stockDataService.saveStockInfo(stockInfo);
 

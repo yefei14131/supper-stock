@@ -23,6 +23,22 @@
     <result column="industryDetail" jdbcType="VARCHAR" property="industryDetail" />
     <result column="date" jdbcType="DATE" property="date" />
     <result column="updateTime" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="totalValue" jdbcType="INTEGER" property="totalValue" />
+    <result column="flowValue" jdbcType="INTEGER" property="flowValue" />
+    <result column="priceProfitAssetRatio" jdbcType="DOUBLE" property="priceProfitAssetRatio" />
+    <result column="priceNetAssetRatio" jdbcType="DOUBLE" property="priceNetAssetRatio" />
+    <result column="dealQuantity" jdbcType="DOUBLE" property="dealQuantity" />
+    <result column="dealAmount" jdbcType="DOUBLE" property="dealAmount" />
+    <result column="priceChange" jdbcType="DOUBLE" property="priceChange" />
+    <result column="priceChangeRatio" jdbcType="DOUBLE" property="priceChangeRatio" />
+    <result column="turnoverRatio" jdbcType="DOUBLE" property="turnoverRatio" />
+    <result column="mainInflowAmount" jdbcType="DOUBLE" property="mainInflowAmount" />
+    <result column="mainOutflowAmount" jdbcType="DOUBLE" property="mainOutflowAmount" />
+    <result column="netInflow" jdbcType="DOUBLE" property="netInflow" />
+    <result column="openPrice" jdbcType="DOUBLE" property="openPrice" />
+    <result column="maxPrice" jdbcType="DOUBLE" property="maxPrice" />
+    <result column="minPrice" jdbcType="DOUBLE" property="minPrice" />
+    <result column="price" jdbcType="DOUBLE" property="price" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -87,7 +103,9 @@
     achievementsGrowupScore, profitAbilityScore, achievementsClueScore, marketplaceStyleScore, 
     organizationHoldScore, organizationEmotionScore, businessPreferenceScore, successRateStatisticsScore, 
     stockValuationScore, totalScore, marketRank, industryRank, industryDetail, date, 
-    updateTime
+    updateTime, totalValue, flowValue, priceProfitAssetRatio, priceNetAssetRatio, dealQuantity, 
+    dealAmount, priceChange, priceChangeRatio, turnoverRatio, mainInflowAmount, mainOutflowAmount, 
+    netInflow, openPrice, maxPrice, minPrice, price
   </sql>
   <select id="selectByExample" parameterType="com.pers.yefei.supper.stock.model.gen.pojo.TblStockScoreExample" resultMap="BaseResultMap">
     select
@@ -101,6 +119,14 @@
     </if>
     <if test="orderByClause != null">
       order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -131,7 +157,13 @@
       businessPreferenceScore, successRateStatisticsScore, 
       stockValuationScore, totalScore, marketRank, 
       industryRank, industryDetail, date, 
-      updateTime)
+      updateTime, totalValue, flowValue, 
+      priceProfitAssetRatio, priceNetAssetRatio, 
+      dealQuantity, dealAmount, priceChange, 
+      priceChangeRatio, turnoverRatio, mainInflowAmount, 
+      mainOutflowAmount, netInflow, openPrice, 
+      maxPrice, minPrice, price
+      )
     values (#{stockCode,jdbcType=VARCHAR}, #{stockName,jdbcType=VARCHAR}, #{companyHonorScore,jdbcType=INTEGER}, 
       #{businessStatusScore,jdbcType=INTEGER}, #{achievementsAppraisalScore,jdbcType=INTEGER}, 
       #{achievementsGrowupScore,jdbcType=INTEGER}, #{profitAbilityScore,jdbcType=INTEGER}, 
@@ -140,7 +172,13 @@
       #{businessPreferenceScore,jdbcType=INTEGER}, #{successRateStatisticsScore,jdbcType=INTEGER}, 
       #{stockValuationScore,jdbcType=INTEGER}, #{totalScore,jdbcType=DOUBLE}, #{marketRank,jdbcType=INTEGER}, 
       #{industryRank,jdbcType=INTEGER}, #{industryDetail,jdbcType=VARCHAR}, #{date,jdbcType=DATE}, 
-      #{updateTime,jdbcType=TIMESTAMP})
+      #{updateTime,jdbcType=TIMESTAMP}, #{totalValue,jdbcType=INTEGER}, #{flowValue,jdbcType=INTEGER}, 
+      #{priceProfitAssetRatio,jdbcType=DOUBLE}, #{priceNetAssetRatio,jdbcType=DOUBLE}, 
+      #{dealQuantity,jdbcType=DOUBLE}, #{dealAmount,jdbcType=DOUBLE}, #{priceChange,jdbcType=DOUBLE}, 
+      #{priceChangeRatio,jdbcType=DOUBLE}, #{turnoverRatio,jdbcType=DOUBLE}, #{mainInflowAmount,jdbcType=DOUBLE}, 
+      #{mainOutflowAmount,jdbcType=DOUBLE}, #{netInflow,jdbcType=DOUBLE}, #{openPrice,jdbcType=DOUBLE}, 
+      #{maxPrice,jdbcType=DOUBLE}, #{minPrice,jdbcType=DOUBLE}, #{price,jdbcType=DOUBLE}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.pers.yefei.supper.stock.model.gen.pojo.TblStockScore">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -208,6 +246,54 @@
       <if test="updateTime != null">
         updateTime,
       </if>
+      <if test="totalValue != null">
+        totalValue,
+      </if>
+      <if test="flowValue != null">
+        flowValue,
+      </if>
+      <if test="priceProfitAssetRatio != null">
+        priceProfitAssetRatio,
+      </if>
+      <if test="priceNetAssetRatio != null">
+        priceNetAssetRatio,
+      </if>
+      <if test="dealQuantity != null">
+        dealQuantity,
+      </if>
+      <if test="dealAmount != null">
+        dealAmount,
+      </if>
+      <if test="priceChange != null">
+        priceChange,
+      </if>
+      <if test="priceChangeRatio != null">
+        priceChangeRatio,
+      </if>
+      <if test="turnoverRatio != null">
+        turnoverRatio,
+      </if>
+      <if test="mainInflowAmount != null">
+        mainInflowAmount,
+      </if>
+      <if test="mainOutflowAmount != null">
+        mainOutflowAmount,
+      </if>
+      <if test="netInflow != null">
+        netInflow,
+      </if>
+      <if test="openPrice != null">
+        openPrice,
+      </if>
+      <if test="maxPrice != null">
+        maxPrice,
+      </if>
+      <if test="minPrice != null">
+        minPrice,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="stockCode != null">
@@ -269,6 +355,54 @@
       </if>
       <if test="updateTime != null">
         #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="totalValue != null">
+        #{totalValue,jdbcType=INTEGER},
+      </if>
+      <if test="flowValue != null">
+        #{flowValue,jdbcType=INTEGER},
+      </if>
+      <if test="priceProfitAssetRatio != null">
+        #{priceProfitAssetRatio,jdbcType=DOUBLE},
+      </if>
+      <if test="priceNetAssetRatio != null">
+        #{priceNetAssetRatio,jdbcType=DOUBLE},
+      </if>
+      <if test="dealQuantity != null">
+        #{dealQuantity,jdbcType=DOUBLE},
+      </if>
+      <if test="dealAmount != null">
+        #{dealAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="priceChange != null">
+        #{priceChange,jdbcType=DOUBLE},
+      </if>
+      <if test="priceChangeRatio != null">
+        #{priceChangeRatio,jdbcType=DOUBLE},
+      </if>
+      <if test="turnoverRatio != null">
+        #{turnoverRatio,jdbcType=DOUBLE},
+      </if>
+      <if test="mainInflowAmount != null">
+        #{mainInflowAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="mainOutflowAmount != null">
+        #{mainOutflowAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="netInflow != null">
+        #{netInflow,jdbcType=DOUBLE},
+      </if>
+      <if test="openPrice != null">
+        #{openPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="maxPrice != null">
+        #{maxPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="minPrice != null">
+        #{minPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DOUBLE},
       </if>
     </trim>
   </insert>
@@ -344,6 +478,54 @@
       <if test="record.updateTime != null">
         updateTime = #{record.updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.totalValue != null">
+        totalValue = #{record.totalValue,jdbcType=INTEGER},
+      </if>
+      <if test="record.flowValue != null">
+        flowValue = #{record.flowValue,jdbcType=INTEGER},
+      </if>
+      <if test="record.priceProfitAssetRatio != null">
+        priceProfitAssetRatio = #{record.priceProfitAssetRatio,jdbcType=DOUBLE},
+      </if>
+      <if test="record.priceNetAssetRatio != null">
+        priceNetAssetRatio = #{record.priceNetAssetRatio,jdbcType=DOUBLE},
+      </if>
+      <if test="record.dealQuantity != null">
+        dealQuantity = #{record.dealQuantity,jdbcType=DOUBLE},
+      </if>
+      <if test="record.dealAmount != null">
+        dealAmount = #{record.dealAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="record.priceChange != null">
+        priceChange = #{record.priceChange,jdbcType=DOUBLE},
+      </if>
+      <if test="record.priceChangeRatio != null">
+        priceChangeRatio = #{record.priceChangeRatio,jdbcType=DOUBLE},
+      </if>
+      <if test="record.turnoverRatio != null">
+        turnoverRatio = #{record.turnoverRatio,jdbcType=DOUBLE},
+      </if>
+      <if test="record.mainInflowAmount != null">
+        mainInflowAmount = #{record.mainInflowAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="record.mainOutflowAmount != null">
+        mainOutflowAmount = #{record.mainOutflowAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="record.netInflow != null">
+        netInflow = #{record.netInflow,jdbcType=DOUBLE},
+      </if>
+      <if test="record.openPrice != null">
+        openPrice = #{record.openPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.maxPrice != null">
+        maxPrice = #{record.maxPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.minPrice != null">
+        minPrice = #{record.minPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.price != null">
+        price = #{record.price,jdbcType=DOUBLE},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -371,7 +553,23 @@
       industryRank = #{record.industryRank,jdbcType=INTEGER},
       industryDetail = #{record.industryDetail,jdbcType=VARCHAR},
       date = #{record.date,jdbcType=DATE},
-      updateTime = #{record.updateTime,jdbcType=TIMESTAMP}
+      updateTime = #{record.updateTime,jdbcType=TIMESTAMP},
+      totalValue = #{record.totalValue,jdbcType=INTEGER},
+      flowValue = #{record.flowValue,jdbcType=INTEGER},
+      priceProfitAssetRatio = #{record.priceProfitAssetRatio,jdbcType=DOUBLE},
+      priceNetAssetRatio = #{record.priceNetAssetRatio,jdbcType=DOUBLE},
+      dealQuantity = #{record.dealQuantity,jdbcType=DOUBLE},
+      dealAmount = #{record.dealAmount,jdbcType=DOUBLE},
+      priceChange = #{record.priceChange,jdbcType=DOUBLE},
+      priceChangeRatio = #{record.priceChangeRatio,jdbcType=DOUBLE},
+      turnoverRatio = #{record.turnoverRatio,jdbcType=DOUBLE},
+      mainInflowAmount = #{record.mainInflowAmount,jdbcType=DOUBLE},
+      mainOutflowAmount = #{record.mainOutflowAmount,jdbcType=DOUBLE},
+      netInflow = #{record.netInflow,jdbcType=DOUBLE},
+      openPrice = #{record.openPrice,jdbcType=DOUBLE},
+      maxPrice = #{record.maxPrice,jdbcType=DOUBLE},
+      minPrice = #{record.minPrice,jdbcType=DOUBLE},
+      price = #{record.price,jdbcType=DOUBLE}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -439,6 +637,54 @@
       <if test="updateTime != null">
         updateTime = #{updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="totalValue != null">
+        totalValue = #{totalValue,jdbcType=INTEGER},
+      </if>
+      <if test="flowValue != null">
+        flowValue = #{flowValue,jdbcType=INTEGER},
+      </if>
+      <if test="priceProfitAssetRatio != null">
+        priceProfitAssetRatio = #{priceProfitAssetRatio,jdbcType=DOUBLE},
+      </if>
+      <if test="priceNetAssetRatio != null">
+        priceNetAssetRatio = #{priceNetAssetRatio,jdbcType=DOUBLE},
+      </if>
+      <if test="dealQuantity != null">
+        dealQuantity = #{dealQuantity,jdbcType=DOUBLE},
+      </if>
+      <if test="dealAmount != null">
+        dealAmount = #{dealAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="priceChange != null">
+        priceChange = #{priceChange,jdbcType=DOUBLE},
+      </if>
+      <if test="priceChangeRatio != null">
+        priceChangeRatio = #{priceChangeRatio,jdbcType=DOUBLE},
+      </if>
+      <if test="turnoverRatio != null">
+        turnoverRatio = #{turnoverRatio,jdbcType=DOUBLE},
+      </if>
+      <if test="mainInflowAmount != null">
+        mainInflowAmount = #{mainInflowAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="mainOutflowAmount != null">
+        mainOutflowAmount = #{mainOutflowAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="netInflow != null">
+        netInflow = #{netInflow,jdbcType=DOUBLE},
+      </if>
+      <if test="openPrice != null">
+        openPrice = #{openPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="maxPrice != null">
+        maxPrice = #{maxPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="minPrice != null">
+        minPrice = #{minPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DOUBLE},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -463,7 +709,23 @@
       industryRank = #{industryRank,jdbcType=INTEGER},
       industryDetail = #{industryDetail,jdbcType=VARCHAR},
       date = #{date,jdbcType=DATE},
-      updateTime = #{updateTime,jdbcType=TIMESTAMP}
+      updateTime = #{updateTime,jdbcType=TIMESTAMP},
+      totalValue = #{totalValue,jdbcType=INTEGER},
+      flowValue = #{flowValue,jdbcType=INTEGER},
+      priceProfitAssetRatio = #{priceProfitAssetRatio,jdbcType=DOUBLE},
+      priceNetAssetRatio = #{priceNetAssetRatio,jdbcType=DOUBLE},
+      dealQuantity = #{dealQuantity,jdbcType=DOUBLE},
+      dealAmount = #{dealAmount,jdbcType=DOUBLE},
+      priceChange = #{priceChange,jdbcType=DOUBLE},
+      priceChangeRatio = #{priceChangeRatio,jdbcType=DOUBLE},
+      turnoverRatio = #{turnoverRatio,jdbcType=DOUBLE},
+      mainInflowAmount = #{mainInflowAmount,jdbcType=DOUBLE},
+      mainOutflowAmount = #{mainOutflowAmount,jdbcType=DOUBLE},
+      netInflow = #{netInflow,jdbcType=DOUBLE},
+      openPrice = #{openPrice,jdbcType=DOUBLE},
+      maxPrice = #{maxPrice,jdbcType=DOUBLE},
+      minPrice = #{minPrice,jdbcType=DOUBLE},
+      price = #{price,jdbcType=DOUBLE}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

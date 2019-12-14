@@ -4,25 +4,25 @@ package com.pers.yefei.supper.stock.exception;
 /**
  *
  */
-public class UnknownDataException extends ServerBaseException {
+public class EastMoneyDataGetErrorException extends ServerBaseException {
 
 	private static final long serialVersionUID = 1L;
-	private static ResponseCodeEnum responseCodeEnum = ResponseCodeEnum.DATA_NOT_IN_DB;
+	private static ResponseCodeEnum responseCodeEnum = ResponseCodeEnum.Get_EastMoney_Data_Error;
 
 
-	public UnknownDataException() {
+	public EastMoneyDataGetErrorException() {
 		super(responseCodeEnum.getCode(), responseCodeEnum.getReason());
 	}
 
-	public UnknownDataException(String message) {
+	public EastMoneyDataGetErrorException(String message) {
 		super(responseCodeEnum.getCode(), responseCodeEnum.getReason() + ":" + message);
 	}
 
-	public UnknownDataException(String message, Exception e) {
+	public EastMoneyDataGetErrorException(String message, Exception e) {
 		super(responseCodeEnum.getCode(), responseCodeEnum.getReason() + ":" + message, e);
 	}
 
-	public UnknownDataException(Exception e) {
+	public EastMoneyDataGetErrorException(Exception e) {
 		super(responseCodeEnum.getCode(), responseCodeEnum.getReason(), e);	}
 
 }

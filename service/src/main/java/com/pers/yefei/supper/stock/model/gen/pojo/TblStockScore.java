@@ -45,6 +45,38 @@ public class TblStockScore {
 
     private Date updateTime;
 
+    private Integer totalValue;
+
+    private Integer flowValue;
+
+    private Double priceProfitAssetRatio;
+
+    private Double priceNetAssetRatio;
+
+    private Double dealQuantity;
+
+    private Double dealAmount;
+
+    private Double priceChange;
+
+    private Double priceChangeRatio;
+
+    private Double turnoverRatio;
+
+    private Double mainInflowAmount;
+
+    private Double mainOutflowAmount;
+
+    private Double netInflow;
+
+    private Double openPrice;
+
+    private Double maxPrice;
+
+    private Double minPrice;
+
+    private Double price;
+
     public Integer getId() {
         return id;
     }
@@ -211,5 +243,133 @@ public class TblStockScore {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Integer getTotalValue() {
+        return totalValue;
+    }
+
+    public void setTotalValue(Integer totalValue) {
+        this.totalValue = totalValue;
+    }
+
+    public Integer getFlowValue() {
+        return flowValue;
+    }
+
+    public void setFlowValue(Integer flowValue) {
+        this.flowValue = flowValue;
+    }
+
+    public Double getPriceProfitAssetRatio() {
+        return priceProfitAssetRatio;
+    }
+
+    public void setPriceProfitAssetRatio(Double priceProfitAssetRatio) {
+        this.priceProfitAssetRatio = priceProfitAssetRatio;
+    }
+
+    public Double getPriceNetAssetRatio() {
+        return priceNetAssetRatio;
+    }
+
+    public void setPriceNetAssetRatio(Double priceNetAssetRatio) {
+        this.priceNetAssetRatio = priceNetAssetRatio;
+    }
+
+    public Double getDealQuantity() {
+        return dealQuantity;
+    }
+
+    public void setDealQuantity(Double dealQuantity) {
+        this.dealQuantity = dealQuantity;
+    }
+
+    public Double getDealAmount() {
+        return dealAmount;
+    }
+
+    public void setDealAmount(Double dealAmount) {
+        this.dealAmount = dealAmount;
+    }
+
+    public Double getPriceChange() {
+        return priceChange;
+    }
+
+    public void setPriceChange(Double priceChange) {
+        this.priceChange = priceChange;
+    }
+
+    public Double getPriceChangeRatio() {
+        return priceChangeRatio;
+    }
+
+    public void setPriceChangeRatio(Double priceChangeRatio) {
+        this.priceChangeRatio = priceChangeRatio;
+    }
+
+    public Double getTurnoverRatio() {
+        return turnoverRatio;
+    }
+
+    public void setTurnoverRatio(Double turnoverRatio) {
+        this.turnoverRatio = turnoverRatio;
+    }
+
+    public Double getMainInflowAmount() {
+        return mainInflowAmount;
+    }
+
+    public void setMainInflowAmount(Double mainInflowAmount) {
+        this.mainInflowAmount = mainInflowAmount;
+    }
+
+    public Double getMainOutflowAmount() {
+        return mainOutflowAmount;
+    }
+
+    public void setMainOutflowAmount(Double mainOutflowAmount) {
+        this.mainOutflowAmount = mainOutflowAmount;
+    }
+
+    public Double getNetInflow() {
+        return netInflow;
+    }
+
+    public void setNetInflow(Double netInflow) {
+        this.netInflow = netInflow;
+    }
+
+    public Double getOpenPrice() {
+        return openPrice;
+    }
+
+    public void setOpenPrice(Double openPrice) {
+        this.openPrice = openPrice;
+    }
+
+    public Double getMaxPrice() {
+        return maxPrice;
+    }
+
+    public void setMaxPrice(Double maxPrice) {
+        this.maxPrice = maxPrice;
+    }
+
+    public Double getMinPrice() {
+        return minPrice;
+    }
+
+    public void setMinPrice(Double minPrice) {
+        this.minPrice = minPrice;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 }

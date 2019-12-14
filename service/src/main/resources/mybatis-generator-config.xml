@@ -9,9 +9,12 @@
     <!--<classPathEntry location="/Users/longlive/Documents/maven/repository/mysql/mysql-connector-java/5.1.46/mysql-connector-java-5.1.46.jar"/>-->
 
     <context id="context" targetRuntime="MyBatis3">
-        <!--<plugin type="com.xxg.mybatis.plugins.MySQLLimitPlugin"></plugin>-->
 
         <property name="javaFileEncoding" value="utf-8"></property>
+
+        <!--<plugin type="com.qiukeke.mybatis.plugins.MySQLLimitPlugin"></plugin>-->
+        <plugin type="com.xxg.mybatis.plugins.MySQLLimitPlugin"></plugin>
+
         <commentGenerator>
             <property name="suppressAllComments" value="true"/>
             <property name="suppressDate" value="true"/>
@@ -42,48 +45,59 @@
 
 
         <!-- !!!! Table Configurations !!!! -->
-        <!--<table tableName="tbl_stock_info"-->
-               <!--enableCountByExample="true"-->
-               <!--enableDeleteByExample="true"-->
-               <!--enableSelectByExample="true"-->
-               <!--enableUpdateByExample="true"-->
-               <!--enableUpdateByPrimaryKey="true">-->
-            <!--<property name="useActualColumnNames" value="true" />-->
-            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-        <!--</table>-->
+        <table tableName="tbl_stock_info"
+               enableCountByExample="true"
+               enableDeleteByExample="true"
+               enableSelectByExample="true"
+               enableUpdateByExample="true"
+               enableUpdateByPrimaryKey="true">
+            <property name="useActualColumnNames" value="true" />
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
 
-        <!--<table tableName="tbl_stock_score"-->
-               <!--enableCountByExample="true"-->
-               <!--enableDeleteByExample="true"-->
-               <!--enableSelectByExample="true"-->
-               <!--enableUpdateByExample="true"-->
-               <!--enableUpdateByPrimaryKey="true">-->
-            <!--<property name="useActualColumnNames" value="true" />-->
-            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-        <!--</table>-->
+        <table tableName="tbl_stock_score"
+               enableCountByExample="true"
+               enableDeleteByExample="true"
+               enableSelectByExample="true"
+               enableUpdateByExample="true"
+               enableUpdateByPrimaryKey="true">
+            <property name="useActualColumnNames" value="true" />
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
 
 
-        <!--<table tableName="tbl_stock_score_change"-->
-               <!--enableCountByExample="true"-->
-               <!--enableDeleteByExample="true"-->
-               <!--enableSelectByExample="true"-->
-               <!--enableUpdateByExample="true"-->
-               <!--enableUpdateByPrimaryKey="true">-->
-            <!--<property name="useActualColumnNames" value="true" />-->
-            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-        <!--</table>-->
+        <table tableName="tbl_stock_score_change"
+               enableCountByExample="true"
+               enableDeleteByExample="true"
+               enableSelectByExample="true"
+               enableUpdateByExample="true"
+               enableUpdateByPrimaryKey="true">
+            <property name="useActualColumnNames" value="true" />
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
 
-        <!--<table tableName="tbl_stock_trans"-->
-               <!--enableCountByExample="true"-->
-               <!--enableDeleteByExample="true"-->
-               <!--enableSelectByExample="true"-->
-               <!--enableUpdateByExample="true"-->
-               <!--enableUpdateByPrimaryKey="true">-->
-            <!--<property name="useActualColumnNames" value="true" />-->
-            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
-        <!--</table>-->
+        <table tableName="tbl_stock_trans"
+               enableCountByExample="true"
+               enableDeleteByExample="true"
+               enableSelectByExample="true"
+               enableUpdateByExample="true"
+               enableUpdateByPrimaryKey="true">
+            <property name="useActualColumnNames" value="true" />
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
 
         <table tableName="tbl_holidays"
+               enableCountByExample="true"
+               enableDeleteByExample="true"
+               enableSelectByExample="true"
+               enableUpdateByExample="true"
+               enableUpdateByPrimaryKey="true">
+            <property name="useActualColumnNames" value="true" />
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+
+
+        <table tableName="tbl_stock_public_notice"
                enableCountByExample="true"
                enableDeleteByExample="true"
                enableSelectByExample="true"

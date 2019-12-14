@@ -45,12 +45,13 @@ public class CollectStockScoreSchedulerConfig {
 //        stockScoreConllectBiz.batchConllectStockScore();
 //        stockScoreConllectBiz.calculateStockScoreChangeByDay();
 //        stockTacticsBiz.mockTrans();
-        stockTacticsBiz.repareTransPrice();
+//        stockTacticsBiz.repareTransPrice();
 
     }
 
 
     @Scheduled(cron = "0 0 16 * * 1-5")
+//    @Scheduled(fixedRate = 60 * 60 * 1000, initialDelay =  1 * 1000)
     public void conllectStockScoreByCron() throws InterruptedException {
 
         if (stockStatisticService.isHolidays(new Date())){
@@ -59,6 +60,7 @@ public class CollectStockScoreSchedulerConfig {
         }
         // 随机延时 1s - 5min 执行
         int delay = RandomUtils.nextInt(1000, 5 * 60 * 1000);
+//        delay = 1;
         log.info("开始执行定时任务，延时 {}s 执行", delay / 1000);
         Thread.sleep((long)delay);
 
