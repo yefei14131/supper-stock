@@ -52,7 +52,7 @@ public class IndexController {
     @ResponseBody
     public Object getStockScore(String stockCode) {
         try {
-            TblStockInfo stockInfo = stockDataService.getStockInfo(stockCode);
+            TblStockInfo stockInfo = stockScoreConllectBiz.forceGetStock(stockCode);
             TblStockScore stockScore = stockScoreConllectBiz.conllectStockScore(stockInfo);
 
             return responseAdapter.success(stockScore);

@@ -5,8 +5,10 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="stockCode" jdbcType="VARCHAR" property="stockCode" />
     <result column="stockName" jdbcType="VARCHAR" property="stockName" />
-    <result column="date" jdbcType="TIMESTAMP" property="date" />
+    <result column="noticeCode" jdbcType="VARCHAR" property="noticeCode" />
     <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="noticeDate" jdbcType="TIMESTAMP" property="noticeDate" />
+    <result column="publicTime" jdbcType="TIMESTAMP" property="publicTime" />
     <result column="keywords" jdbcType="VARCHAR" property="keywords" />
     <result column="url" jdbcType="VARCHAR" property="url" />
     <result column="updateTime" jdbcType="TIMESTAMP" property="updateTime" />
@@ -70,7 +72,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, stockCode, stockName, date, title, keywords, url, updateTime
+    id, stockCode, stockName, noticeCode, title, noticeDate, publicTime, keywords, url, 
+    updateTime
   </sql>
   <select id="selectByExample" parameterType="com.pers.yefei.supper.stock.model.gen.pojo.TblStockPublicNoticeExample" resultMap="BaseResultMap">
     select
@@ -114,12 +117,14 @@
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into tbl_stock_public_notice (stockCode, stockName, date, 
-      title, keywords, url, 
-      updateTime)
-    values (#{stockCode,jdbcType=VARCHAR}, #{stockName,jdbcType=VARCHAR}, #{date,jdbcType=TIMESTAMP}, 
-      #{title,jdbcType=VARCHAR}, #{keywords,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
-      #{updateTime,jdbcType=TIMESTAMP})
+    insert into tbl_stock_public_notice (stockCode, stockName, noticeCode, 
+      title, noticeDate, publicTime, 
+      keywords, url, updateTime
+      )
+    values (#{stockCode,jdbcType=VARCHAR}, #{stockName,jdbcType=VARCHAR}, #{noticeCode,jdbcType=VARCHAR}, 
+      #{title,jdbcType=VARCHAR}, #{noticeDate,jdbcType=TIMESTAMP}, #{publicTime,jdbcType=TIMESTAMP}, 
+      #{keywords,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.pers.yefei.supper.stock.model.gen.pojo.TblStockPublicNotice">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -133,11 +138,17 @@
       <if test="stockName != null">
         stockName,
       </if>
-      <if test="date != null">
-        date,
+      <if test="noticeCode != null">
+        noticeCode,
       </if>
       <if test="title != null">
         title,
+      </if>
+      <if test="noticeDate != null">
+        noticeDate,
+      </if>
+      <if test="publicTime != null">
+        publicTime,
       </if>
       <if test="keywords != null">
         keywords,
@@ -156,11 +167,17 @@
       <if test="stockName != null">
         #{stockName,jdbcType=VARCHAR},
       </if>
-      <if test="date != null">
-        #{date,jdbcType=TIMESTAMP},
+      <if test="noticeCode != null">
+        #{noticeCode,jdbcType=VARCHAR},
       </if>
       <if test="title != null">
         #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="noticeDate != null">
+        #{noticeDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="publicTime != null">
+        #{publicTime,jdbcType=TIMESTAMP},
       </if>
       <if test="keywords != null">
         #{keywords,jdbcType=VARCHAR},
@@ -191,11 +208,17 @@
       <if test="record.stockName != null">
         stockName = #{record.stockName,jdbcType=VARCHAR},
       </if>
-      <if test="record.date != null">
-        date = #{record.date,jdbcType=TIMESTAMP},
+      <if test="record.noticeCode != null">
+        noticeCode = #{record.noticeCode,jdbcType=VARCHAR},
       </if>
       <if test="record.title != null">
         title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.noticeDate != null">
+        noticeDate = #{record.noticeDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.publicTime != null">
+        publicTime = #{record.publicTime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.keywords != null">
         keywords = #{record.keywords,jdbcType=VARCHAR},
@@ -216,8 +239,10 @@
     set id = #{record.id,jdbcType=INTEGER},
       stockCode = #{record.stockCode,jdbcType=VARCHAR},
       stockName = #{record.stockName,jdbcType=VARCHAR},
-      date = #{record.date,jdbcType=TIMESTAMP},
+      noticeCode = #{record.noticeCode,jdbcType=VARCHAR},
       title = #{record.title,jdbcType=VARCHAR},
+      noticeDate = #{record.noticeDate,jdbcType=TIMESTAMP},
+      publicTime = #{record.publicTime,jdbcType=TIMESTAMP},
       keywords = #{record.keywords,jdbcType=VARCHAR},
       url = #{record.url,jdbcType=VARCHAR},
       updateTime = #{record.updateTime,jdbcType=TIMESTAMP}
@@ -234,11 +259,17 @@
       <if test="stockName != null">
         stockName = #{stockName,jdbcType=VARCHAR},
       </if>
-      <if test="date != null">
-        date = #{date,jdbcType=TIMESTAMP},
+      <if test="noticeCode != null">
+        noticeCode = #{noticeCode,jdbcType=VARCHAR},
       </if>
       <if test="title != null">
         title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="noticeDate != null">
+        noticeDate = #{noticeDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="publicTime != null">
+        publicTime = #{publicTime,jdbcType=TIMESTAMP},
       </if>
       <if test="keywords != null">
         keywords = #{keywords,jdbcType=VARCHAR},
@@ -256,8 +287,10 @@
     update tbl_stock_public_notice
     set stockCode = #{stockCode,jdbcType=VARCHAR},
       stockName = #{stockName,jdbcType=VARCHAR},
-      date = #{date,jdbcType=TIMESTAMP},
+      noticeCode = #{noticeCode,jdbcType=VARCHAR},
       title = #{title,jdbcType=VARCHAR},
+      noticeDate = #{noticeDate,jdbcType=TIMESTAMP},
+      publicTime = #{publicTime,jdbcType=TIMESTAMP},
       keywords = #{keywords,jdbcType=VARCHAR},
       url = #{url,jdbcType=VARCHAR},
       updateTime = #{updateTime,jdbcType=TIMESTAMP}

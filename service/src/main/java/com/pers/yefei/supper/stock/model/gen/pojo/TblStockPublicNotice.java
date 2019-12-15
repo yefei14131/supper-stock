@@ -9,9 +9,13 @@ public class TblStockPublicNotice {
 
     private String stockName;
 
-    private Date date;
+    private String noticeCode;
 
     private String title;
+
+    private Date noticeDate;
+
+    private Date publicTime;
 
     private String keywords;
 
@@ -43,12 +47,12 @@ public class TblStockPublicNotice {
         this.stockName = stockName == null ? null : stockName.trim();
     }
 
-    public Date getDate() {
-        return date;
+    public String getNoticeCode() {
+        return noticeCode;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setNoticeCode(String noticeCode) {
+        this.noticeCode = noticeCode == null ? null : noticeCode.trim();
     }
 
     public String getTitle() {
@@ -57,6 +61,22 @@ public class TblStockPublicNotice {
 
     public void setTitle(String title) {
         this.title = title == null ? null : title.trim();
+    }
+
+    public Date getNoticeDate() {
+        return noticeDate;
+    }
+
+    public void setNoticeDate(Date noticeDate) {
+        this.noticeDate = noticeDate;
+    }
+
+    public Date getPublicTime() {
+        return publicTime;
+    }
+
+    public void setPublicTime(Date publicTime) {
+        this.publicTime = publicTime;
     }
 
     public String getKeywords() {

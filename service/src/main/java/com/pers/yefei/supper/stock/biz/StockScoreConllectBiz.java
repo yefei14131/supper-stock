@@ -126,7 +126,11 @@ public class StockScoreConllectBiz {
     }
 
 
-
+    /**
+     * 获取股票的评分，保存至tbl_stock_score和tbl_stock_info
+     * @param stockInfo
+     * @return
+     */
     public TblStockScore conllectStockScore(TblStockInfo stockInfo){
         try {
             TblStockScore stockScore = stockDataService.getStockScoreToday(stockInfo.getStockCode());
@@ -198,6 +202,9 @@ public class StockScoreConllectBiz {
     }
 
 
+    /**
+     * 计算股票的评分变化情况
+     */
     public void calculateStockScoreChangeByDay(){
 
         log.info("开始计算股票得分变化");
@@ -253,7 +260,23 @@ public class StockScoreConllectBiz {
     }
 
 
+    /**
+     * 从tbl_stock_info查询股票信息，如果查询不到，则重新获取数据并保存
+     *
+     * @param stockCode
+     * @return
+     */
 
+    public TblStockInfo forceGetStock(String stockCode){
+        TblStockInfo stockInfo = stockDataService.getStockInfo(stockCode);
 
+        if (stockInfo == null){
+            stockInfo = new TblStockInfo();
+            stockInfo.setStockCode(stockCode);
+            this.conllectStockScore(stockInfo);
+        }
+
+        return stockInfo;
+    }
 
 }

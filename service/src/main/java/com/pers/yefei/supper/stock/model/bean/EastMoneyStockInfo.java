@@ -1,7 +1,7 @@
 package com.pers.yefei.supper.stock.model.bean;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pers.yefei.supper.stock.exception.EastMoneyDataParseErrorException;
+import com.pers.yefei.supper.stock.exception.EastMoneyDataParseException;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
@@ -9,8 +9,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-
-import static com.pers.yefei.supper.stock.exception.ResponseCodeEnum.Parse_EastMoney_Data_Error;
 
 /**
  * @author yefei
@@ -81,13 +79,13 @@ public class EastMoneyStockInfo {
         }
     }
 
-    public static EastMoneyStockInfo from(String eastMoneyData) {
+    public static EastMoneyStockInfo from(String eastMoneyData, String callbackFunc) {
 
         if (eastMoneyData.matches(".+?\"data:\"null.+?")) {
-            throw new EastMoneyDataParseErrorException(eastMoneyData);
+            throw new EastMoneyDataParseException(eastMoneyData);
         }
         try {
-            eastMoneyData = eastMoneyData.replaceAll("^hqCall\\((.+?)data\":(.*?)\\}\\);$", "$2");
+            eastMoneyData = eastMoneyData.replaceAll("^" + callbackFunc + "\\((.+?)data\":(.*?)\\}\\);$", "$2");
             Iterator<Map.Entry<String, String>> iterator = fieldMapping.entrySet().iterator();
             while (iterator.hasNext()) {
                 Map.Entry<String, String> entry = iterator.next();
@@ -98,7 +96,7 @@ public class EastMoneyStockInfo {
             return new ObjectMapper().readValue(eastMoneyData, EastMoneyStockInfo.class);
 
         } catch (Exception e) {
-            throw new EastMoneyDataParseErrorException(eastMoneyData, e);
+            throw new EastMoneyDataParseException(eastMoneyData, e);
         }
     }
 

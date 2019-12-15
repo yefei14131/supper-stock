@@ -37,7 +37,7 @@ public class StockScoreDaoImpl implements IStockScoreDao {
 
     @Override
     public void insertStockScore(TblStockScore stockScore){
-        tblStockScoreMapper.insert(stockScore);
+        tblStockScoreMapper.insertSelective(stockScore);
     }
 
     @Override

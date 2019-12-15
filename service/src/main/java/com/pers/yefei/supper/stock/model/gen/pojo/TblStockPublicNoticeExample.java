@@ -325,63 +325,73 @@ public class TblStockPublicNoticeExample {
             return (Criteria) this;
         }
 
-        public Criteria andDateIsNull() {
-            addCriterion("date is null");
+        public Criteria andNoticeCodeIsNull() {
+            addCriterion("noticeCode is null");
             return (Criteria) this;
         }
 
-        public Criteria andDateIsNotNull() {
-            addCriterion("date is not null");
+        public Criteria andNoticeCodeIsNotNull() {
+            addCriterion("noticeCode is not null");
             return (Criteria) this;
         }
 
-        public Criteria andDateEqualTo(Date value) {
-            addCriterion("date =", value, "date");
+        public Criteria andNoticeCodeEqualTo(String value) {
+            addCriterion("noticeCode =", value, "noticeCode");
             return (Criteria) this;
         }
 
-        public Criteria andDateNotEqualTo(Date value) {
-            addCriterion("date <>", value, "date");
+        public Criteria andNoticeCodeNotEqualTo(String value) {
+            addCriterion("noticeCode <>", value, "noticeCode");
             return (Criteria) this;
         }
 
-        public Criteria andDateGreaterThan(Date value) {
-            addCriterion("date >", value, "date");
+        public Criteria andNoticeCodeGreaterThan(String value) {
+            addCriterion("noticeCode >", value, "noticeCode");
             return (Criteria) this;
         }
 
-        public Criteria andDateGreaterThanOrEqualTo(Date value) {
-            addCriterion("date >=", value, "date");
+        public Criteria andNoticeCodeGreaterThanOrEqualTo(String value) {
+            addCriterion("noticeCode >=", value, "noticeCode");
             return (Criteria) this;
         }
 
-        public Criteria andDateLessThan(Date value) {
-            addCriterion("date <", value, "date");
+        public Criteria andNoticeCodeLessThan(String value) {
+            addCriterion("noticeCode <", value, "noticeCode");
             return (Criteria) this;
         }
 
-        public Criteria andDateLessThanOrEqualTo(Date value) {
-            addCriterion("date <=", value, "date");
+        public Criteria andNoticeCodeLessThanOrEqualTo(String value) {
+            addCriterion("noticeCode <=", value, "noticeCode");
             return (Criteria) this;
         }
 
-        public Criteria andDateIn(List<Date> values) {
-            addCriterion("date in", values, "date");
+        public Criteria andNoticeCodeLike(String value) {
+            addCriterion("noticeCode like", value, "noticeCode");
             return (Criteria) this;
         }
 
-        public Criteria andDateNotIn(List<Date> values) {
-            addCriterion("date not in", values, "date");
+        public Criteria andNoticeCodeNotLike(String value) {
+            addCriterion("noticeCode not like", value, "noticeCode");
             return (Criteria) this;
         }
 
-        public Criteria andDateBetween(Date value1, Date value2) {
-            addCriterion("date between", value1, value2, "date");
+        public Criteria andNoticeCodeIn(List<String> values) {
+            addCriterion("noticeCode in", values, "noticeCode");
             return (Criteria) this;
         }
 
-        public Criteria andDateNotBetween(Date value1, Date value2) {
-            addCriterion("date not between", value1, value2, "date");
+        public Criteria andNoticeCodeNotIn(List<String> values) {
+            addCriterion("noticeCode not in", values, "noticeCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoticeCodeBetween(String value1, String value2) {
+            addCriterion("noticeCode between", value1, value2, "noticeCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoticeCodeNotBetween(String value1, String value2) {
+            addCriterion("noticeCode not between", value1, value2, "noticeCode");
             return (Criteria) this;
         }
 
@@ -452,6 +462,126 @@ public class TblStockPublicNoticeExample {
 
         public Criteria andTitleNotBetween(String value1, String value2) {
             addCriterion("title not between", value1, value2, "title");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoticeDateIsNull() {
+            addCriterion("noticeDate is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoticeDateIsNotNull() {
+            addCriterion("noticeDate is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoticeDateEqualTo(Date value) {
+            addCriterion("noticeDate =", value, "noticeDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoticeDateNotEqualTo(Date value) {
+            addCriterion("noticeDate <>", value, "noticeDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoticeDateGreaterThan(Date value) {
+            addCriterion("noticeDate >", value, "noticeDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoticeDateGreaterThanOrEqualTo(Date value) {
+            addCriterion("noticeDate >=", value, "noticeDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoticeDateLessThan(Date value) {
+            addCriterion("noticeDate <", value, "noticeDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoticeDateLessThanOrEqualTo(Date value) {
+            addCriterion("noticeDate <=", value, "noticeDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoticeDateIn(List<Date> values) {
+            addCriterion("noticeDate in", values, "noticeDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoticeDateNotIn(List<Date> values) {
+            addCriterion("noticeDate not in", values, "noticeDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoticeDateBetween(Date value1, Date value2) {
+            addCriterion("noticeDate between", value1, value2, "noticeDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoticeDateNotBetween(Date value1, Date value2) {
+            addCriterion("noticeDate not between", value1, value2, "noticeDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andPublicTimeIsNull() {
+            addCriterion("publicTime is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPublicTimeIsNotNull() {
+            addCriterion("publicTime is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPublicTimeEqualTo(Date value) {
+            addCriterion("publicTime =", value, "publicTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPublicTimeNotEqualTo(Date value) {
+            addCriterion("publicTime <>", value, "publicTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPublicTimeGreaterThan(Date value) {
+            addCriterion("publicTime >", value, "publicTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPublicTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("publicTime >=", value, "publicTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPublicTimeLessThan(Date value) {
+            addCriterion("publicTime <", value, "publicTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPublicTimeLessThanOrEqualTo(Date value) {
+            addCriterion("publicTime <=", value, "publicTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPublicTimeIn(List<Date> values) {
+            addCriterion("publicTime in", values, "publicTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPublicTimeNotIn(List<Date> values) {
+            addCriterion("publicTime not in", values, "publicTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPublicTimeBetween(Date value1, Date value2) {
+            addCriterion("publicTime between", value1, value2, "publicTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPublicTimeNotBetween(Date value1, Date value2) {
+            addCriterion("publicTime not between", value1, value2, "publicTime");
             return (Criteria) this;
         }
 

@@ -4,25 +4,25 @@ package com.pers.yefei.supper.stock.exception;
 /**
  *
  */
-public class EastMoneyDataGetErrorException extends ServerBaseException {
+public class EastMoneyDataGetException extends ServerBaseException {
 
 	private static final long serialVersionUID = 1L;
 	private static ResponseCodeEnum responseCodeEnum = ResponseCodeEnum.Get_EastMoney_Data_Error;
 
 
-	public EastMoneyDataGetErrorException() {
+	public EastMoneyDataGetException() {
 		super(responseCodeEnum.getCode(), responseCodeEnum.getReason());
 	}
 
-	public EastMoneyDataGetErrorException(String message) {
+	public EastMoneyDataGetException(String message) {
 		super(responseCodeEnum.getCode(), responseCodeEnum.getReason() + ":" + message);
 	}
 
-	public EastMoneyDataGetErrorException(String message, Exception e) {
+	public EastMoneyDataGetException(String message, Exception e) {
 		super(responseCodeEnum.getCode(), responseCodeEnum.getReason() + ":" + message, e);
 	}
 
-	public EastMoneyDataGetErrorException(Exception e) {
+	public EastMoneyDataGetException(Exception e) {
 		super(responseCodeEnum.getCode(), responseCodeEnum.getReason(), e);	}
 
 }

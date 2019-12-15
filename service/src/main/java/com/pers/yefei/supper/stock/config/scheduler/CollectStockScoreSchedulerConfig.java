@@ -1,6 +1,7 @@
 package com.pers.yefei.supper.stock.config.scheduler;
 
 
+import com.pers.yefei.supper.stock.biz.StockPublicNoticeBiz;
 import com.pers.yefei.supper.stock.biz.StockScoreConllectBiz;
 import com.pers.yefei.supper.stock.biz.StockTacticsBiz;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockScore;
@@ -38,6 +39,9 @@ public class CollectStockScoreSchedulerConfig {
     @Autowired
     private StockTacticsBiz stockTacticsBiz;
 
+    @Autowired
+    private StockPublicNoticeBiz stockPublicNoticeBiz;
+
 
     @Scheduled(fixedRate = 60 * 60 * 1000, initialDelay =  1 * 1000)
     private void process(){
@@ -45,7 +49,7 @@ public class CollectStockScoreSchedulerConfig {
 //        stockScoreConllectBiz.batchConllectStockScore();
 //        stockScoreConllectBiz.calculateStockScoreChangeByDay();
 //        stockTacticsBiz.mockTrans();
-//        stockTacticsBiz.repareTransPrice();
+        stockTacticsBiz.repareTransPrice();
 
     }
 
@@ -69,6 +73,20 @@ public class CollectStockScoreSchedulerConfig {
         stockTacticsBiz.mockTrans();
         stockTacticsBiz.repareTransPrice();
     }
+
+
+    /**
+     * 定时拉取公告
+     * @throws InterruptedException
+     */
+    @Scheduled(cron = "1 10 6,22 * * ?")
+//    @Scheduled(fixedRate = 60 * 60 * 1000, initialDelay =  1 * 1000)
+    public void conllectStockPublicNoticeByCron() throws InterruptedException {
+        stockPublicNoticeBiz.fetchStockPublicNotice();
+        stockPublicNoticeBiz.publishStockNotice();
+    }
+
+
 
 
 

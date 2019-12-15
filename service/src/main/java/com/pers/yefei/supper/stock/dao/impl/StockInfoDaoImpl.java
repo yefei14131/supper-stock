@@ -28,7 +28,7 @@ public class StockInfoDaoImpl implements IStockInfoDao {
     @Override
     public int insertStockInfo(TblStockInfo tblStockInfo){
 
-        return tblStockInfoMapper.insert(tblStockInfo);
+        return tblStockInfoMapper.insertSelective(tblStockInfo);
     }
 
     @Override

@@ -2,13 +2,16 @@ package com.pers.yefei.supper.stock.service.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pers.yefei.supper.stock.exception.EastMoneyDataGetErrorException;
+import com.pers.yefei.supper.stock.exception.EastMoneyDataGetException;
 import com.pers.yefei.supper.stock.model.bean.EastMoneyStockInfo;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockInfo;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockScore;
 import com.pers.yefei.supper.stock.service.IStockBaseInfoEastMoneyService;
 import com.pers.yefei.supper.stock.utils.FileUtils;
+import com.pers.yefei.supper.stock.utils.OkHttpHelper;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -29,12 +32,16 @@ public class StockBaseInfoEastMoneyServiceImpl implements IStockBaseInfoEastMone
     private final static String SZ_MARKET_CODE = "0";
     private final static String SH_STOCK_CODE = "sh000001";
     private final static String SZ_STOCK_CODE = "399001";
-    private final static String urlTemplate = "https://push2.eastmoney.com/api/qt/stock/get?secid={0}.{1}&ut=f057cbcbce2a86e2866ab8877db1d059&forcect=1&fields={2}&invt=2&cb=hqCall&callback=jsonp1";
+    private final static String urlTemplate = "https://push2.eastmoney.com/api/qt/stock/get?secid={0}.{1}&ut=f057cbcbce2a86e2866ab8877db1d059&forcect=1&fields={2}&invt=2&cb={3}&callback=jsonp1";
+
+    @Autowired
+    private OkHttpHelper okHttpHelper;
 
     @Override
     public EastMoneyStockInfo queryStockInfo(String stockCode) {
-        String s = readFromEastMoneyServer(stockCode);
-        return EastMoneyStockInfo.from(s);
+        String callbackFunc = RandomStringUtils.randomAlphanumeric(5);
+        String s = readFromEastMoneyServer(stockCode, callbackFunc);
+        return EastMoneyStockInfo.from(s, callbackFunc);
     }
 
     @Override
@@ -114,12 +121,14 @@ public class StockBaseInfoEastMoneyServiceImpl implements IStockBaseInfoEastMone
     @Override
     public void queryStockInfo(TblStockInfo stockInfo) {
         EastMoneyStockInfo eastMoneyStockInfo = this.queryStockInfo(stockInfo.getStockCode());
+
         stockInfo.setTotalValue(((int)eastMoneyStockInfo.getTotalValue())/10000/10000);
         stockInfo.setFlowValue(((int)eastMoneyStockInfo.getFlowValue())/10000/10000);
         stockInfo.setPriceNetAssetRatio(((double)eastMoneyStockInfo.getPriceNetAssetRatio())/100);
         stockInfo.setPriceProfitAssetRatio(((double)eastMoneyStockInfo.getPriceProfitAssetRatio())/100);
         stockInfo.setStockName(eastMoneyStockInfo.getStockName());
         stockInfo.setPrice(((double)eastMoneyStockInfo.getPrice())/100);
+
 
     }
 
@@ -130,7 +139,7 @@ public class StockBaseInfoEastMoneyServiceImpl implements IStockBaseInfoEastMone
         return ((float)eastMoneyStockInfo.getPrice())/100 + "";
     }
 
-    private String readFromEastMoneyServer(String stockCode) {
+    private String readFromEastMoneyServer(String stockCode, String callbackFunc) {
         String market;
         if (stockCode.equals(SH_STOCK_CODE)) {
             market = SH_MARKET_CODE;
@@ -139,25 +148,21 @@ public class StockBaseInfoEastMoneyServiceImpl implements IStockBaseInfoEastMone
         } else {
             market = stockCode.startsWith("6") ? SH_MARKET_CODE : SZ_MARKET_CODE;
         }
-        String url  = MessageFormat.format(urlTemplate, new Object[]{market, stockCode, EastMoneyStockInfo.getAllField()});
-        System.out.println(url);
-        String content = doGet(url);
-        return content;
-    }
-
-
-    private String doGet(String urlStr) {
+        String url  = MessageFormat.format(urlTemplate, new Object[]{market, stockCode, EastMoneyStockInfo.getAllField(), callbackFunc});
         try {
-            log.info("调用东方财富接口：{}", urlStr);
-            URL url = new URL(urlStr);
-            URLConnection urlConnection = url.openConnection();
-            String content = FileUtils.readContent(urlConnection.getInputStream(), "utf-8");
-            log.info("调用东方财富接口返回内容：{}", content);
+
+            log.info("调用东方财富接口获取股票信息：{}", url);
+            String content = okHttpHelper.getResponseString(url);
+            log.info("调用东方财富接口获取股票信息，返回内容：{}", url);
+
             return content;
         } catch (IOException e) {
-            throw new EastMoneyDataGetErrorException(e);
+            throw new EastMoneyDataGetException(e);
+
         }
     }
+
+
 
 
 
