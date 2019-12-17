@@ -18,7 +18,7 @@ public interface IStockScoreDao {
 
     List<TblStockScore> queryStockScoreByDate(Date date);
 
-    Date queryPrevDate();
+    Date queryPrevDate(Date date);
 
     long countStockScoreByDate(Date date);
 

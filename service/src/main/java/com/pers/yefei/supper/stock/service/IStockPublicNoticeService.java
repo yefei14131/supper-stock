@@ -1,6 +1,5 @@
 package com.pers.yefei.supper.stock.service;
 
-import com.pers.yefei.supper.stock.model.bean.StockPublicNoticeObserver;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockPublicNotice;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockPublicNoticeObserver;
 

@@ -1,15 +1,18 @@
 package com.pers.yefei.supper.stock.service.impl;
 
 import com.pers.yefei.supper.stock.dao.*;
+import com.pers.yefei.supper.stock.model.bean.StockScoreChangeInfo;
+import com.pers.yefei.supper.stock.model.bean.StockScoreChangeSummary;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockInfo;
-import com.pers.yefei.supper.stock.model.gen.pojo.TblStockScore;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockScoreChange;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockTrans;
-import com.pers.yefei.supper.stock.service.IStockDataService;
 import com.pers.yefei.supper.stock.service.IStockStatisticService;
+import com.pers.yefei.supper.stock.utils.DateUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +21,7 @@ import java.util.List;
  * @author: yefei
  * @date: 2019/4/27 01:14
  */
+@Slf4j
 @Service
 public class StockStatisticServiceImpl implements IStockStatisticService {
 
@@ -40,7 +44,42 @@ public class StockStatisticServiceImpl implements IStockStatisticService {
     @Override
     public List<TblStockScoreChange> queryStockScoreChangeByDate(Date date){
 
-        return stockStatisticDao.queryStockScoreChangeByDate(date);
+        return stockStatisticDao.queryStockScoreChangeByDate(DateUtils.getZeroDate(date));
+    }
+
+    @Override
+    public StockScoreChangeSummary queryStockScoreChangeInfoByDate(Date date){
+        log.info("开始查询{}的评分变化");
+        date = DateUtils.getZeroDate(date);
+        StockScoreChangeSummary stockScoreChangeSummary = new StockScoreChangeSummary();
+        stockScoreChangeSummary.setDate(date);
+
+        List<TblStockScoreChange> tblStockScoreChanges = stockStatisticDao.queryStockScoreChangeByDate(date);
+
+        tblStockScoreChanges.sort(new Comparator<TblStockScoreChange>() {
+            @Override
+            public int compare(TblStockScoreChange o1, TblStockScoreChange o2) {
+                return o1.getChangeValue() - o2.getChangeValue();
+            }
+        });
+
+        tblStockScoreChanges.forEach(tblStockScoreChange->{
+
+            StockScoreChangeInfo stockScoreChangeInfo = new StockScoreChangeInfo();
+            stockScoreChangeInfo.from(tblStockScoreChange);
+            TblStockInfo stockInfo = stockInfoDao.getStockInfo(tblStockScoreChange.getStockCode());
+            stockScoreChangeInfo.from(stockInfo);
+
+            if( tblStockScoreChange.getChangeValue() > 0) {
+
+                stockScoreChangeSummary.getIncreaseList().add(0, stockScoreChangeInfo);
+            } else {
+                stockScoreChangeSummary.getReduceList().add(stockScoreChangeInfo);
+            }
+        });
+
+
+        return stockScoreChangeSummary;
     }
 
     @Override

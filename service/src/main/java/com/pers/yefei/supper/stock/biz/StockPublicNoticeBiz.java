@@ -1,17 +1,13 @@
 package com.pers.yefei.supper.stock.biz;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pers.yefei.supper.stock.model.bean.EastMoneyPublicNoticeInfo;
-import com.pers.yefei.supper.stock.model.bean.StockPublicNoticeObserver;
+import com.pers.yefei.supper.stock.model.bean.MessageObserver.StockPublicNoticeObserver;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockInfo;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockPublicNotice;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockPublicNoticeObserver;
-import com.pers.yefei.supper.stock.service.IStockDataService;
-import com.pers.yefei.supper.stock.service.IStockPublicNoticeEastMoneyService;
 import com.pers.yefei.supper.stock.service.IStockPublicNoticeService;
-import com.pers.yefei.supper.stock.third.DingTalk.DingTalkMessageSender;
-import com.pers.yefei.supper.stock.third.MessageSender;
+import com.pers.yefei.supper.stock.third.message.MessageSender;
+import com.pers.yefei.supper.stock.third.public_notice.PublicNoticeCollector;
 import com.pers.yefei.supper.stock.utils.DateUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomUtils;
@@ -34,7 +30,7 @@ public class StockPublicNoticeBiz {
     private static final int pageSize = 50;
 
     @Autowired
-    private IStockPublicNoticeEastMoneyService stockPublicNoticeEastMoneyService;
+    private PublicNoticeCollector publicNoticeCollector;
 
     @Autowired
     private IStockPublicNoticeService stockPublicNoticeService;
@@ -43,7 +39,7 @@ public class StockPublicNoticeBiz {
     private MessageSender messageSender;
 
     @Autowired
-    private StockScoreConllectBiz stockScoreConllectBiz;
+    private StockScoreBiz stockScoreConllectBiz;
 
 
     /**
@@ -81,7 +77,7 @@ public class StockPublicNoticeBiz {
             }
 
             log.info("获取 {} 公告, page:{}, pageTotal:{}", DateFormatUtils.format(date, "yyyy-MM-dd"), page, pageTotal);
-            eastMoneyPublicNoticeInfo = stockPublicNoticeEastMoneyService.fetchPrevDayNotice(pageSize, page, date);
+            eastMoneyPublicNoticeInfo = publicNoticeCollector.fetchPrevDayNotice(pageSize, page, date);
             pageTotal = eastMoneyPublicNoticeInfo.getPageTotal();
             stockPublicNoticeService.savePublicNotice(eastMoneyPublicNoticeInfo.getPublicNoticeList());
 
@@ -137,7 +133,7 @@ public class StockPublicNoticeBiz {
             stockPublicNoticeObserver.getStockPublicNoticeInfoList().forEach(stockPublicNoticeInfo->{
                 TblStockInfo stockInfo = stockScoreConllectBiz.forceGetStock(stockPublicNoticeInfo.getStockCode());
 
-                stockPublicNoticeInfo.setField(stockInfo);
+                stockPublicNoticeInfo.from(stockInfo);
             });
         });
 

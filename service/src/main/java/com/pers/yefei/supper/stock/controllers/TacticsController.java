@@ -1,14 +1,10 @@
 package com.pers.yefei.supper.stock.controllers;
 
-import com.pers.yefei.supper.stock.biz.StockScoreConllectBiz;
+import com.pers.yefei.supper.stock.biz.StockScoreBiz;
 import com.pers.yefei.supper.stock.biz.StockTacticsBiz;
 import com.pers.yefei.supper.stock.config.ResponseAdapter;
-import com.pers.yefei.supper.stock.model.gen.pojo.TblStockInfo;
-import com.pers.yefei.supper.stock.model.gen.pojo.TblStockScore;
-import com.pers.yefei.supper.stock.model.gen.pojo.TblStockScoreChange;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockTrans;
 import com.pers.yefei.supper.stock.service.IStockDataService;
-import com.pers.yefei.supper.stock.service.IStockScoreService;
 import com.pers.yefei.supper.stock.service.IStockStatisticService;
 import com.pers.yefei.supper.stock.utils.DateUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +24,7 @@ import java.util.List;
  */
 @RestController
 @Slf4j
+@RequestMapping(value = "/supper_stock/tactics")
 public class TacticsController {
 
 
@@ -39,11 +36,7 @@ public class TacticsController {
 
 
     @Autowired
-    private IStockScoreService stockScoreService;
-
-
-    @Autowired
-    private StockScoreConllectBiz stockScoreConllectBiz;
+    private StockScoreBiz stockScoreConllectBiz;
 
 
     @Autowired
@@ -59,7 +52,7 @@ public class TacticsController {
      * @param date
      * @return
      */
-    @RequestMapping(value = "/stock/mock/trans")
+    @RequestMapping(value = "/mock/trans")
     @ResponseBody
     public Object mockTransToday(@RequestParam(name = "date", defaultValue = "") String date) {
         try {
@@ -74,24 +67,6 @@ public class TacticsController {
             return responseAdapter.failure(ExceptionUtils.getStackTrace(e));
         }
     }
-
-    /**
-     * 采集所有股票当前价格并更新
-     * @return
-     */
-    @RequestMapping(value = "/stock/collect/price")
-    @ResponseBody
-    public Object collectStockPrice() {
-        try {
-            stockTacticsBiz.collectStockPrice();
-            return responseAdapter.success();
-
-        } catch (Exception e) {
-            log.error(ExceptionUtils.getStackTrace(e));
-            return responseAdapter.failure(ExceptionUtils.getStackTrace(e));
-        }
-    }
-
 
 
 }

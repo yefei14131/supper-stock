@@ -1,16 +1,19 @@
-package com.pers.yefei.supper.stock.third.DingTalk;
+package com.pers.yefei.supper.stock.third.message.DingTalk;
 
 import com.dingtalk.api.DefaultDingTalkClient;
 import com.dingtalk.api.DingTalkClient;
 import com.dingtalk.api.request.OapiRobotSendRequest;
 import com.dingtalk.api.response.OapiRobotSendResponse;
-import com.pers.yefei.supper.stock.model.bean.StockPublicNoticeObserver;
+import com.pers.yefei.supper.stock.model.bean.MessageObserver.StockPublicNoticeObserver;
+import com.pers.yefei.supper.stock.model.bean.MessageObserver.StockSoreChangeObserver;
+import com.pers.yefei.supper.stock.model.bean.StockScoreChangeInfo;
 import com.taobao.api.ApiException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.stereotype.Component;
 
 import java.text.MessageFormat;
+import java.util.List;
 
 /**
  * @author yefei
@@ -21,20 +24,23 @@ import java.text.MessageFormat;
 public class DingTalkMessageSender {
     private static final String urlTemplate = "https://oapi.dingtalk.com/robot/send?access_token={0}&timestamp={1}&sign={2}";
 
+    private String genUrl(String token){
+        Long timestamp = System.currentTimeMillis();
+        String sign = DingTalkSign.genSign(token, timestamp);
+        String url = MessageFormat.format(urlTemplate, new Object[]{token, timestamp.toString(), sign});
+        log.info("请求钉钉url：{}\n{}", timestamp, url );
+        return url;
+    }
 
     public void sendStockPublicNotice(StockPublicNoticeObserver stockPublicNoticeObserver) {
         try {
-            Long timestamp = System.currentTimeMillis();
-            String sign = DingTalkSign.genSign(stockPublicNoticeObserver.getThirdToken(), timestamp);
-            String url = MessageFormat.format(urlTemplate, new Object[]{stockPublicNoticeObserver.getThirdToken(), timestamp.toString(), sign});
-
-            log.info("请求钉钉url：{}\n{}", timestamp, url );
+            String url = genUrl(stockPublicNoticeObserver.getThirdToken());
             DingTalkClient client = new DefaultDingTalkClient(url);
             OapiRobotSendRequest request = new OapiRobotSendRequest();
 
             request.setMsgtype("markdown");
             OapiRobotSendRequest.Markdown markdown = new OapiRobotSendRequest.Markdown();
-            String title = "股票公告推送";
+            String title = stockPublicNoticeObserver.getTitle();
             markdown.setTitle(title);
 
             StringBuilder contentBuilder = new StringBuilder();
@@ -67,11 +73,71 @@ public class DingTalkMessageSender {
     }
 
 
-    public static void main(String[] args) {
-        StockPublicNoticeObserver stockPublicNoticeObserver = new StockPublicNoticeObserver();
-        stockPublicNoticeObserver.setThirdToken("20e0f97ec78da7a0eeeae5a541682bf189a3d0975ccfe71a4bf7058cbd0f8deb");
-        new DingTalkMessageSender().sendStockPublicNotice(stockPublicNoticeObserver);
+    public void sendStockScoreChange(StockSoreChangeObserver stockSoreChangeObserver) {
+        sendStockScoreChange(stockSoreChangeObserver, stockSoreChangeObserver.getStockScoreChangeSummary().getReduceList(), "减少");
+        sendStockScoreChange(stockSoreChangeObserver, stockSoreChangeObserver.getStockScoreChangeSummary().getIncreaseList(), "增加");
     }
+
+    private void sendStockScoreChange(StockSoreChangeObserver stockSoreChangeObserver, List<StockScoreChangeInfo> stockScoreChangeInfoList, String keyword) {
+        try {
+
+            String url = genUrl(stockSoreChangeObserver.getThirdToken());
+            DingTalkClient client = new DefaultDingTalkClient(url);
+            OapiRobotSendRequest request = new OapiRobotSendRequest();
+
+            request.setMsgtype("markdown");
+            OapiRobotSendRequest.Markdown markdown = new OapiRobotSendRequest.Markdown();
+            String title = stockSoreChangeObserver.getTitle();
+            markdown.setTitle(title);
+
+            StringBuilder contentBuilder = new StringBuilder();
+            contentBuilder.append( MessageFormat.format("### {0} {1}\n", new String[]{DateFormatUtils.format(stockSoreChangeObserver.getDate(), "yyyy-MM-dd"), title}));
+            contentBuilder.append( MessageFormat.format("#### 评分{0} 共计 {1} 只\n", new String[]{keyword, String.valueOf(stockScoreChangeInfoList.size())}));
+
+            stockScoreChangeInfoList.forEach(stockScoreChangeInfo->{
+                contentBuilder.append( MessageFormat.format("> #### {0}, {1}, 总市值:{2}亿, {3}, 评分:{4},评分行业排名:{5}\n\n> ##### {6}变化: {7}, 当前值: {8}\n***\n",
+                        new String[]{
+                                stockScoreChangeInfo.getStockCode(),
+                                stockScoreChangeInfo.getStockName(),
+                                String.valueOf(stockScoreChangeInfo.getTotalValue()),
+                                stockScoreChangeInfo.getIndustryName(),
+                                String.valueOf(stockScoreChangeInfo.getTotalScore()),
+                                String.valueOf(stockScoreChangeInfo.getIndustryRank()),
+                                stockScoreChangeInfo.getChangeField(),
+                                String.valueOf(stockScoreChangeInfo.getChangeValue()),
+                                String.valueOf(stockScoreChangeInfo.getCurrentValue())
+                        }));
+            });
+            markdown.setText(contentBuilder.toString());
+            request.setMarkdown(markdown);
+            log.info("to DingTalk message:\n{}", contentBuilder.toString());
+            OapiRobotSendResponse response = client.execute(request);
+
+            log.info("向钉钉发送股票评分变化消息,response: \n{}, {}", response.getErrcode(), response.getErrmsg());
+        } catch (ApiException e) {
+            log.error("向钉钉发送股票评分变化消息失败", e);
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

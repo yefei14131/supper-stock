@@ -2,15 +2,12 @@ package com.pers.yefei.supper.stock.biz;
 
 import com.pers.yefei.supper.stock.dao.IStockTransDao;
 import com.pers.yefei.supper.stock.enums.StockTransType;
-import com.pers.yefei.supper.stock.model.bean.SinaStock;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockInfo;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockScoreChange;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockTrans;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockTransExample;
-import com.pers.yefei.supper.stock.service.IStockBaseInfoEastMoneyService;
-import com.pers.yefei.supper.stock.service.IStockBaseInfoService;
 import com.pers.yefei.supper.stock.service.IStockDataService;
-import com.pers.yefei.supper.stock.service.IStockScoreService;
+import com.pers.yefei.supper.stock.third.stock.info.StockInfoCollector;
 import com.pers.yefei.supper.stock.utils.DateUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +16,6 @@ import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -38,13 +34,7 @@ public class StockTacticsBiz {
     private IStockDataService stockDataService;
 
     @Autowired
-    private IStockScoreService stockScoreService;
-
-    @Autowired
-    private IStockBaseInfoService stockBaseInfoService;
-
-    @Autowired
-    private IStockBaseInfoEastMoneyService stockBaseInfoEastMoneyService;
+    private StockInfoCollector stockInfoCollector;
 
     public void mockTrans(){
         log.info("开始执行模拟交易");
@@ -69,7 +59,7 @@ public class StockTacticsBiz {
 
         log.info("需要执行模拟交易的股票数量为：{}", stockTransList.size());
 
-        String shCompositeStockPrice = stockBaseInfoEastMoneyService.fetchSHCompositeStockPrice();
+        String shCompositeStockPrice = stockInfoCollector.fetchSHCompositeStockPrice();
         stockTransList.forEach(tblStockTrans->{
             TblStockInfo stockInfo = stockDataService.getStockInfo(tblStockTrans.getStockCode());
             tblStockTrans.setTransPrice(new BigDecimal(stockInfo.getPrice()));
@@ -81,6 +71,9 @@ public class StockTacticsBiz {
         log.info("模拟交易执行结束");
     }
 
+    /**
+     * 完善交易价格，目前修复的价格只适用于当天
+     */
     public void repareTransPrice(){
         //queryScoreChange
         TblStockTransExample example = new TblStockTransExample();
@@ -104,19 +97,4 @@ public class StockTacticsBiz {
         });
     }
 
-
-    public void collectStockPrice(){
-        List<TblStockInfo> activeStockInfoList = stockDataService.getActiveStockInfoList();
-        List<String> stockCodeList = new ArrayList<>();
-        activeStockInfoList.forEach(stockInfo->{
-            stockCodeList.add(stockInfo.getStockCode());
-        });
-        log.info("需要采集价格的股票数：{}", stockCodeList.size());
-        activeStockInfoList.forEach(stockInfo->{
-            stockBaseInfoEastMoneyService.queryStockInfo(stockInfo);
-            stockDataService.saveStockInfo(stockInfo);
-        });
-
-        stockDataService.updateStockTransCurrentPrice();
-    }
 }

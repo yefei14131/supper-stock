@@ -92,8 +92,8 @@ public class StockDataServiceImpl implements IStockDataService {
     }
 
     @Override
-    public Date queryPrevDate(){
-        return stockScoreDao.queryPrevDate();
+    public Date queryPrevDate(Date date){
+        return stockScoreDao.queryPrevDate(date);
     }
 
     @Override

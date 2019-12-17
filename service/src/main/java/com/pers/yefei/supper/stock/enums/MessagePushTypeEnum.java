@@ -5,5 +5,5 @@ package com.pers.yefei.supper.stock.enums;
  * @date: 2019/12/15
  */
 public enum MessagePushTypeEnum {
-    DingDing;
+    DingTalk;
 }

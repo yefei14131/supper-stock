@@ -2,10 +2,9 @@ package com.pers.yefei.supper.stock.config.scheduler;
 
 
 import com.pers.yefei.supper.stock.biz.StockPublicNoticeBiz;
-import com.pers.yefei.supper.stock.biz.StockScoreConllectBiz;
+import com.pers.yefei.supper.stock.biz.StockScoreBiz;
 import com.pers.yefei.supper.stock.biz.StockTacticsBiz;
-import com.pers.yefei.supper.stock.model.gen.pojo.TblStockScore;
-import com.pers.yefei.supper.stock.service.IStockScoreService;
+import com.pers.yefei.supper.stock.model.bean.StockScoreChangeSummary;
 import com.pers.yefei.supper.stock.service.IStockStatisticService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomUtils;
@@ -15,7 +14,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -34,13 +32,16 @@ public class CollectStockScoreSchedulerConfig {
     private IStockStatisticService stockStatisticService;
 
     @Autowired
-    private StockScoreConllectBiz stockScoreConllectBiz;
+    private StockScoreBiz stockScoreConllectBiz;
 
     @Autowired
     private StockTacticsBiz stockTacticsBiz;
 
     @Autowired
     private StockPublicNoticeBiz stockPublicNoticeBiz;
+
+    @Autowired
+    private StockScoreBiz stockScoreBiz;
 
 
     @Scheduled(fixedRate = 60 * 60 * 1000, initialDelay =  1 * 1000)
@@ -58,7 +59,8 @@ public class CollectStockScoreSchedulerConfig {
 //    @Scheduled(fixedRate = 60 * 60 * 1000, initialDelay =  1 * 1000)
     public void conllectStockScoreByCron() throws InterruptedException {
 
-        if (stockStatisticService.isHolidays(new Date())){
+        Date date = new Date();
+        if (stockStatisticService.isHolidays(date)){
             log.info("节假日休市，不执行定时任务");
             return;
         }
@@ -69,9 +71,13 @@ public class CollectStockScoreSchedulerConfig {
         Thread.sleep((long)delay);
 
         stockScoreConllectBiz.batchConllectStockScore();
-        stockScoreConllectBiz.calculateStockScoreChangeByDay();
+        stockScoreConllectBiz.calculateStockScoreChangeByDay(date);
+
         stockTacticsBiz.mockTrans();
         stockTacticsBiz.repareTransPrice();
+
+        StockScoreChangeSummary stockScoreChangeSummary = stockStatisticService.queryStockScoreChangeInfoByDate(date);
+        stockScoreBiz.pushStockScoreChangeSummary(stockScoreChangeSummary);
     }
 
 

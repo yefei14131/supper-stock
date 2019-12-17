@@ -45,21 +45,6 @@ spring:
       number_format: '0.##'   #数字格式化，无小数点
 
 
-
-  datasource:
-    url: jdbc:mysql://172.16.32.243:3306/db_supper_stock?useSSL=false&useUnicode=true&characterEncoding=utf8
-    username: root
-    password: root
-  #  url: jdbc:mysql://localhost:3306/db_pre_k8s_op?useSSL=false&useUnicode=true&characterEncoding=utf8
-  #  username: root
-  #  password: Pass@123
-    driverClassName: com.mysql.jdbc.Driver
-    initialSize: 1
-    maxActive: 1
-    minIdle: 1
-    validationQuery: SELECT 1
-
-
 datasource:
   url: jdbc:mysql://172.16.32.243:3306/db_supper_stock?useSSL=false&useUnicode=true&characterEncoding=utf8
   username: root
@@ -68,9 +53,9 @@ datasource:
 #  username: root
 #  password: Pass@123
   driverClassName: com.mysql.jdbc.Driver
-  initialSize: 10
-  maxActive: 30
-  minIdle: 5
+  initialSize: 2
+  maxActive: 5
+  minIdle: 2
   validationQuery: SELECT 1
 
 mybatis:
@@ -124,21 +109,6 @@ spring:
       number_format: '0.##'   #数字格式化，无小数点
 
 
-
-  datasource:
-    url: jdbc:mysql://172.16.32.243:3306/db_supper_stock?useSSL=false&useUnicode=true&characterEncoding=utf8
-    username: root
-    password: root
-  #  url: jdbc:mysql://localhost:3306/db_pre_k8s_op?useSSL=false&useUnicode=true&characterEncoding=utf8
-  #  username: root
-  #  password: Pass@123
-    driverClassName: com.mysql.jdbc.Driver
-    initialSize: 1
-    maxActive: 1
-    minIdle: 1
-    validationQuery: SELECT 1
-
-
 datasource:
   url: jdbc:mysql://172.16.32.243:3306/db_supper_stock?useSSL=false&useUnicode=true&characterEncoding=utf8
   username: root
@@ -147,9 +117,9 @@ datasource:
 #  username: root
 #  password: Pass@123
   driverClassName: com.mysql.jdbc.Driver
-  initialSize: 10
-  maxActive: 30
-  minIdle: 5
+  initialSize: 2
+  maxActive: 3
+  minIdle: 2
   validationQuery: SELECT 1
 
 mybatis:

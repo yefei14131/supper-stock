@@ -33,7 +33,7 @@ public interface IStockDataService {
 
     TblStockScoreChange getStockScoreChangeByDate(String stockCode, Date date);
 
-    Date queryPrevDate();
+    Date queryPrevDate(Date date);
 
     List<TblStockInfo> getNewUnActiveStockList(Date lessDate);
 

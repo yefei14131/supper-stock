@@ -11,11 +11,7 @@ import java.util.Date;
  * @date: 2019/12/15
  */
 @Data
-public class StockPublicNoticeInfo extends TblStockPublicNotice {
-
-    private String stockCode;
-
-    private String stockName;
+public class StockPublicNoticeInfo extends StockBaseInfo {
 
     private String noticeCode;
 
@@ -29,12 +25,6 @@ public class StockPublicNoticeInfo extends TblStockPublicNotice {
 
     private String url;
 
-    private Integer flowValue;
-    private Integer totalValue;
-    private Double priceProfitAssetRatio;
-    private String industryName;
-    private Integer industryRank;
-    private Double totalScore;
 
     public StockPublicNoticeInfo(TblStockPublicNotice tblStockPublicNotice){
         this.stockCode = tblStockPublicNotice.getStockCode();
@@ -47,14 +37,4 @@ public class StockPublicNoticeInfo extends TblStockPublicNotice {
         this.url = tblStockPublicNotice.getUrl();
     }
 
-    public void setField(TblStockInfo tblStockInfo) {
-        if (tblStockInfo != null) {
-            this.flowValue = tblStockInfo.getFlowValue();
-            this.totalValue = tblStockInfo.getTotalValue();
-            this.priceProfitAssetRatio = tblStockInfo.getPriceProfitAssetRatio();
-            this.industryName = tblStockInfo.getIndustryName();
-            this.industryRank = tblStockInfo.getIndustryRank();
-            this.totalScore = tblStockInfo.getTotalScore();
-        }
-    }
 }

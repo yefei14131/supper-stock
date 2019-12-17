@@ -1,17 +1,21 @@
 package com.pers.yefei.supper.stock.biz;
 
-import com.pers.yefei.supper.stock.model.gen.pojo.*;
-import com.pers.yefei.supper.stock.service.IStockBaseInfoEastMoneyService;
+import com.pers.yefei.supper.stock.model.bean.MessageObserver.StockSoreChangeObserver;
+import com.pers.yefei.supper.stock.model.bean.StockScoreChangeSummary;
+import com.pers.yefei.supper.stock.model.gen.pojo.TblStockInfo;
+import com.pers.yefei.supper.stock.model.gen.pojo.TblStockScore;
+import com.pers.yefei.supper.stock.model.gen.pojo.TblStockScoreChange;
 import com.pers.yefei.supper.stock.service.IStockDataService;
-import com.pers.yefei.supper.stock.service.IStockScoreService;
+import com.pers.yefei.supper.stock.third.message.MessageSender;
+import com.pers.yefei.supper.stock.third.stock.info.StockInfoCollector;
+import com.pers.yefei.supper.stock.third.stock.score.StockScoreCollector;
 import com.pers.yefei.supper.stock.utils.DateUtils;
+import com.pers.yefei.supper.stock.utils.RandomSleep;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.script.ScriptException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -22,16 +26,19 @@ import java.util.List;
  */
 @Component
 @Slf4j
-public class StockScoreConllectBiz {
+public class StockScoreBiz {
 
     @Autowired
     private IStockDataService stockDataService;
 
     @Autowired
-    private IStockScoreService stockScoreService;
+    private StockScoreCollector stockScoreCollector;
 
     @Autowired
-    private IStockBaseInfoEastMoneyService stockBaseInfoEastMoneyService;
+    private StockInfoCollector stockInfoCollector;
+
+    @Autowired
+    private MessageSender messageSender;
 
     private boolean collectorRunning = false;
 
@@ -54,7 +61,7 @@ public class StockScoreConllectBiz {
             List<TblStockInfo> stockListNeedConllectScore = stockDataService.getActiveStockInfoList();
 
             stockListNeedConllectScore.forEach( tblStockInfo -> {
-                conllectStockScore(tblStockInfo);
+                conllectStockScoreAndSleep(tblStockInfo);
             });
 
             this.conllectStockScoreByNewUnActiveStock();
@@ -87,7 +94,7 @@ public class StockScoreConllectBiz {
             List<TblStockInfo> stockListNeedConllectScore = stockDataService.getStockListNeedConllectScore();
 
             stockListNeedConllectScore.forEach( tblStockInfo -> {
-                conllectStockScore(tblStockInfo);
+                conllectStockScoreAndSleep(tblStockInfo);
             });
 
             this.conllectStockScoreByNewUnActiveStock();
@@ -104,6 +111,28 @@ public class StockScoreConllectBiz {
 
 
     /**
+     * @desc 更新股票得分，取无效状态的股票
+     *
+     */
+    public void fetchUnActiveStockScore(){
+        try {
+
+            List<TblStockInfo> unActiveStockList = stockDataService.getUnActiveStockList();
+            unActiveStockList.forEach( tblStockInfo -> {
+                conllectStockScoreAndSleep(tblStockInfo);
+            });
+
+            log.info("采集任务执行完成");
+
+        }catch (Exception e){
+            log.error(ExceptionUtils.getStackTrace(e));
+        }
+
+    }
+
+
+
+    /**
      * @desc 更新股票得分，取最近被更新为无效的
      *
      */
@@ -114,7 +143,7 @@ public class StockScoreConllectBiz {
             List<TblStockInfo> stockListNeedConllectScore = stockDataService.getNewUnActiveStockList(DateUtils.getZeroDate(DateUtils.getDateAfterDays(-1)));
 
             stockListNeedConllectScore.forEach( tblStockInfo -> {
-                conllectStockScore(tblStockInfo);
+                conllectStockScoreAndSleep(tblStockInfo);
             });
 
             log.info("采集任务执行完成");
@@ -131,7 +160,7 @@ public class StockScoreConllectBiz {
      * @param stockInfo
      * @return
      */
-    public TblStockScore conllectStockScore(TblStockInfo stockInfo){
+    public TblStockScore conllectStockScoreAndSleep(TblStockInfo stockInfo){
         try {
             TblStockScore stockScore = stockDataService.getStockScoreToday(stockInfo.getStockCode());
             if (stockScore == null){
@@ -139,8 +168,8 @@ public class StockScoreConllectBiz {
                 stockScore.setStockCode(stockInfo.getStockCode());
             }
 
-            stockScoreService.getCurrentStockScore(stockScore);
-            stockBaseInfoEastMoneyService.queryStockInfo(stockScore);
+            stockScoreCollector.fetchStockScore(stockScore);
+            stockInfoCollector.fetchStockInfo(stockScore);
 
             if(stockScore.getTotalScore() == null){
                 log.info("{}, {} 接口没有评分数据", stockInfo.getStockCode(), stockInfo.getStockName());
@@ -189,11 +218,8 @@ public class StockScoreConllectBiz {
 
             }
 
-            Thread.sleep((long)(RandomUtils.nextInt(500, 3500)));
+            RandomSleep.sleep(500, 3500);
             return stockScore;
-
-        } catch (ScriptException e) {
-            log.error(ExceptionUtils.getStackTrace(e));
 
         } catch (Exception e) {
             log.error(ExceptionUtils.getStackTrace(e));
@@ -204,23 +230,24 @@ public class StockScoreConllectBiz {
 
     /**
      * 计算股票的评分变化情况
+     * @param date
      */
-    public void calculateStockScoreChangeByDay(){
+    public void calculateStockScoreChangeByDay(Date date){
 
-        log.info("开始计算股票得分变化");
-        int dayForWeek = DateUtils.dayForWeek(new Date());
+        log.info("开始计算股票得分变化, {}", DateUtils.transformDate2Y_M_DStr(date));
+        int dayForWeek = DateUtils.dayForWeek(date);
         if (dayForWeek > 5 ){
 //            return;
         }
 
-        Date prevDate = stockDataService.queryPrevDate();
+        Date prevDate = stockDataService.queryPrevDate(date);
         log.info("查询前一天记录 {}", DateUtils.transformDate2Y_M_DStr(prevDate));
 
         if(prevDate == null){
             return;
         }
 
-        List<TblStockScore> todayStockScores = stockDataService.queryStockScoreByDate(new Date());
+        List<TblStockScore> todayStockScores = stockDataService.queryStockScoreByDate(date);
         List<TblStockScore> prevDayStockScores = stockDataService.queryStockScoreByDate(prevDate);
 
         HashMap<String, TblStockScore> prevDayStockScoreMap = new HashMap<>();
@@ -243,7 +270,7 @@ public class StockScoreConllectBiz {
                     }
 
                     stockScoreChange.setChangeValue(diffOrganizationHoldScore);
-                    stockScoreChange.setDate(new Date());
+                    stockScoreChange.setDate(date);
                     stockScoreChange.setFieldName("organizationHoldScore");
                     stockScoreChange.setPreValue(prevDayStockScore.getOrganizationHoldScore());
                     stockScoreChange.setTodayValue(todayStockScore.getOrganizationHoldScore());
@@ -273,10 +300,21 @@ public class StockScoreConllectBiz {
         if (stockInfo == null){
             stockInfo = new TblStockInfo();
             stockInfo.setStockCode(stockCode);
-            this.conllectStockScore(stockInfo);
+            this.conllectStockScoreAndSleep(stockInfo);
         }
 
         return stockInfo;
+    }
+
+
+    public void pushStockScoreChangeSummary(StockScoreChangeSummary stockScoreChangeSummary) {
+        StockSoreChangeObserver stockSoreChangeObserver = new StockSoreChangeObserver();
+        stockSoreChangeObserver.fromStockScoreChangeSummary(stockScoreChangeSummary);
+
+        stockSoreChangeObserver.setThirdToken("20e0f97ec78da7a0eeeae5a541682bf189a3d0975ccfe71a4bf7058cbd0f8deb");
+        stockSoreChangeObserver.setMessagePushType("DingTalk");
+
+        messageSender.sendStockScoreChange(stockSoreChangeObserver);
     }
 
 }

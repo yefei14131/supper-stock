@@ -1,4 +1,4 @@
-package com.pers.yefei.supper.stock.third.DingTalk;
+package com.pers.yefei.supper.stock.third.message.DingTalk;
 
 import com.pers.yefei.supper.stock.exception.DingTalkSignException;
 import org.apache.tomcat.util.codec.binary.Base64;

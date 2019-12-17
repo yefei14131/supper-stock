@@ -53,8 +53,8 @@ public class StockScoreDaoImpl implements IStockScoreDao {
     }
 
     @Override
-    public Date queryPrevDate(){
-        TblStockScore tblStockScore = stockMapper.selectPrevDate(DateUtils.getZeroDate(new Date()));
+    public Date queryPrevDate(Date date){
+        TblStockScore tblStockScore = stockMapper.selectPrevDate(DateUtils.getZeroDate(date));
 
         return tblStockScore == null ? null : tblStockScore.getDate();
     }

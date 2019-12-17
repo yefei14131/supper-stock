@@ -1,5 +1,7 @@
 package com.pers.yefei.supper.stock.service;
 
+import com.pers.yefei.supper.stock.model.bean.StockScoreChangeInfo;
+import com.pers.yefei.supper.stock.model.bean.StockScoreChangeSummary;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockScore;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockScoreChange;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockTrans;
@@ -18,6 +20,8 @@ import java.util.List;
 public interface IStockStatisticService {
 
     List<TblStockScoreChange> queryStockScoreChangeByDate(Date date);
+
+    StockScoreChangeSummary queryStockScoreChangeInfoByDate(Date date);
 
     /**
      * 计算当日采集进度

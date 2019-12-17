@@ -2,8 +2,6 @@ package com.pers.yefei.supper.stock.service.impl;
 
 import com.pers.yefei.supper.stock.dao.IStockInfoDao;
 import com.pers.yefei.supper.stock.dao.IStockPublicNoticeDao;
-import com.pers.yefei.supper.stock.model.bean.StockPublicNoticeObserver;
-import com.pers.yefei.supper.stock.model.gen.pojo.TblStockInfo;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockPublicNotice;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockPublicNoticeObserver;
 import com.pers.yefei.supper.stock.service.IStockPublicNoticeService;
@@ -13,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 

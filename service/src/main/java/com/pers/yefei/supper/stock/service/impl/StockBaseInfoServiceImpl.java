@@ -155,12 +155,12 @@ public class StockBaseInfoServiceImpl implements IStockBaseInfoService {
     }
 
 
-
-
-    public static void main(String[] args) throws IOException {
-        List<String> list = new ArrayList<>();
-        list.add("000507");
-        list.add("600353");
-        new StockBaseInfoServiceImpl().batchFetchStockInfo(list);
-    }
+//
+//
+//    public static void main(String[] args) throws IOException {
+//        List<String> list = new ArrayList<>();
+//        list.add("000507");
+//        list.add("600353");
+//        new StockBaseInfoServiceImpl().batchFetchStockInfo(list);
+//    }
 }
