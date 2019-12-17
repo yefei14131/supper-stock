@@ -46,7 +46,7 @@ public class EastMoneyPublicNoticeInfo {
 
             tblStockPublicNotice.setTitle(dataItem.getString("NOTICETITLE"));
             tblStockPublicNotice.setNoticeDate(DateUtils.getZeroDate(DateUtils.parseDate(dataItem.getString("NOTICEDATE"), dateTimeformat)));
-            tblStockPublicNotice.setPublicTime(DateUtils.getZeroDate(DateUtils.parseDate(dataItem.getString("EUTIME"), dateTimeformat)));
+            tblStockPublicNotice.setPublicTime(DateUtils.parseDate(dataItem.getString("EUTIME"), dateTimeformat));
             tblStockPublicNotice.setNoticeCode(dataItem.getString("INFOCODE"));
 
             // 获取股票代码和股票名称
