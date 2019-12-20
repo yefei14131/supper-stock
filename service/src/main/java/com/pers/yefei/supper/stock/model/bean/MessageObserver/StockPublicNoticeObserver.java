@@ -27,6 +27,7 @@ public class StockPublicNoticeObserver extends MessageBaseObserver {
     public StockPublicNoticeObserver (){
         this.title = "股票公告推送";
     }
+
     public StockPublicNoticeObserver(TblStockPublicNoticeObserver tblStockPublicNoticeObserver) {
         this.keywords = tblStockPublicNoticeObserver.getKeywords();
         this.thirdToken = tblStockPublicNoticeObserver.getThirdToken();

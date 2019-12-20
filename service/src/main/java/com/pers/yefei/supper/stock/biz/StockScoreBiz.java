@@ -11,6 +11,7 @@ import com.pers.yefei.supper.stock.third.stock.info.StockInfoCollector;
 import com.pers.yefei.supper.stock.third.stock.score.StockScoreCollector;
 import com.pers.yefei.supper.stock.utils.DateUtils;
 import com.pers.yefei.supper.stock.utils.RandomSleep;
+import com.pers.yefei.supper.stock.utils.StockBaseInfoUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -313,6 +314,11 @@ public class StockScoreBiz {
 
         stockSoreChangeObserver.setThirdToken("20e0f97ec78da7a0eeeae5a541682bf189a3d0975ccfe71a4bf7058cbd0f8deb");
         stockSoreChangeObserver.setMessagePushType("DingTalk");
+
+
+        // 过滤
+        StockBaseInfoUtils.filterTotalValeTop10AndTotalScoreTop10(stockSoreChangeObserver.getStockScoreChangeSummary().getIncreaseList());
+        StockBaseInfoUtils.filterTotalValeTop10AndTotalScoreTop10(stockSoreChangeObserver.getStockScoreChangeSummary().getReduceList());
 
         messageSender.sendStockScoreChange(stockSoreChangeObserver);
     }

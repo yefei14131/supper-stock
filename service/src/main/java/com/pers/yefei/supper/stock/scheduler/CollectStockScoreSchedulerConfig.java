@@ -1,4 +1,4 @@
-package com.pers.yefei.supper.stock.config.scheduler;
+package com.pers.yefei.supper.stock.scheduler;
 
 
 import com.pers.yefei.supper.stock.biz.StockPublicNoticeBiz;
@@ -85,9 +85,9 @@ public class CollectStockScoreSchedulerConfig {
      * 定时拉取公告
      * @throws InterruptedException
      */
-    @Scheduled(cron = "1 10 6,22 * * ?")
+    @Scheduled(cron = " 10 6,22 * * ?")
 //    @Scheduled(fixedRate = 60 * 60 * 1000, initialDelay =  1 * 1000)
-    public void conllectStockPublicNoticeByCron() throws InterruptedException {
+    public void conllectStockPublicNoticeByCron() {
         stockPublicNoticeBiz.fetchStockPublicNotice();
         stockPublicNoticeBiz.publishStockNotice();
     }

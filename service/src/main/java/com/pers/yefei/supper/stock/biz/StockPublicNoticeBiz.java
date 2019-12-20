@@ -2,6 +2,7 @@ package com.pers.yefei.supper.stock.biz;
 
 import com.pers.yefei.supper.stock.model.bean.EastMoneyPublicNoticeInfo;
 import com.pers.yefei.supper.stock.model.bean.MessageObserver.StockPublicNoticeObserver;
+import com.pers.yefei.supper.stock.model.bean.StockBaseInfo;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockInfo;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockPublicNotice;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockPublicNoticeObserver;
@@ -9,15 +10,14 @@ import com.pers.yefei.supper.stock.service.IStockPublicNoticeService;
 import com.pers.yefei.supper.stock.third.message.MessageSender;
 import com.pers.yefei.supper.stock.third.public_notice.PublicNoticeCollector;
 import com.pers.yefei.supper.stock.utils.DateUtils;
+import com.pers.yefei.supper.stock.utils.StockBaseInfoUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author yefei
@@ -119,14 +119,19 @@ public class StockPublicNoticeBiz {
     private List<StockPublicNoticeObserver> queryStockPublicNoticeObserver(Date date) {
 
         List<StockPublicNoticeObserver> stockPublicNoticeObserverList = new ArrayList<>();
+        // 查询公告订阅者
         List<TblStockPublicNoticeObserver> tblStockPublicNoticeObservers = stockPublicNoticeService.queryStockPublicNoticeObserver();
+
         tblStockPublicNoticeObservers.forEach(tblStockPublicNoticeObserver->{
-            // 查询公告
             StockPublicNoticeObserver stockPublicNoticeObserver = new StockPublicNoticeObserver(tblStockPublicNoticeObserver);
-            List<TblStockPublicNotice> tblStockPublicNotices = stockPublicNoticeService.queryStockPublicNotice(tblStockPublicNoticeObserver.getKeywords(), date);
+            stockPublicNoticeObserver.setDate(date);
+
             stockPublicNoticeObserverList.add(stockPublicNoticeObserver);
 
-            stockPublicNoticeObserver.setDate(date);
+            // 查询公告
+            List<TblStockPublicNotice> tblStockPublicNotices = stockPublicNoticeService.queryStockPublicNotice(tblStockPublicNoticeObserver.getKeywords(), date);
+
+            // 添加公告并转换成需要推送的公告对象
             stockPublicNoticeObserver.addStockPublicNoticeList(tblStockPublicNotices);
 
             // 补全股票基本信息
@@ -135,11 +140,16 @@ public class StockPublicNoticeBiz {
 
                 stockPublicNoticeInfo.from(stockInfo);
             });
+
+            // 过滤
+            StockBaseInfoUtils.filterTotalValeTop10AndTotalScoreTop10(stockPublicNoticeObserver.getStockPublicNoticeInfoList());
+
         });
 
 
         return stockPublicNoticeObserverList;
     }
+
 
 
 }
