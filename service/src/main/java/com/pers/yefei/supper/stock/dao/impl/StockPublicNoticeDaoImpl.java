@@ -39,12 +39,22 @@ public class StockPublicNoticeDaoImpl implements IStockPublicNoticeDao {
 
 
     @Override
-    public List<TblStockPublicNotice> queryTblStockPublicNoticeByKeywords(String keywords, Date date) {
+    public List<TblStockPublicNotice> queryTblStockPublicNoticeByDate(String keywords, Date date) {
         if (StringUtils.isEmpty(keywords)) {
             return empty;
         }
         TblStockPublicNoticeExample example = new TblStockPublicNoticeExample();
         example.createCriteria().andNoticeDateEqualTo(date).andKeywordsLike(MessageFormat.format("%{0}%", keywords));
+        return stockPublicNoticeMapper.selectByExample(example);
+    }
+
+    @Override
+    public List<TblStockPublicNotice> queryTblStockPublicNoticeByLessTime(String keywords, Date lessTime) {
+        if (StringUtils.isEmpty(keywords)) {
+            return empty;
+        }
+        TblStockPublicNoticeExample example = new TblStockPublicNoticeExample();
+        example.createCriteria().andUpdateTimeGreaterThan(lessTime).andKeywordsLike(MessageFormat.format("%{0}%", keywords));
         return stockPublicNoticeMapper.selectByExample(example);
     }
 

@@ -15,5 +15,7 @@ public interface IStockPublicNoticeService {
 
     List<TblStockPublicNoticeObserver> queryStockPublicNoticeObserver();
 
-    List<TblStockPublicNotice> queryStockPublicNotice(String keywords, Date date);
+    List<TblStockPublicNotice> queryStockPublicNoticeByDate(String keywords, Date date);
+
+    List<TblStockPublicNotice> queryStockPublicNoticeByLessTime(String keywords, Date lessTime);
 }

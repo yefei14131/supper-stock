@@ -2,7 +2,6 @@ package com.pers.yefei.supper.stock.biz;
 
 import com.pers.yefei.supper.stock.model.bean.EastMoneyPublicNoticeInfo;
 import com.pers.yefei.supper.stock.model.bean.MessageObserver.StockPublicNoticeObserver;
-import com.pers.yefei.supper.stock.model.bean.StockBaseInfo;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockInfo;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockPublicNotice;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockPublicNoticeObserver;
@@ -18,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 /**
  * @author yefei
@@ -77,7 +78,7 @@ public class StockPublicNoticeBiz {
             }
 
             log.info("获取 {} 公告, page:{}, pageTotal:{}", DateFormatUtils.format(date, "yyyy-MM-dd"), page, pageTotal);
-            eastMoneyPublicNoticeInfo = publicNoticeCollector.fetchPrevDayNotice(pageSize, page, date);
+            eastMoneyPublicNoticeInfo = publicNoticeCollector.fetchNotice(pageSize, page, date);
             pageTotal = eastMoneyPublicNoticeInfo.getPageTotal();
             stockPublicNoticeService.savePublicNotice(eastMoneyPublicNoticeInfo.getPublicNoticeList());
 
@@ -89,19 +90,30 @@ public class StockPublicNoticeBiz {
     }
 
     /**
-     * 查询系统中订阅的公告，并推送给订阅者
+     * 查询指定时间之后系统中订阅的公告，并推送给订阅者
      */
-    public void publishStockNotice() {
-        publishStockNotice(new Date());
+    public void publishStockNoticeByLessDate(Date lessTime) {
+        List<StockPublicNoticeObserver> stockPublicNoticeObservers = queryStockPublicNoticeObserver( (keywords, tblStockPublicNotices) -> {
+            stockPublicNoticeService.queryStockPublicNoticeByLessTime(keywords, lessTime);
+        });
+        pushToObservers(stockPublicNoticeObservers);
     }
 
-
- /**
-     * 查询系统中订阅的公告，并推送给订阅者
+    /**
+     * 指定日期查询系统中订阅的公告，并推送给订阅者
      */
     public void publishStockNotice(Date date) {
-        List<StockPublicNoticeObserver> stockPublicNoticeObservers = queryStockPublicNoticeObserver(date);
+        List<StockPublicNoticeObserver> stockPublicNoticeObservers = queryStockPublicNoticeObserver( (keywords, tblStockPublicNotices) -> {
+            tblStockPublicNotices.addAll(stockPublicNoticeService.queryStockPublicNoticeByDate(keywords, DateUtils.getZeroDate(date)));
+        });
+        pushToObservers(stockPublicNoticeObservers);
+    }
 
+    /**
+     * 推送给订阅者
+     * @param stockPublicNoticeObservers
+     */
+    private void pushToObservers(List<StockPublicNoticeObserver> stockPublicNoticeObservers) {
         for (StockPublicNoticeObserver stockPublicNoticeObserver : stockPublicNoticeObservers) {
             messageSender.sendStockPublicNotice(stockPublicNoticeObserver);
             try {
@@ -113,23 +125,30 @@ public class StockPublicNoticeBiz {
     }
 
 
+    /**
+     * 查询公告订阅者，及相关公告
+     * @param queryNoticeAction 根据关键字查询公告的方法，由调用方实现
+     * @return
+     */
+    private List<StockPublicNoticeObserver> queryStockPublicNoticeObserver(BiConsumer<String, List<TblStockPublicNotice>> queryNoticeAction) {
+        if (queryNoticeAction == null){
 
-
-
-    private List<StockPublicNoticeObserver> queryStockPublicNoticeObserver(Date date) {
-
+        }
         List<StockPublicNoticeObserver> stockPublicNoticeObserverList = new ArrayList<>();
         // 查询公告订阅者
         List<TblStockPublicNoticeObserver> tblStockPublicNoticeObservers = stockPublicNoticeService.queryStockPublicNoticeObserver();
 
         tblStockPublicNoticeObservers.forEach(tblStockPublicNoticeObserver->{
             StockPublicNoticeObserver stockPublicNoticeObserver = new StockPublicNoticeObserver(tblStockPublicNoticeObserver);
-            stockPublicNoticeObserver.setDate(date);
+            stockPublicNoticeObserver.setDate(new Date());
 
             stockPublicNoticeObserverList.add(stockPublicNoticeObserver);
 
+
             // 查询公告
-            List<TblStockPublicNotice> tblStockPublicNotices = stockPublicNoticeService.queryStockPublicNotice(tblStockPublicNoticeObserver.getKeywords(), date);
+            List<TblStockPublicNotice> tblStockPublicNotices = new ArrayList<>();
+            queryNoticeAction.accept(tblStockPublicNoticeObserver.getKeywords(), tblStockPublicNotices);
+
 
             // 添加公告并转换成需要推送的公告对象
             stockPublicNoticeObserver.addStockPublicNoticeList(tblStockPublicNotices);

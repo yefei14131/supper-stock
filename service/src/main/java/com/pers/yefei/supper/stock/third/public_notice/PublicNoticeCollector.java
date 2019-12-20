@@ -19,8 +19,8 @@ public class PublicNoticeCollector {
     @Autowired
     private PublicNoticeEasyMoneyCollector publicNoticeEasyMoneyCollector;
 
-    public EastMoneyPublicNoticeInfo fetchPrevDayNotice(int pageSize, int page, Date noticeDate) {
-        return publicNoticeEasyMoneyCollector.fetchPrevDayNotice(pageSize, page, noticeDate);
+    public EastMoneyPublicNoticeInfo fetchNotice(int pageSize, int page, Date noticeDate) {
+        return publicNoticeEasyMoneyCollector.fetchNotice(pageSize, page, noticeDate);
     }
 
 }

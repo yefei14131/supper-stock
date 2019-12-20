@@ -9,5 +9,5 @@
 // * @date: 2019/12/15
 // */
 //public interface IStockPublicNoticeEastMoneyService {
-//    EastMoneyPublicNoticeInfo fetchPrevDayNotice(int pageSize, int page, Date noticeDate);
+//    EastMoneyPublicNoticeInfo fetchNotice(int pageSize, int page, Date noticeDate);
 //}

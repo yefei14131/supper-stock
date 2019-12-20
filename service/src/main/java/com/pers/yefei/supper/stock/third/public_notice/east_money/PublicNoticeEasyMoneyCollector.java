@@ -26,7 +26,7 @@ public class PublicNoticeEasyMoneyCollector {
     @Autowired
     private OkHttpHelper okHttpHelper;
 
-    public EastMoneyPublicNoticeInfo fetchPrevDayNotice(int pageSize, int page, Date noticeDate) {
+    public EastMoneyPublicNoticeInfo fetchNotice(int pageSize, int page, Date noticeDate) {
         try {
             String callbackFunc = RandomStringUtils.randomAlphanumeric(8);
             String content = getFromEastMoney(pageSize, page, noticeDate, callbackFunc);

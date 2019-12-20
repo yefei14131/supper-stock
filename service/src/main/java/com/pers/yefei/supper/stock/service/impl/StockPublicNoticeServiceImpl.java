@@ -50,7 +50,15 @@ public class StockPublicNoticeServiceImpl implements IStockPublicNoticeService {
     }
 
     @Override
-    public List<TblStockPublicNotice> queryStockPublicNotice(String keywords, Date date) {
-        return stockPublicNoticeDao.queryTblStockPublicNoticeByKeywords(keywords, DateUtils.getZeroDate(date));
+    public List<TblStockPublicNotice> queryStockPublicNoticeByDate(String keywords, Date date) {
+        return stockPublicNoticeDao.queryTblStockPublicNoticeByDate(keywords, DateUtils.getZeroDate(date));
     }
+
+
+    @Override
+    public List<TblStockPublicNotice> queryStockPublicNoticeByLessTime(String keywords, Date lessTime) {
+        return stockPublicNoticeDao.queryTblStockPublicNoticeByLessTime(keywords, lessTime);
+    }
+
+
 }

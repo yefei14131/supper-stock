@@ -31,7 +31,7 @@
 //    private OkHttpHelper okHttpHelper;
 //
 //    @Override
-//    public EastMoneyPublicNoticeInfo fetchPrevDayNotice(int pageSize, int page, Date noticeDate) {
+//    public EastMoneyPublicNoticeInfo fetchNotice(int pageSize, int page, Date noticeDate) {
 //        try {
 //            String callbackFunc = RandomStringUtils.randomAlphanumeric(8);
 //            String content = getFromEastMoney(pageSize, page, noticeDate, callbackFunc);
@@ -61,7 +61,7 @@
 //
 //    public static void main(String[] args) throws JsonProcessingException {
 //        Date d = DateUtils.getDateAfterDays(-2);
-//        EastMoneyPublicNoticeInfo eastMoneyPublicNoticeInfo = new StockPublicNoticeEastMoneyServiceImpl().fetchPrevDayNotice(2, 2, d);
+//        EastMoneyPublicNoticeInfo eastMoneyPublicNoticeInfo = new StockPublicNoticeEastMoneyServiceImpl().fetchNotice(2, 2, d);
 //        System.out.println(new ObjectMapper().writeValueAsString(eastMoneyPublicNoticeInfo));
 //    }
 //}

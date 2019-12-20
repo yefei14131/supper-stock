@@ -14,7 +14,9 @@ public interface IStockPublicNoticeDao {
 
     void insertStockPublicNotice(TblStockPublicNotice tblStockPublicNotice);
 
-    List<TblStockPublicNotice> queryTblStockPublicNoticeByKeywords(String keywords, Date date);
+    List<TblStockPublicNotice> queryTblStockPublicNoticeByDate(String keywords, Date date);
+
+    List<TblStockPublicNotice> queryTblStockPublicNoticeByLessTime(String keywords, Date lessTime);
 
     // 以下是 公告订阅信息
     List<TblStockPublicNoticeObserver> queryStockPublicNoticeObserver();

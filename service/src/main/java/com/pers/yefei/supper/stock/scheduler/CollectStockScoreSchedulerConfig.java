@@ -43,16 +43,13 @@ public class CollectStockScoreSchedulerConfig {
     @Autowired
     private StockScoreBiz stockScoreBiz;
 
-
-    @Scheduled(fixedRate = 60 * 60 * 1000, initialDelay =  1 * 1000)
-    private void process(){
-        log.info("spring boot scheduler running: CollectStockScoreSchedulerConfig ");
-//        stockScoreConllectBiz.batchConllectStockScore();
-//        stockScoreConllectBiz.calculateStockScoreChangeByDay();
-//        stockTacticsBiz.mockTrans();
-        stockTacticsBiz.repareTransPrice();
-
-    }
+//
+//    @Scheduled(fixedRate = 60 * 60 * 1000, initialDelay =  1 * 1000)
+//    private void process(){
+//        log.info("spring boot scheduler running: CollectStockScoreSchedulerConfig ");
+//        stockTacticsBiz.repareTransPrice();
+//
+//    }
 
 
     @Scheduled(cron = "0 0 16 * * 1-5")
@@ -85,11 +82,12 @@ public class CollectStockScoreSchedulerConfig {
      * 定时拉取公告
      * @throws InterruptedException
      */
-    @Scheduled(cron = " 10 6,22 * * ?")
+    @Scheduled(cron = "1 10 6,22 * * ?")
 //    @Scheduled(fixedRate = 60 * 60 * 1000, initialDelay =  1 * 1000)
     public void conllectStockPublicNoticeByCron() {
+        Date lessTime = new Date();
         stockPublicNoticeBiz.fetchStockPublicNotice();
-        stockPublicNoticeBiz.publishStockNotice();
+        stockPublicNoticeBiz.publishStockNoticeByLessDate(lessTime);
     }
 
 
