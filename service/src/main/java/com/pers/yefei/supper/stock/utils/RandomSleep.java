@@ -12,7 +12,9 @@ public class RandomSleep {
 
     public static void sleep(long minMS, long maxMS) {
         try{
-            Thread.sleep(RandomUtils.nextLong(minMS, maxMS));
+            long delay = RandomUtils.nextLong(minMS, maxMS);
+            log.info("随机延时 {}s 执行", delay / 1000);
+            Thread.sleep(delay);
         } catch (Exception e) {
             log.error("random sleep error", e);
 

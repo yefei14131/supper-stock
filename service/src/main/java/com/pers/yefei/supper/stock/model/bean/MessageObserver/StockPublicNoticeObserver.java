@@ -39,7 +39,6 @@ public class StockPublicNoticeObserver extends MessageBaseObserver {
         tblStockPublicNotices.forEach(tblStockPublicNotice-> {
             stockPublicNoticeInfoList.add(new StockPublicNoticeInfo(tblStockPublicNotice));
         });
-
     }
 
 }

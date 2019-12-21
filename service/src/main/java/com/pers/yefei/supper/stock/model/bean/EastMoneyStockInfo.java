@@ -55,8 +55,8 @@ public class EastMoneyStockInfo {
                 "    \"f135\":\"mainInflowAmount\",\n" +
                 "    \"f136\":\"mainOutflowAmount\",\n" +
                 "    \"f137\":\"netInflow\",\n" +
-                "    \"f164\":\"priceNetAssetRatio\",\n" +
-                "    \"f167\":\"priceProfitAssetRatio\",\n" +
+                "    \"f164\":\"priceProfitAssetRatio\",\n" +
+                "    \"f167\":\"priceNetAssetRatio\",\n" +
                 "    \"f168\":\"turnoverRatio\",\n" +
                 "    \"f169\":\"priceChange\",\n" +
                 "    \"f170\":\"priceChangeRatio\"\n" +

@@ -54,42 +54,14 @@ public class EastMoneyStockInfoCollector {
          private long  mainInflowAmount;  // f135    主力流入
          private long  mainOutflowAmount; // f136    主力流出
          private long  netInflow;         // f137    主力净流向
-         private int  priceNetAssetRatio;    // f162    动态市盈率
-         private int  priceProfitAssetRatio; // f167    市净率
+         private int  priceProfitAssetRatio;    // f164    动态市盈率
+         private int  priceNetAssetRatio; // f167    市净率
          private int  turnoverRatio;     // f168    换手率
          private int  priceChange;       // f169    涨跌
          private int  priceChangeRatio;  // f170    涨跌幅
          *
          */
 
-        /**
-         *
-         * {
-         "price":3190,
-         "maxPrice":3210,
-         "minPrice":3138,
-         "openPrice":3160,
-
-         "dealQuantity":219569,
-         "dealAmount":697775792,
-         "stockCode":"300003",
-         "stockName":"乐普医疗",
-
-         "totalValue":56834728179.899994,
-         "flowValue":48336465780.9,
-
-         "mainInflowAmount":243793527,
-         "mainOutflowAmount":224922795,
-         "netInflow":18870732,
-
-         "priceNetAssetRatio":2644,
-         "priceProfitAssetRatio":762,
-         "turnoverRatio":145,
-         "priceChange":56,
-         "priceChangeRatio":179
-         }
-
-         */
 
         stockScore.setMaxPrice(((double)eastMoneyStockInfo.getMaxPrice())/100);
         stockScore.setMinPrice(((double)eastMoneyStockInfo.getMinPrice())/100);

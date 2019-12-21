@@ -2,6 +2,7 @@ package com.pers.yefei.supper.stock.controllers;
 
 import com.pers.yefei.supper.stock.biz.StockScoreBiz;
 import com.pers.yefei.supper.stock.config.ResponseAdapter;
+import com.pers.yefei.supper.stock.model.bean.MessageObserver.StockScoreInfoObserver;
 import com.pers.yefei.supper.stock.model.bean.StockScoreChangeSummary;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockInfo;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockScore;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 
 /**
@@ -171,6 +173,37 @@ public class StockScoreController {
 
             return responseAdapter.success(stockScore);
 
+        } catch (Exception e) {
+            log.error(ExceptionUtils.getStackTrace(e));
+            return responseAdapter.failure(ExceptionUtils.getStackTrace(e));
+        }
+
+    }
+
+
+
+    @RequestMapping(value = "/push_industry")
+    @ResponseBody
+    public Object pushStockScoreByObserver(@RequestParam(name = "date", defaultValue = "") String date,
+                                           String industryKeywords,
+                                           @RequestParam(name ="orderBy", defaultValue = "totalValue") String orderBy
+    ) {
+        try {
+
+            Date d = StringUtils.isEmpty(date) ? new Date() : DateUtils.parseDate(date);
+
+            List<StockScoreInfoObserver> stockScoreInfoObservers;
+
+            if(orderBy.equals("totalValue")) {
+                stockScoreInfoObservers = stockScoreBiz.genStockObserversByIndustryTopTotalValue(industryKeywords, d);
+
+            } else {
+                stockScoreInfoObservers = stockScoreBiz.genStockObserversByIndustryTopTotalScore(industryKeywords, d);
+
+            }
+            stockScoreBiz.pushStockScoreInfoObserver(stockScoreInfoObservers);
+
+            return responseAdapter.success(stockScoreInfoObservers);
 
         } catch (Exception e) {
             log.error(ExceptionUtils.getStackTrace(e));

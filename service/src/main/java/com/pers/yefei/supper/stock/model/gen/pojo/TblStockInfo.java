@@ -11,8 +11,6 @@ public class TblStockInfo {
 
     private Double price;
 
-    private Double syl;
-
     private Integer totalValue;
 
     private Integer flowValue;
@@ -67,14 +65,6 @@ public class TblStockInfo {
 
     public void setPrice(Double price) {
         this.price = price;
-    }
-
-    public Double getSyl() {
-        return syl;
-    }
-
-    public void setSyl(Double syl) {
-        this.syl = syl;
     }
 
     public Integer getTotalValue() {

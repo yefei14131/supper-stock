@@ -2,6 +2,7 @@ package com.pers.yefei.supper.stock.third.message;
 
 import com.pers.yefei.supper.stock.enums.MessagePushTypeEnum;
 import com.pers.yefei.supper.stock.model.bean.MessageObserver.StockPublicNoticeObserver;
+import com.pers.yefei.supper.stock.model.bean.MessageObserver.StockScoreInfoObserver;
 import com.pers.yefei.supper.stock.model.bean.MessageObserver.StockSoreChangeObserver;
 import com.pers.yefei.supper.stock.third.message.DingTalk.DingTalkMessageSender;
 import lombok.extern.slf4j.Slf4j;
@@ -36,6 +37,16 @@ public class MessageSender {
             dingTalkMessageSender.sendStockScoreChange(stockSoreChangeObserver);
         } else {
             log.error("无法识别的消息推送类别： {}", stockSoreChangeObserver.getPushConfig().getMessagePushType());
+
+        }
+    }
+
+    public void sendStockScore(StockScoreInfoObserver stockSoreObserver) {
+
+        if (MessagePushTypeEnum.DingTalk.equals(stockSoreObserver.getPushConfig().getMessagePushType())){
+            dingTalkMessageSender.sendStockScore(stockSoreObserver);
+        } else {
+            log.error("无法识别的消息推送类别： {}", stockSoreObserver.getPushConfig().getMessagePushType());
 
         }
     }

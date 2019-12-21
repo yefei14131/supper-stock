@@ -385,66 +385,6 @@ public class TblStockInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andSylIsNull() {
-            addCriterion("syl is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andSylIsNotNull() {
-            addCriterion("syl is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andSylEqualTo(Double value) {
-            addCriterion("syl =", value, "syl");
-            return (Criteria) this;
-        }
-
-        public Criteria andSylNotEqualTo(Double value) {
-            addCriterion("syl <>", value, "syl");
-            return (Criteria) this;
-        }
-
-        public Criteria andSylGreaterThan(Double value) {
-            addCriterion("syl >", value, "syl");
-            return (Criteria) this;
-        }
-
-        public Criteria andSylGreaterThanOrEqualTo(Double value) {
-            addCriterion("syl >=", value, "syl");
-            return (Criteria) this;
-        }
-
-        public Criteria andSylLessThan(Double value) {
-            addCriterion("syl <", value, "syl");
-            return (Criteria) this;
-        }
-
-        public Criteria andSylLessThanOrEqualTo(Double value) {
-            addCriterion("syl <=", value, "syl");
-            return (Criteria) this;
-        }
-
-        public Criteria andSylIn(List<Double> values) {
-            addCriterion("syl in", values, "syl");
-            return (Criteria) this;
-        }
-
-        public Criteria andSylNotIn(List<Double> values) {
-            addCriterion("syl not in", values, "syl");
-            return (Criteria) this;
-        }
-
-        public Criteria andSylBetween(Double value1, Double value2) {
-            addCriterion("syl between", value1, value2, "syl");
-            return (Criteria) this;
-        }
-
-        public Criteria andSylNotBetween(Double value1, Double value2) {
-            addCriterion("syl not between", value1, value2, "syl");
-            return (Criteria) this;
-        }
-
         public Criteria andTotalValueIsNull() {
             addCriterion("totalValue is null");
             return (Criteria) this;

@@ -1,23 +1,29 @@
 package com.pers.yefei.supper.stock.biz;
 
+import com.pers.yefei.supper.stock.constant.SystemConstant;
+import com.pers.yefei.supper.stock.model.bean.MessageObserver.StockScoreInfoObserver;
 import com.pers.yefei.supper.stock.model.bean.MessageObserver.StockSoreChangeObserver;
 import com.pers.yefei.supper.stock.model.bean.StockScoreChangeSummary;
+import com.pers.yefei.supper.stock.model.bean.StockScorePushInfo;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockInfo;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockScore;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockScoreChange;
 import com.pers.yefei.supper.stock.service.IPushConfigService;
 import com.pers.yefei.supper.stock.service.IStockDataService;
+import com.pers.yefei.supper.stock.service.IStockScoreService;
 import com.pers.yefei.supper.stock.third.message.MessageSender;
 import com.pers.yefei.supper.stock.third.stock.info.StockInfoCollector;
 import com.pers.yefei.supper.stock.third.stock.score.StockScoreCollector;
 import com.pers.yefei.supper.stock.utils.DateUtils;
 import com.pers.yefei.supper.stock.utils.RandomSleep;
 import com.pers.yefei.supper.stock.utils.StockBaseInfoUtils;
+import com.pers.yefei.supper.stock.utils.StockScoreUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -46,6 +52,8 @@ public class StockScoreBiz {
     @Autowired
     private IPushConfigService pushConfigService;
 
+    @Autowired
+    private IStockScoreService stockScoreService;
 
     private boolean collectorRunning = false;
 
@@ -319,7 +327,7 @@ public class StockScoreBiz {
         StockSoreChangeObserver stockSoreChangeObserver = new StockSoreChangeObserver();
         stockSoreChangeObserver.fromStockScoreChangeSummary(stockScoreChangeSummary);
 
-        stockSoreChangeObserver.setPushConfig(pushConfigService.getPushConfig(1));
+        stockSoreChangeObserver.setPushConfig(pushConfigService.getPushConfig(SystemConstant.Default_PushConfigID));
 
         // 过滤
         StockBaseInfoUtils.filterTotalValeTop10AndTotalScoreTop10(stockSoreChangeObserver.getStockScoreChangeSummary().getIncreaseList());
@@ -327,5 +335,97 @@ public class StockScoreBiz {
 
         messageSender.sendStockScoreChange(stockSoreChangeObserver);
     }
+
+
+    /**
+     * 查询股票基本信息的订阅者，并查询评分和详细信息
+     * @param date
+     * @return
+     */
+    public List<StockScoreInfoObserver> queryStockObserversFromDB(Date date) {
+
+        List<StockScoreInfoObserver> stockScoreInfoObservers = stockScoreService.queryStockObserversFromDB(date);
+
+        int observerLength = stockScoreInfoObservers.size();
+        for (int observerIndex=0; observerIndex<observerLength; observerIndex++) {
+
+            StockScoreInfoObserver stockScoreInfoObserver = stockScoreInfoObservers.get(observerIndex);
+            List<StockScorePushInfo> stockScorePushInfoList = stockScoreInfoObserver.getStockScorePushInfoList();
+            int pageSize = 15;
+
+            if (stockScorePushInfoList.size() > pageSize) {
+                int pageTotal = stockScorePushInfoList.size() % pageSize == 0 ? stockScorePushInfoList.size() / pageSize : stockScorePushInfoList.size() / pageSize + 1;
+
+                // 前面的页，拆分为新的对象
+                for (int i=0; i < pageTotal-1; i++){
+                    StockScoreInfoObserver infoObserver = new StockScoreInfoObserver();
+                    infoObserver.setDate(stockScoreInfoObserver.getDate());
+                    infoObserver.setTitle(stockScoreInfoObserver.getTitle());
+                    infoObserver.setMemo(stockScoreInfoObserver.getMemo());
+                    infoObserver.setPushConfig(stockScoreInfoObserver.getPushConfig());
+
+                    infoObserver.getStockScorePushInfoList().addAll(stockScoreInfoObserver.getStockScorePushInfoList().subList(i*pageSize, (i+1)*pageSize));
+                }
+
+                // 最后一页赋值给当前对象
+                List<StockScorePushInfo> stockScorePushInfos = new ArrayList<>();
+                stockScorePushInfos.addAll(stockScorePushInfoList.subList((pageTotal - 1) * pageSize, stockScorePushInfoList.size())) ;
+                stockScoreInfoObserver.setStockScorePushInfoList(stockScorePushInfos);
+            }
+        }
+        
+        
+        return stockScoreInfoObservers;
+    }
+
+
+    /**
+     * 根据行业关键字，查询评分及相关信息, 按市值排序，取前10
+     * @param industryKeywords
+     * @param date
+     * @return
+     */
+    public List<StockScoreInfoObserver> genStockObserversByIndustryTopTotalValue(String industryKeywords, Date date) {
+        List<StockScoreInfoObserver> stockScoreInfoObservers = stockScoreService.queryStockObservers(industryKeywords, date);
+        stockScoreInfoObservers.forEach(stockScoreInfoObserver -> {
+            List<StockScorePushInfo> totalValeTop10 = StockScoreUtils.getTotalValeTop10(stockScoreInfoObserver.getStockScorePushInfoList(), 5);
+            stockScoreInfoObserver.setStockScorePushInfoList(totalValeTop10);
+        });
+        return stockScoreInfoObservers;
+    }
+
+    /**
+     * 根据行业关键字，查询评分及相关信息, 按评分排序，取前10
+     * @param industryKeywords
+     * @param date
+     * @return
+     */
+    public List<StockScoreInfoObserver> genStockObserversByIndustryTopTotalScore(String industryKeywords, Date date) {
+        List<StockScoreInfoObserver> stockScoreInfoObservers = stockScoreService.queryStockObservers(industryKeywords, date);
+        stockScoreInfoObservers.forEach(stockScoreInfoObserver -> {
+            List<StockScorePushInfo> totalValeTop10 = StockScoreUtils.getTotalScoreTop10(stockScoreInfoObserver.getStockScorePushInfoList(), 5);
+            stockScoreInfoObserver.setStockScorePushInfoList(totalValeTop10);
+        });
+        return stockScoreInfoObservers;
+    }
+
+
+    /**
+     * 推送股票评分及基本信息
+     * @param stockScoreInfoObservers
+     */
+    public void pushStockScoreInfoObserver(List<StockScoreInfoObserver> stockScoreInfoObservers){
+        for (StockScoreInfoObserver stockScoreInfoObserver : stockScoreInfoObservers) {
+            messageSender.sendStockScore(stockScoreInfoObserver);
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                log.error("sleep error", e);
+            }
+        }
+
+    }
+
+
 
 }

@@ -22,4 +22,7 @@ public interface StockMapper {
 
     @Update("update tbl_stock_trans trans, (select stockCode, price from tbl_stock_info ) as info set trans.currentPrice = info.price where trans.stockCode = info.stockCode ")
     void updateStockTransCurrentPrice();
+
+    @Select("select * from tbl_stock_score where stockCode = #{stockCode} order by date desc limit 1")
+    TblStockScore selectLastDayStockScore(@Param("stockCode") String stockCode);
 }

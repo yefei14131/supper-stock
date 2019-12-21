@@ -1,9 +1,12 @@
 package com.pers.yefei.supper.stock.third.message.DingTalk;
 
 import com.pers.yefei.supper.stock.model.bean.MessageObserver.StockPublicNoticeObserver;
+import com.pers.yefei.supper.stock.model.bean.MessageObserver.StockScoreInfoObserver;
 import com.pers.yefei.supper.stock.model.bean.MessageObserver.StockSoreChangeObserver;
 import com.pers.yefei.supper.stock.model.bean.StockScoreChangeInfo;
+import com.pers.yefei.supper.stock.model.gen.pojo.TblStockScore;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -82,5 +85,56 @@ public class DingTalkMessageSender {
         } );
     }
 
+
+    public void sendStockScore(StockScoreInfoObserver stockSoreObserver){
+        dingTalkHelper.sendMarkdownMessage(stockSoreObserver, contentBuilder -> {
+
+            contentBuilder.append( MessageFormat.format("### {0}\n", new String[]{stockSoreObserver.getTitle()}));
+            contentBuilder.append( MessageFormat.format("#### {0} 共计 {1} 只\n", new String[]{DateFormatUtils.format(stockSoreObserver.getDate(), "yyyy-MM-dd"), String.valueOf(stockSoreObserver.getStockScorePushInfoList().size())}));
+
+            stockSoreObserver.getStockScorePushInfoList().forEach(stockScorePushInfo->{
+                TblStockScore tblStockScore = stockScorePushInfo.getTblStockScore();
+                contentBuilder.append( MessageFormat.format("> #### {0} {1}, 总市值:{2}亿,  流通市值:{3}亿, 市盈率:{4},市净率:{5}\n\n",
+                        new String[]{
+                                tblStockScore.getStockCode(),
+                                tblStockScore.getStockName(),
+                                String.valueOf(tblStockScore.getTotalValue()),
+                                String.valueOf(tblStockScore.getFlowValue()),
+                                String.valueOf(tblStockScore.getPriceProfitAssetRatio()),
+                                String.valueOf(tblStockScore.getPriceNetAssetRatio()),
+                        })
+                );
+                contentBuilder.append( MessageFormat.format("> #### 评分:{0}, 排名:{1}, 行业:{2}, 行业排名:{3}, 机构持仓:{4}, 机构持仓变化:{5}\n\n",
+                        new String[]{
+                                String.valueOf(tblStockScore.getTotalScore()),
+                                String.valueOf(tblStockScore.getMarketRank()),
+                                String.valueOf(tblStockScore.getIndustryDetail()),
+                                String.valueOf(tblStockScore.getIndustryRank()),
+                                String.valueOf(tblStockScore.getOrganizationHoldScore()),
+                                stockScorePushInfo.getTblStockScoreChange() == null ? "0" : String.valueOf(stockScorePushInfo.getTblStockScoreChange().getChangeValue())
+                        })
+                );
+
+                contentBuilder.append( MessageFormat.format("> #### 涨幅:{0}%, 换手率:{1}%, 主力流入:{2}亿, 主力流出:{3}亿, 净流入:{4}亿, 最高价:{5}, 最低价:{6}\n\n",
+                        new String[]{
+                                String.valueOf(tblStockScore.getPriceChangeRatio()),
+                                String.valueOf(tblStockScore.getTurnoverRatio()),
+                                String.valueOf(tblStockScore.getMainInflowAmount()),
+                                String.valueOf(tblStockScore.getMainOutflowAmount()),
+                                String.valueOf(tblStockScore.getNetInflow()),
+                                String.valueOf(tblStockScore.getMaxPrice()),
+                                String.valueOf(tblStockScore.getMinPrice())
+                        })
+                );
+
+                if (!StringUtils.isEmpty(stockScorePushInfo.getPushReason())){
+                    contentBuilder.append( MessageFormat.format("> ###### {0}\n\n", new String[]{stockScorePushInfo.getPushReason()}));
+                }
+
+                contentBuilder.append("***\n");
+
+            });
+        } );
+    }
 
 }

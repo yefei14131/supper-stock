@@ -4,10 +4,14 @@ package com.pers.yefei.supper.stock.scheduler;
 import com.pers.yefei.supper.stock.biz.StockPublicNoticeBiz;
 import com.pers.yefei.supper.stock.biz.StockScoreBiz;
 import com.pers.yefei.supper.stock.biz.StockTacticsBiz;
+import com.pers.yefei.supper.stock.model.bean.MessageObserver.StockScoreInfoObserver;
 import com.pers.yefei.supper.stock.model.bean.StockScoreChangeSummary;
 import com.pers.yefei.supper.stock.service.IStockStatisticService;
+import com.pers.yefei.supper.stock.utils.DateUtils;
+import com.pers.yefei.supper.stock.utils.RandomSleep;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -15,6 +19,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author: yefei
@@ -62,10 +67,7 @@ public class CollectStockScoreSchedulerConfig {
             return;
         }
         // 随机延时 1s - 5min 执行
-        int delay = RandomUtils.nextInt(1000, 5 * 60 * 1000);
-//        delay = 1;
-        log.info("开始执行定时任务，延时 {}s 执行", delay / 1000);
-        Thread.sleep((long)delay);
+        RandomSleep.sleep(1000L, 5 * 60 * 1000L);
 
         stockScoreConllectBiz.batchConllectStockScore();
         stockScoreConllectBiz.calculateStockScoreChangeByDay(date);
@@ -75,6 +77,12 @@ public class CollectStockScoreSchedulerConfig {
 
         StockScoreChangeSummary stockScoreChangeSummary = stockStatisticService.queryStockScoreChangeInfoByDate(date);
         stockScoreBiz.pushStockScoreChangeSummary(stockScoreChangeSummary);
+
+
+        RandomSleep.sleep(60000L, 60010L);
+        List<StockScoreInfoObserver> stockScoreInfoObservers = stockScoreBiz.queryStockObserversFromDB(date);
+        stockScoreBiz.pushStockScoreInfoObserver(stockScoreInfoObservers);
+
     }
 
 

@@ -26,6 +26,19 @@ public class StockScoreDaoImpl implements IStockScoreDao {
     private StockMapper stockMapper;
 
     @Override
+    public TblStockScore getLastDayStockScore(String stockCode) {
+        return stockMapper.selectLastDayStockScore(stockCode);
+    }
+
+    @Override
+    public TblStockScore getStockScore(String stockCode, Date date) {
+        TblStockScoreExample example = new TblStockScoreExample();
+        example.createCriteria().andStockCodeEqualTo(stockCode).andDateEqualTo(DateUtils.getZeroDate(date));
+        List<TblStockScore> tblStockScores = tblStockScoreMapper.selectByExample(example);
+        return tblStockScores.size() > 0 ? tblStockScores.get(0) : null;
+    }
+
+    @Override
     public TblStockScore getStockScoreToday(String stockCode){
         TblStockScoreExample example = new TblStockScoreExample();
         example.createCriteria().andStockCodeEqualTo(stockCode).andDateEqualTo(new Date());
@@ -53,6 +66,29 @@ public class StockScoreDaoImpl implements IStockScoreDao {
     }
 
     @Override
+    public List<TblStockScore> queryStockScore(String industryKeywords, Date date){
+        TblStockScoreExample example = new TblStockScoreExample();
+        example.createCriteria().andDateEqualTo(DateUtils.getZeroDate(date)).andIndustryDetailLike(industryKeywords);
+        return tblStockScoreMapper.selectByExample(example);
+    }
+
+    @Override
+    public List<TblStockScore> queryStockScoreOrderByTotalValue(String industryKeywords, Date date){
+        TblStockScoreExample example = new TblStockScoreExample();
+        example.setOrderByClause(" totalValue desc");
+        example.createCriteria().andDateEqualTo(DateUtils.getZeroDate(date)).andIndustryDetailLike(industryKeywords);
+        return tblStockScoreMapper.selectByExample(example);
+    }
+
+    @Override
+    public List<TblStockScore> queryStockScoreOrderByTotalScore(String industryKeywords, Date date){
+        TblStockScoreExample example = new TblStockScoreExample();
+        example.setOrderByClause(" totalScore desc");
+        example.createCriteria().andDateEqualTo(DateUtils.getZeroDate(date)).andIndustryDetailLike(industryKeywords);
+        return tblStockScoreMapper.selectByExample(example);
+    }
+
+    @Override
     public Date queryPrevDate(Date date){
         TblStockScore tblStockScore = stockMapper.selectPrevDate(DateUtils.getZeroDate(date));
 
@@ -66,6 +102,7 @@ public class StockScoreDaoImpl implements IStockScoreDao {
         example.createCriteria().andDateEqualTo(date);
         return tblStockScoreMapper.countByExample(example);
     }
+
 
 
 }

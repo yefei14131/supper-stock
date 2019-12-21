@@ -1,6 +1,7 @@
 package com.pers.yefei.supper.stock.dao;
 
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockInfo;
+import com.pers.yefei.supper.stock.model.gen.pojo.TblStockObserver;
 
 import java.util.Date;
 import java.util.List;
@@ -27,4 +28,5 @@ public interface IStockInfoDao {
 
     long countActiveStock();
 
+    List<TblStockObserver> queryStockObserver();
 }

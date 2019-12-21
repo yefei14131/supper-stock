@@ -3,8 +3,10 @@ package com.pers.yefei.supper.stock.dao.impl;
 import com.pers.yefei.supper.stock.dao.IStockInfoDao;
 import com.pers.yefei.supper.stock.model.gen.dao.StockMapper;
 import com.pers.yefei.supper.stock.model.gen.dao.TblStockInfoMapper;
+import com.pers.yefei.supper.stock.model.gen.dao.TblStockObserverMapper;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockInfo;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockInfoExample;
+import com.pers.yefei.supper.stock.model.gen.pojo.TblStockObserver;
 import com.pers.yefei.supper.stock.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -24,6 +26,9 @@ public class StockInfoDaoImpl implements IStockInfoDao {
 
     @Autowired
     private StockMapper stockMapper;
+
+    @Autowired
+    private TblStockObserverMapper tblStockObserverMapper;
 
     @Override
     public int insertStockInfo(TblStockInfo tblStockInfo){
@@ -80,5 +85,11 @@ public class StockInfoDaoImpl implements IStockInfoDao {
         TblStockInfoExample example = new TblStockInfoExample();
         example.createCriteria().andIsActiveEqualTo(true);
         return tblStockInfoMapper.countByExample(example);
+    }
+
+
+    @Override
+    public List<TblStockObserver> queryStockObserver(){
+        return tblStockObserverMapper.selectByExample(null);
     }
 }

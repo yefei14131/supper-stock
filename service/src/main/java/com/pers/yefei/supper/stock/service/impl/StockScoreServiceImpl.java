@@ -1,207 +1,140 @@
-//package com.pers.yefei.supper.stock.service.impl;
-//
-//import com.alibaba.fastjson.JSONArray;
-//import com.alibaba.fastjson.JSONObject;
-//import com.fasterxml.jackson.databind.ObjectMapper;
-//import com.pers.yefei.supper.stock.model.bean.GogoalDataWeight;
-//import com.pers.yefei.supper.stock.model.gen.pojo.TblStockScore;
-//import com.pers.yefei.supper.stock.service.IStockScoreService;
-//import com.pers.yefei.supper.stock.utils.FileUtils;
-//import lombok.extern.slf4j.Slf4j;
-//import org.apache.commons.lang3.exception.ExceptionUtils;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.stereotype.Service;
-//
-//import javax.script.Bindings;
-//import javax.script.ScriptEngine;
-//import javax.script.ScriptEngineManager;
-//import javax.script.ScriptException;
-//import java.io.IOException;
-//import java.io.InputStream;
-//import java.net.URL;
-//import java.util.Date;
-//import java.util.HashMap;
-//
-///**
-// * @author: yefei
-// * @date: 2019/4/26 01:28
-// */
-//@Service
-//@Slf4j
-//public class StockScoreServiceImpl implements IStockScoreService {
-//
-//    @Autowired
-//    ObjectMapper jacksonFormatter;
-//
-//    @Autowired
-//    private GogoalDataWeight gogoalDataWeight;
-//
-//    private String makeSignJsCodeTemplate;
-//
-//    private ScriptEngine jsEngine;
-//
-//    final private String gogoalHost = "https://ggservice.go-goal.cn/";
-//
-//    final static int LEVEL_RATE = 1000;
-//
-//    StockScoreServiceImpl() throws IOException {
-//
-//        // 读取签名算法代码
-//        InputStream stream = getClass().getClassLoader().getResourceAsStream("static/java_templates/js/makeSign.js");
-//        makeSignJsCodeTemplate = FileUtils.readContent(stream);
-//
-//        // 初始化js脚本引擎
-//        ScriptEngineManager factory = new ScriptEngineManager();
-//        jsEngine = factory.getEngineByName("nashorn");
-//
-//    }
-//
-//    @Override
-//    public TblStockScore getStockScore(String stockCode) {
-//        try {
-//            String reqString = getReqString(stockCode);
-//            String gogoalUrl = gogoalHost + reqString;
-//
-//            JSONObject response = getStockScoreInfo(gogoalUrl);
-//
-//            TblStockScore stockScore = new TblStockScore();
-//            dealGogoalResponse(response, stockScore);
-//
-//            stockScore.setStockCode(stockCode);
-//
-//            return stockScore;
-//        } catch (ScriptException e) {
-//            log.error(ExceptionUtils.getStackTrace(e));
-//        } catch (IOException e) {
-//            log.error(ExceptionUtils.getStackTrace(e));
-//        }
-//
-//        return null;
-//    }
-//
-//
-//    @Override
-//    public void getCurrentStockScore(TblStockScore stockScore) throws ScriptException, IOException {
-//
-//        String reqString = getReqString(stockScore.getStockCode());
-//        String gogoalUrl = gogoalHost + reqString;
-//        JSONObject response = getStockScoreInfo(gogoalUrl);
-//        dealGogoalResponse(response, stockScore);
-//    }
-//
-//
-//    private String getReqString(String stockCode) throws ScriptException {
-////        String makeSignJsCode = this.makeSignJsCodeTemplate.replace("STOCK_CODE", stockCode);
-//
-//        HashMap<String, String> signInfo = new HashMap<>();
-//        signInfo.put("stockCode", stockCode);
-//        Bindings bings = jsEngine.createBindings();
-//        bings.put("signInfoMap", signInfo);
-//
-//        long startTime = System.currentTimeMillis();
-////        log.info("开始执行js脚本,{}", startTime);
-//
-//        Object result =  jsEngine.eval(makeSignJsCodeTemplate, bings);
-//        long endTime = System.currentTimeMillis();
-//        log.info("执行js脚本结束,{}, 耗时：{}ms, {}", endTime, endTime-startTime , result);
-//
-//        if(signInfo.containsKey("reqString")){
-//            return signInfo.get("reqString");
-//        }else if(result != null){
-//            return result.toString();
-//        }
-//        return "";
-//    }
-//
-//
-//    private JSONObject getStockScoreInfo(String gogalUrl) throws IOException {
-//        URL url = new URL(gogalUrl);
-//        JSONObject response = jacksonFormatter.readValue(url, JSONObject.class);
-//        log.info("\n调用接口 {},执行结果：\n{}", gogalUrl, response.toJSONString());
-//
-//        if (response.getIntValue("code") != 0){
-//            log.error("获取gogal接口出错");
-//            return null;
-//        }else{
-//            return response;
-//        }
-//
-//    }
-//
-//
-//    private void dealGogoalResponse(JSONObject response, TblStockScore tblStockScore){
-//
-//        if (response.getIntValue("code") != 0){
-//            log.error("获取gogal接口出错");
-//            return;
-//        }
-//        JSONObject data = response.getJSONObject("data");
-//
-//        JSONObject appraisalList = data.getJSONObject("appraisal_list");
-//
-//        JSONArray status = appraisalList.getJSONArray("status");
-//
-//        if (appraisalList == null || appraisalList.size() == 0 || status == null || status.size() == 0){
-//            log.info("{} gogoal接口没有数据。", tblStockScore.getStockCode());
-//            return;
-//        }
-//        JSONArray scoreList = appraisalList.getJSONArray("score");
-///**
-// `stockCode` varchar(255) NOT NULL DEFAULT '' COMMENT '股票代码',
-// `stockName` varchar(255) NOT NULL DEFAULT '' COMMENT '股票名称',
-// `companyHonorScore` decimal(10,0) NOT NULL DEFAULT '0' COMMENT '公司品质',
-// `businessStatusScore` decimal(10,0) NOT NULL DEFAULT '0' COMMENT '行业龙头',
-// `achievementsAppraisalScore` decimal(10,0) NOT NULL DEFAULT '0' COMMENT '超预期鉴定',
-// `achievementsGrowupScore` decimal(10,0) NOT NULL DEFAULT '0' COMMENT '业绩成长性',
-// `profitAbilityScore` decimal(10,0) NOT NULL DEFAULT '0' COMMENT '盈利能力',
-// `achievementsClueScore` decimal(10,0) NOT NULL DEFAULT '0' COMMENT '业绩线索',
-// `marketplaceStyleScore` decimal(10,0) NOT NULL DEFAULT '0' COMMENT '业绩驱动性',
-// `organizationHoldScore` decimal(10,0) NOT NULL DEFAULT '0' COMMENT '机构持仓',
-// `organizationEmotionScore` decimal(10,0) NOT NULL DEFAULT '0' COMMENT '分析师情绪',
-// `businessPreferenceScore` decimal(10,0) NOT NULL DEFAULT '0' COMMENT '全市场情绪',
-// `successRateStatisticsScore` decimal(10,0) NOT NULL DEFAULT '0' COMMENT '胜率统计',
-// `stockValuationScore` decimal(10,0) NOT NULL DEFAULT '0' COMMENT '个股估值',
-// **/
-//        String stockName = scoreList.getString(0);
-//        int companyHonorScore = scoreList.getIntValue(1);
-//        int businessStatusScore = scoreList.getIntValue(2);
-//        int achievementsAppraisalScore = scoreList.getIntValue(3);
-//        int achievementsGrowupScore = scoreList.getIntValue(4);
-//        int profitAbilityScore = scoreList.getIntValue(5);
-//        int achievementsClueScore = scoreList.getIntValue(6);
-//        int marketplaceStyleScore = scoreList.getIntValue(7);
-//        int organizationHoldScore = scoreList.getIntValue(8);
-//        int organizationEmotionScore = scoreList.getIntValue(9);
-//        int businessPreferenceScore = scoreList.getIntValue(10);
-//        int successRateStatisticsScore = scoreList.getIntValue(11);
-//        int stockValuationScore = scoreList.getIntValue(12);
-//
-//        tblStockScore.setStockName(stockName);
-//        tblStockScore.setCompanyHonorScore(companyHonorScore * LEVEL_RATE / gogoalDataWeight.getCompanyHonorScore());
-//        tblStockScore.setBusinessStatusScore(businessStatusScore * LEVEL_RATE / gogoalDataWeight.getBusinessStatusScore());
-//        tblStockScore.setAchievementsAppraisalScore(achievementsAppraisalScore * LEVEL_RATE /gogoalDataWeight.getAchievementsAppraisalScore());
-//        tblStockScore.setAchievementsGrowupScore(achievementsGrowupScore * LEVEL_RATE / gogoalDataWeight.getAchievementsGrowupScore());
-//        tblStockScore.setProfitAbilityScore(profitAbilityScore * LEVEL_RATE / gogoalDataWeight.getProfitAbilityScore());
-//        tblStockScore.setAchievementsClueScore(achievementsClueScore * LEVEL_RATE / gogoalDataWeight.getAchievementsClueScore());
-//        tblStockScore.setMarketplaceStyleScore(marketplaceStyleScore * LEVEL_RATE / gogoalDataWeight.getMarketplaceStyleScore());
-//        tblStockScore.setOrganizationHoldScore( organizationHoldScore * LEVEL_RATE / gogoalDataWeight.getOrganizationHoldScore());
-//        tblStockScore.setOrganizationEmotionScore(organizationEmotionScore * LEVEL_RATE / gogoalDataWeight.getOrganizationEmotionScore());
-//        tblStockScore.setBusinessPreferenceScore( businessPreferenceScore * LEVEL_RATE / gogoalDataWeight.getBusinessPreferenceScore());
-//        tblStockScore.setSuccessRateStatisticsScore( successRateStatisticsScore * LEVEL_RATE / gogoalDataWeight.getStockValuationScore());
-//        tblStockScore.setStockValuationScore(stockValuationScore * LEVEL_RATE / gogoalDataWeight.getStockValuationScore());
-//
-//        // 获取当前总得分
-//        tblStockScore.setTotalScore(data.getJSONObject("week_change").getDoubleValue("total_score"));
-//
-//        // 获取当前总排名
-//        tblStockScore.setMarketRank(status.getIntValue(0));
-//
-//        tblStockScore.setIndustryDetail(status.getString(2) == null ? "" : status.getString(2));
-//
-//        tblStockScore.setIndustryRank(status.getIntValue(3));
-//
-//        tblStockScore.setDate( new Date());
-//
-//    }
-//
-//}
+package com.pers.yefei.supper.stock.service.impl;
+
+import com.pers.yefei.supper.stock.constant.SystemConstant;
+import com.pers.yefei.supper.stock.dao.IStockInfoDao;
+import com.pers.yefei.supper.stock.dao.IStockScoreChangeDao;
+import com.pers.yefei.supper.stock.dao.IStockScoreDao;
+import com.pers.yefei.supper.stock.model.bean.MessageObserver.StockScoreInfoObserver;
+import com.pers.yefei.supper.stock.model.bean.StockScorePushInfo;
+import com.pers.yefei.supper.stock.model.gen.pojo.TblStockObserver;
+import com.pers.yefei.supper.stock.model.gen.pojo.TblStockScore;
+import com.pers.yefei.supper.stock.model.gen.pojo.TblStockScoreChange;
+import com.pers.yefei.supper.stock.service.IPushConfigService;
+import com.pers.yefei.supper.stock.service.IStockScoreService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+
+/**
+ * @author: yefei
+ * @date: 2019/4/26 01:28
+ */
+@Service
+@Slf4j
+public class StockScoreServiceImpl implements IStockScoreService {
+
+    @Autowired
+    private IStockInfoDao stockInfoDao;
+
+    @Autowired
+    private IStockScoreDao stockScoreDao;
+
+    @Autowired
+    private IStockScoreChangeDao stockScoreChangeDao;
+
+    @Autowired
+    private IPushConfigService pushConfigService;
+
+    /**
+     * 查询股票基本信息的订阅者，并查询评分和详细信息
+     * @param date
+     * @return
+     */
+    @Override
+    public List<StockScoreInfoObserver> queryStockObserversFromDB(Date date) {
+        HashMap<Integer, StockScoreInfoObserver> stockInfoObserverMap = new HashMap<>();
+
+        // 从数据库查询关注的股票
+        List<TblStockObserver> tblStockObservers = stockInfoDao.queryStockObserver();
+        tblStockObservers.forEach(tblStockObserver -> {
+            try {
+                StockScoreInfoObserver stockScoreInfoObserver;
+                // 按推送配置id分组
+                if (!stockInfoObserverMap.containsKey(tblStockObserver.getPushConfigID())) {
+                    stockScoreInfoObserver = new StockScoreInfoObserver();
+                    stockScoreInfoObserver.setDate(date);
+
+                    // 查询推送配置
+                    stockScoreInfoObserver.setPushConfig(pushConfigService.getPushConfig(tblStockObserver.getPushConfigID()));
+
+                    stockInfoObserverMap.put(tblStockObserver.getPushConfigID(), stockScoreInfoObserver);
+
+                } else {
+                    stockScoreInfoObserver = stockInfoObserverMap.get(tblStockObserver.getPushConfigID());
+                }
+
+                // 生成推送信息
+                StockScorePushInfo stockScorePushInfo = genStockScorePushInfo(tblStockObserver.getStockCode(), date);
+                if (stockScorePushInfo != null) {
+                    stockScorePushInfo.setPushReason(tblStockObserver.getAddReason());
+                    stockScoreInfoObserver.getStockScorePushInfoList().add(stockScorePushInfo);
+                }
+
+            } catch (Exception e) {
+                log.error("", e);
+            }
+        });
+
+        List<StockScoreInfoObserver> stockScoreInfoObservers = new ArrayList<>();
+        stockScoreInfoObservers.addAll(stockInfoObserverMap.values());
+        return stockScoreInfoObservers ;
+    }
+
+
+
+    /**
+     * 根据行业关键字，查询评分及相关信息
+     * @param industryKeywords
+     * @param date
+     * @return
+     */
+    public List<StockScoreInfoObserver> queryStockObservers(String industryKeywords, Date date) {
+        HashMap<String, StockScoreInfoObserver> stockInfoObserverMap = new HashMap<>();
+
+        // 根据日期、关键字 查询评分等信息
+        List<TblStockScore> tblStockScores = stockScoreDao.queryStockScore(industryKeywords, date);
+        tblStockScores.forEach( tblStockScore -> {
+            StockScoreInfoObserver stockScoreInfoObserver;
+
+            // 按行业分组
+            if ( !stockInfoObserverMap.containsKey(tblStockScore.getIndustryDetail())) {
+                stockScoreInfoObserver = new StockScoreInfoObserver();
+                stockScoreInfoObserver.setDate(date);
+
+                stockScoreInfoObserver.setPushConfig(pushConfigService.getPushConfig(SystemConstant.Default_PushConfigID));
+                stockInfoObserverMap.put(tblStockScore.getIndustryDetail(), stockScoreInfoObserver);
+            } else {
+                stockScoreInfoObserver = stockInfoObserverMap.get(tblStockScore.getIndustryDetail());
+            }
+            stockScoreInfoObserver.setTitle("行业龙头："+ tblStockScore.getIndustryDetail() );
+
+            stockScoreInfoObserver.getStockScorePushInfoList().add(genStockScorePushInfo(tblStockScore));
+        });
+
+        List<StockScoreInfoObserver> stockScoreInfoObservers = new ArrayList<>();
+        stockScoreInfoObservers.addAll(stockInfoObserverMap.values());
+        return stockScoreInfoObservers ;
+    }
+
+
+    private StockScorePushInfo genStockScorePushInfo(String stockCode, Date date) {
+        TblStockScore stockScore = stockScoreDao.getStockScore(stockCode, date);
+        return genStockScorePushInfo(stockScore);
+    }
+
+    private StockScorePushInfo genStockScorePushInfo(TblStockScore stockScore) {
+        if (stockScore == null) {
+            return null;
+        }
+        TblStockScoreChange stockScoreChange = stockScoreChangeDao.getStockScoreChangeByDate(stockScore.getStockCode(), stockScore.getDate());
+        StockScorePushInfo stockScorePushInfo = new StockScorePushInfo();
+        stockScorePushInfo.setTblStockScore(stockScore);
+        stockScorePushInfo.setTblStockScoreChange(stockScoreChange);
+        return stockScorePushInfo;
+    }
+}

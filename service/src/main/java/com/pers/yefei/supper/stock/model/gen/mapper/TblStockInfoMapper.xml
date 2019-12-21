@@ -6,7 +6,6 @@
     <result column="stockCode" jdbcType="VARCHAR" property="stockCode" />
     <result column="stockName" jdbcType="VARCHAR" property="stockName" />
     <result column="price" jdbcType="DOUBLE" property="price" />
-    <result column="syl" jdbcType="DOUBLE" property="syl" />
     <result column="totalValue" jdbcType="INTEGER" property="totalValue" />
     <result column="flowValue" jdbcType="INTEGER" property="flowValue" />
     <result column="priceProfitAssetRatio" jdbcType="DOUBLE" property="priceProfitAssetRatio" />
@@ -79,9 +78,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, stockCode, stockName, price, syl, totalValue, flowValue, priceProfitAssetRatio, 
-    priceNetAssetRatio, totalScore, marketRank, industryName, industryRank, organizationHoldScore, 
-    businessPreferenceScore, isActive, updateTime
+    id, stockCode, stockName, price, totalValue, flowValue, priceProfitAssetRatio, priceNetAssetRatio, 
+    totalScore, marketRank, industryName, industryRank, organizationHoldScore, businessPreferenceScore, 
+    isActive, updateTime
   </sql>
   <select id="selectByExample" parameterType="com.pers.yefei.supper.stock.model.gen.pojo.TblStockInfoExample" resultMap="BaseResultMap">
     select
@@ -126,17 +125,17 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into tbl_stock_info (stockCode, stockName, price, 
-      syl, totalValue, flowValue, 
-      priceProfitAssetRatio, priceNetAssetRatio, 
-      totalScore, marketRank, industryName, 
-      industryRank, organizationHoldScore, businessPreferenceScore, 
-      isActive, updateTime)
+      totalValue, flowValue, priceProfitAssetRatio, 
+      priceNetAssetRatio, totalScore, marketRank, 
+      industryName, industryRank, organizationHoldScore, 
+      businessPreferenceScore, isActive, updateTime
+      )
     values (#{stockCode,jdbcType=VARCHAR}, #{stockName,jdbcType=VARCHAR}, #{price,jdbcType=DOUBLE}, 
-      #{syl,jdbcType=DOUBLE}, #{totalValue,jdbcType=INTEGER}, #{flowValue,jdbcType=INTEGER}, 
-      #{priceProfitAssetRatio,jdbcType=DOUBLE}, #{priceNetAssetRatio,jdbcType=DOUBLE}, 
-      #{totalScore,jdbcType=DOUBLE}, #{marketRank,jdbcType=INTEGER}, #{industryName,jdbcType=VARCHAR}, 
-      #{industryRank,jdbcType=INTEGER}, #{organizationHoldScore,jdbcType=INTEGER}, #{businessPreferenceScore,jdbcType=INTEGER}, 
-      #{isActive,jdbcType=BIT}, #{updateTime,jdbcType=TIMESTAMP})
+      #{totalValue,jdbcType=INTEGER}, #{flowValue,jdbcType=INTEGER}, #{priceProfitAssetRatio,jdbcType=DOUBLE}, 
+      #{priceNetAssetRatio,jdbcType=DOUBLE}, #{totalScore,jdbcType=DOUBLE}, #{marketRank,jdbcType=INTEGER}, 
+      #{industryName,jdbcType=VARCHAR}, #{industryRank,jdbcType=INTEGER}, #{organizationHoldScore,jdbcType=INTEGER}, 
+      #{businessPreferenceScore,jdbcType=INTEGER}, #{isActive,jdbcType=BIT}, #{updateTime,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.pers.yefei.supper.stock.model.gen.pojo.TblStockInfo">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -152,9 +151,6 @@
       </if>
       <if test="price != null">
         price,
-      </if>
-      <if test="syl != null">
-        syl,
       </if>
       <if test="totalValue != null">
         totalValue,
@@ -202,9 +198,6 @@
       </if>
       <if test="price != null">
         #{price,jdbcType=DOUBLE},
-      </if>
-      <if test="syl != null">
-        #{syl,jdbcType=DOUBLE},
       </if>
       <if test="totalValue != null">
         #{totalValue,jdbcType=INTEGER},
@@ -265,9 +258,6 @@
       <if test="record.price != null">
         price = #{record.price,jdbcType=DOUBLE},
       </if>
-      <if test="record.syl != null">
-        syl = #{record.syl,jdbcType=DOUBLE},
-      </if>
       <if test="record.totalValue != null">
         totalValue = #{record.totalValue,jdbcType=INTEGER},
       </if>
@@ -315,7 +305,6 @@
       stockCode = #{record.stockCode,jdbcType=VARCHAR},
       stockName = #{record.stockName,jdbcType=VARCHAR},
       price = #{record.price,jdbcType=DOUBLE},
-      syl = #{record.syl,jdbcType=DOUBLE},
       totalValue = #{record.totalValue,jdbcType=INTEGER},
       flowValue = #{record.flowValue,jdbcType=INTEGER},
       priceProfitAssetRatio = #{record.priceProfitAssetRatio,jdbcType=DOUBLE},
@@ -343,9 +332,6 @@
       </if>
       <if test="price != null">
         price = #{price,jdbcType=DOUBLE},
-      </if>
-      <if test="syl != null">
-        syl = #{syl,jdbcType=DOUBLE},
       </if>
       <if test="totalValue != null">
         totalValue = #{totalValue,jdbcType=INTEGER},
@@ -391,7 +377,6 @@
     set stockCode = #{stockCode,jdbcType=VARCHAR},
       stockName = #{stockName,jdbcType=VARCHAR},
       price = #{price,jdbcType=DOUBLE},
-      syl = #{syl,jdbcType=DOUBLE},
       totalValue = #{totalValue,jdbcType=INTEGER},
       flowValue = #{flowValue,jdbcType=INTEGER},
       priceProfitAssetRatio = #{priceProfitAssetRatio,jdbcType=DOUBLE},

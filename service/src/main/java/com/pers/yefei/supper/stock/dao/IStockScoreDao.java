@@ -10,6 +10,12 @@ import java.util.List;
  * @date: 2019/4/27 01:31
  */
 public interface IStockScoreDao {
+
+
+    TblStockScore getLastDayStockScore(String stockCode);
+
+    TblStockScore getStockScore(String stockCode, Date date);
+
     TblStockScore getStockScoreToday(String stockCode);
 
     void insertStockScore(TblStockScore stockScore);
@@ -18,8 +24,15 @@ public interface IStockScoreDao {
 
     List<TblStockScore> queryStockScoreByDate(Date date);
 
+    List<TblStockScore> queryStockScore(String industryKeywords, Date date);
+
+    List<TblStockScore> queryStockScoreOrderByTotalValue(String industryKeywords, Date date);
+
+    List<TblStockScore> queryStockScoreOrderByTotalScore(String industryKeywords, Date date);
+
     Date queryPrevDate(Date date);
 
     long countStockScoreByDate(Date date);
+
 
 }

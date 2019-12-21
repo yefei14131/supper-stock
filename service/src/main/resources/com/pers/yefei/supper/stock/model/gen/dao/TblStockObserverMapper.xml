@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pers.yefei.supper.stock.model.gen.dao.TblStockObserverMapper">
+  <resultMap id="BaseResultMap" type="com.pers.yefei.supper.stock.model.gen.pojo.TblStockObserver">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="stockCode" jdbcType="VARCHAR" property="stockCode" />
+    <result column="stockName" jdbcType="VARCHAR" property="stockName" />
+    <result column="addReason" jdbcType="VARCHAR" property="addReason" />
+    <result column="addTime" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="pushConfigID" jdbcType="INTEGER" property="pushConfigID" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, stockCode, stockName, addReason, addTime, pushConfigID
+  </sql>
+  <select id="selectByExample" parameterType="com.pers.yefei.supper.stock.model.gen.pojo.TblStockObserverExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_stock_observer
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_stock_observer
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tbl_stock_observer
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pers.yefei.supper.stock.model.gen.pojo.TblStockObserverExample">
+    delete from tbl_stock_observer
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pers.yefei.supper.stock.model.gen.pojo.TblStockObserver">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tbl_stock_observer (stockCode, stockName, addReason, 
+      addTime, pushConfigID)
+    values (#{stockCode,jdbcType=VARCHAR}, #{stockName,jdbcType=VARCHAR}, #{addReason,jdbcType=VARCHAR}, 
+      #{addTime,jdbcType=TIMESTAMP}, #{pushConfigID,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pers.yefei.supper.stock.model.gen.pojo.TblStockObserver">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tbl_stock_observer
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="stockCode != null">
+        stockCode,
+      </if>
+      <if test="stockName != null">
+        stockName,
+      </if>
+      <if test="addReason != null">
+        addReason,
+      </if>
+      <if test="addTime != null">
+        addTime,
+      </if>
+      <if test="pushConfigID != null">
+        pushConfigID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="stockCode != null">
+        #{stockCode,jdbcType=VARCHAR},
+      </if>
+      <if test="stockName != null">
+        #{stockName,jdbcType=VARCHAR},
+      </if>
+      <if test="addReason != null">
+        #{addReason,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null">
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pushConfigID != null">
+        #{pushConfigID,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pers.yefei.supper.stock.model.gen.pojo.TblStockObserverExample" resultType="java.lang.Long">
+    select count(*) from tbl_stock_observer
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tbl_stock_observer
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.stockCode != null">
+        stockCode = #{record.stockCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stockName != null">
+        stockName = #{record.stockName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addReason != null">
+        addReason = #{record.addReason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addTime != null">
+        addTime = #{record.addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.pushConfigID != null">
+        pushConfigID = #{record.pushConfigID,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tbl_stock_observer
+    set id = #{record.id,jdbcType=INTEGER},
+      stockCode = #{record.stockCode,jdbcType=VARCHAR},
+      stockName = #{record.stockName,jdbcType=VARCHAR},
+      addReason = #{record.addReason,jdbcType=VARCHAR},
+      addTime = #{record.addTime,jdbcType=TIMESTAMP},
+      pushConfigID = #{record.pushConfigID,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pers.yefei.supper.stock.model.gen.pojo.TblStockObserver">
+    update tbl_stock_observer
+    <set>
+      <if test="stockCode != null">
+        stockCode = #{stockCode,jdbcType=VARCHAR},
+      </if>
+      <if test="stockName != null">
+        stockName = #{stockName,jdbcType=VARCHAR},
+      </if>
+      <if test="addReason != null">
+        addReason = #{addReason,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null">
+        addTime = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pushConfigID != null">
+        pushConfigID = #{pushConfigID,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pers.yefei.supper.stock.model.gen.pojo.TblStockObserver">
+    update tbl_stock_observer
+    set stockCode = #{stockCode,jdbcType=VARCHAR},
+      stockName = #{stockName,jdbcType=VARCHAR},
+      addReason = #{addReason,jdbcType=VARCHAR},
+      addTime = #{addTime,jdbcType=TIMESTAMP},
+      pushConfigID = #{pushConfigID,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
