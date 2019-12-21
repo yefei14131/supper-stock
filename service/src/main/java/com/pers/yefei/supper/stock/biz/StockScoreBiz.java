@@ -5,6 +5,7 @@ import com.pers.yefei.supper.stock.model.bean.StockScoreChangeSummary;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockInfo;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockScore;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockScoreChange;
+import com.pers.yefei.supper.stock.service.IPushConfigService;
 import com.pers.yefei.supper.stock.service.IStockDataService;
 import com.pers.yefei.supper.stock.third.message.MessageSender;
 import com.pers.yefei.supper.stock.third.stock.info.StockInfoCollector;
@@ -40,6 +41,11 @@ public class StockScoreBiz {
 
     @Autowired
     private MessageSender messageSender;
+
+
+    @Autowired
+    private IPushConfigService pushConfigService;
+
 
     private boolean collectorRunning = false;
 
@@ -278,6 +284,7 @@ public class StockScoreBiz {
                     stockScoreChange.setStockCode(todayStockScore.getStockCode());
                     stockScoreChange.setStockName(todayStockScore.getStockName());
                     stockScoreChange.setTotalScore(todayStockScore.getTotalScore());
+                    stockScoreChange.setUpdateTime(new Date());
 
                     stockDataService.saveStockScoreChange(stockScoreChange);
                 }
@@ -312,9 +319,7 @@ public class StockScoreBiz {
         StockSoreChangeObserver stockSoreChangeObserver = new StockSoreChangeObserver();
         stockSoreChangeObserver.fromStockScoreChangeSummary(stockScoreChangeSummary);
 
-        stockSoreChangeObserver.setThirdToken("20e0f97ec78da7a0eeeae5a541682bf189a3d0975ccfe71a4bf7058cbd0f8deb");
-        stockSoreChangeObserver.setMessagePushType("DingTalk");
-
+        stockSoreChangeObserver.setPushConfig(pushConfigService.getPushConfig(1));
 
         // 过滤
         StockBaseInfoUtils.filterTotalValeTop10AndTotalScoreTop10(stockSoreChangeObserver.getStockScoreChangeSummary().getIncreaseList());

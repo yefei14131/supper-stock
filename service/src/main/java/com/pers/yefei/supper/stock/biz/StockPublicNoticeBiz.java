@@ -5,6 +5,7 @@ import com.pers.yefei.supper.stock.model.bean.MessageObserver.StockPublicNoticeO
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockInfo;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockPublicNotice;
 import com.pers.yefei.supper.stock.model.gen.pojo.TblStockPublicNoticeObserver;
+import com.pers.yefei.supper.stock.service.IPushConfigService;
 import com.pers.yefei.supper.stock.service.IStockPublicNoticeService;
 import com.pers.yefei.supper.stock.third.message.MessageSender;
 import com.pers.yefei.supper.stock.third.public_notice.PublicNoticeCollector;
@@ -41,6 +42,9 @@ public class StockPublicNoticeBiz {
 
     @Autowired
     private StockScoreBiz stockScoreConllectBiz;
+
+    @Autowired
+    private IPushConfigService pushConfigService;
 
 
     /**
@@ -139,8 +143,13 @@ public class StockPublicNoticeBiz {
         List<TblStockPublicNoticeObserver> tblStockPublicNoticeObservers = stockPublicNoticeService.queryStockPublicNoticeObserver();
 
         tblStockPublicNoticeObservers.forEach(tblStockPublicNoticeObserver->{
+
+            //实体对象转换
             StockPublicNoticeObserver stockPublicNoticeObserver = new StockPublicNoticeObserver(tblStockPublicNoticeObserver);
             stockPublicNoticeObserver.setDate(new Date());
+
+            // 设置推送配置
+            stockPublicNoticeObserver.setPushConfig(pushConfigService.getPushConfig(tblStockPublicNoticeObserver.getPushConfigID()));
 
             stockPublicNoticeObserverList.add(stockPublicNoticeObserver);
 

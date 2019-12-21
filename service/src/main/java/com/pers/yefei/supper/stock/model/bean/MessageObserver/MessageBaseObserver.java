@@ -1,5 +1,6 @@
 package com.pers.yefei.supper.stock.model.bean.MessageObserver;
 
+import com.pers.yefei.supper.stock.model.bean.PushConfig.RealPushConfig;
 import lombok.Data;
 
 /**
@@ -9,9 +10,8 @@ import lombok.Data;
 @Data
 public class MessageBaseObserver {
 
-    protected String thirdToken;
     protected String title;
     protected String memo;
-    protected String messagePushType;
-
+//    protected String messagePushType;
+    protected RealPushConfig pushConfig;
 }

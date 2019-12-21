@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.pers.yefei.supper.stock.model.gen.dao.TblStockPublicNoticeObserverMapper">
-  <resultMap id="BaseResultMap" type="com.pers.yefei.supper.stock.model.gen.pojo.TblStockPublicNoticeObserver">
+<mapper namespace="com.pers.yefei.supper.stock.model.gen.dao.TblPushConfigMapper">
+  <resultMap id="BaseResultMap" type="com.pers.yefei.supper.stock.model.gen.pojo.TblPushConfig">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="keywords" jdbcType="VARCHAR" property="keywords" />
-    <result column="memo" jdbcType="VARCHAR" property="memo" />
-    <result column="pushConfigID" jdbcType="INTEGER" property="pushConfigID" />
-    <result column="isActive" jdbcType="BIT" property="isActive" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="messagePushType" jdbcType="VARCHAR" property="messagePushType" />
+    <result column="configData" jdbcType="VARCHAR" property="configData" />
+    <result column="updateTime" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -67,15 +67,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, keywords, memo, pushConfigID, isActive
+    id, title, messagePushType, configData, updateTime
   </sql>
-  <select id="selectByExample" parameterType="com.pers.yefei.supper.stock.model.gen.pojo.TblStockPublicNoticeObserverExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.pers.yefei.supper.stock.model.gen.pojo.TblPushConfigExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from tbl_stock_public_notice_observer
+    from tbl_push_config
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -94,85 +94,85 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from tbl_stock_public_notice_observer
+    from tbl_push_config
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from tbl_stock_public_notice_observer
+    delete from tbl_push_config
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pers.yefei.supper.stock.model.gen.pojo.TblStockPublicNoticeObserverExample">
-    delete from tbl_stock_public_notice_observer
+  <delete id="deleteByExample" parameterType="com.pers.yefei.supper.stock.model.gen.pojo.TblPushConfigExample">
+    delete from tbl_push_config
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pers.yefei.supper.stock.model.gen.pojo.TblStockPublicNoticeObserver">
+  <insert id="insert" parameterType="com.pers.yefei.supper.stock.model.gen.pojo.TblPushConfig">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into tbl_stock_public_notice_observer (keywords, memo, pushConfigID, 
-      isActive)
-    values (#{keywords,jdbcType=VARCHAR}, #{memo,jdbcType=VARCHAR}, #{pushConfigID,jdbcType=INTEGER}, 
-      #{isActive,jdbcType=BIT})
+    insert into tbl_push_config (title, messagePushType, configData, 
+      updateTime)
+    values (#{title,jdbcType=VARCHAR}, #{messagePushType,jdbcType=VARCHAR}, #{configData,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.pers.yefei.supper.stock.model.gen.pojo.TblStockPublicNoticeObserver">
+  <insert id="insertSelective" parameterType="com.pers.yefei.supper.stock.model.gen.pojo.TblPushConfig">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into tbl_stock_public_notice_observer
+    insert into tbl_push_config
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="keywords != null">
-        keywords,
+      <if test="title != null">
+        title,
       </if>
-      <if test="memo != null">
-        memo,
+      <if test="messagePushType != null">
+        messagePushType,
       </if>
-      <if test="pushConfigID != null">
-        pushConfigID,
+      <if test="configData != null">
+        configData,
       </if>
-      <if test="isActive != null">
-        isActive,
+      <if test="updateTime != null">
+        updateTime,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="keywords != null">
-        #{keywords,jdbcType=VARCHAR},
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
       </if>
-      <if test="memo != null">
-        #{memo,jdbcType=VARCHAR},
+      <if test="messagePushType != null">
+        #{messagePushType,jdbcType=VARCHAR},
       </if>
-      <if test="pushConfigID != null">
-        #{pushConfigID,jdbcType=INTEGER},
+      <if test="configData != null">
+        #{configData,jdbcType=VARCHAR},
       </if>
-      <if test="isActive != null">
-        #{isActive,jdbcType=BIT},
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pers.yefei.supper.stock.model.gen.pojo.TblStockPublicNoticeObserverExample" resultType="java.lang.Long">
-    select count(*) from tbl_stock_public_notice_observer
+  <select id="countByExample" parameterType="com.pers.yefei.supper.stock.model.gen.pojo.TblPushConfigExample" resultType="java.lang.Long">
+    select count(*) from tbl_push_config
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update tbl_stock_public_notice_observer
+    update tbl_push_config
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.keywords != null">
-        keywords = #{record.keywords,jdbcType=VARCHAR},
+      <if test="record.title != null">
+        title = #{record.title,jdbcType=VARCHAR},
       </if>
-      <if test="record.memo != null">
-        memo = #{record.memo,jdbcType=VARCHAR},
+      <if test="record.messagePushType != null">
+        messagePushType = #{record.messagePushType,jdbcType=VARCHAR},
       </if>
-      <if test="record.pushConfigID != null">
-        pushConfigID = #{record.pushConfigID,jdbcType=INTEGER},
+      <if test="record.configData != null">
+        configData = #{record.configData,jdbcType=VARCHAR},
       </if>
-      <if test="record.isActive != null">
-        isActive = #{record.isActive,jdbcType=BIT},
+      <if test="record.updateTime != null">
+        updateTime = #{record.updateTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     <if test="_parameter != null">
@@ -180,40 +180,40 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update tbl_stock_public_notice_observer
+    update tbl_push_config
     set id = #{record.id,jdbcType=INTEGER},
-      keywords = #{record.keywords,jdbcType=VARCHAR},
-      memo = #{record.memo,jdbcType=VARCHAR},
-      pushConfigID = #{record.pushConfigID,jdbcType=INTEGER},
-      isActive = #{record.isActive,jdbcType=BIT}
+      title = #{record.title,jdbcType=VARCHAR},
+      messagePushType = #{record.messagePushType,jdbcType=VARCHAR},
+      configData = #{record.configData,jdbcType=VARCHAR},
+      updateTime = #{record.updateTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pers.yefei.supper.stock.model.gen.pojo.TblStockPublicNoticeObserver">
-    update tbl_stock_public_notice_observer
+  <update id="updateByPrimaryKeySelective" parameterType="com.pers.yefei.supper.stock.model.gen.pojo.TblPushConfig">
+    update tbl_push_config
     <set>
-      <if test="keywords != null">
-        keywords = #{keywords,jdbcType=VARCHAR},
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
       </if>
-      <if test="memo != null">
-        memo = #{memo,jdbcType=VARCHAR},
+      <if test="messagePushType != null">
+        messagePushType = #{messagePushType,jdbcType=VARCHAR},
       </if>
-      <if test="pushConfigID != null">
-        pushConfigID = #{pushConfigID,jdbcType=INTEGER},
+      <if test="configData != null">
+        configData = #{configData,jdbcType=VARCHAR},
       </if>
-      <if test="isActive != null">
-        isActive = #{isActive,jdbcType=BIT},
+      <if test="updateTime != null">
+        updateTime = #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pers.yefei.supper.stock.model.gen.pojo.TblStockPublicNoticeObserver">
-    update tbl_stock_public_notice_observer
-    set keywords = #{keywords,jdbcType=VARCHAR},
-      memo = #{memo,jdbcType=VARCHAR},
-      pushConfigID = #{pushConfigID,jdbcType=INTEGER},
-      isActive = #{isActive,jdbcType=BIT}
+  <update id="updateByPrimaryKey" parameterType="com.pers.yefei.supper.stock.model.gen.pojo.TblPushConfig">
+    update tbl_push_config
+    set title = #{title,jdbcType=VARCHAR},
+      messagePushType = #{messagePushType,jdbcType=VARCHAR},
+      configData = #{configData,jdbcType=VARCHAR},
+      updateTime = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

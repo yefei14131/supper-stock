@@ -20,24 +20,22 @@ public class MessageSender {
     private DingTalkMessageSender dingTalkMessageSender;
 
     public void sendStockPublicNotice(StockPublicNoticeObserver stockPublicNoticeObserver){
-        stockPublicNoticeObserver.getMessagePushType();
 
-        if (MessagePushTypeEnum.valueOf(stockPublicNoticeObserver.getMessagePushType()).equals(MessagePushTypeEnum.DingTalk)){
+        if (MessagePushTypeEnum.DingTalk.equals(stockPublicNoticeObserver.getPushConfig().getMessagePushType())){
             dingTalkMessageSender.sendStockPublicNotice(stockPublicNoticeObserver);
         } else {
-            log.error("无法识别的消息推送类别： {}", stockPublicNoticeObserver.getMessagePushType());
+            log.error("无法识别的消息推送类别： {}", stockPublicNoticeObserver.getPushConfig().getMessagePushType());
         }
 
     }
 
 
     public void sendStockScoreChange(StockSoreChangeObserver stockSoreChangeObserver) {
-        stockSoreChangeObserver.getMessagePushType();
 
-        if (MessagePushTypeEnum.valueOf(stockSoreChangeObserver.getMessagePushType()).equals(MessagePushTypeEnum.DingTalk)) {
+        if (MessagePushTypeEnum.DingTalk.equals(stockSoreChangeObserver.getPushConfig().getMessagePushType())){
             dingTalkMessageSender.sendStockScoreChange(stockSoreChangeObserver);
         } else {
-            log.error("无法识别的消息推送类别： {}", stockSoreChangeObserver.getMessagePushType());
+            log.error("无法识别的消息推送类别： {}", stockSoreChangeObserver.getPushConfig().getMessagePushType());
 
         }
     }

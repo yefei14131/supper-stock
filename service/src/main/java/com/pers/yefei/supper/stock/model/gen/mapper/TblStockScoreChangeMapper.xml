@@ -3,8 +3,8 @@
 <mapper namespace="com.pers.yefei.supper.stock.model.gen.dao.TblStockScoreChangeMapper">
   <resultMap id="BaseResultMap" type="com.pers.yefei.supper.stock.model.gen.pojo.TblStockScoreChange">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <id column="stockName" jdbcType="VARCHAR" property="stockName" />
     <result column="stockCode" jdbcType="VARCHAR" property="stockCode" />
+    <result column="stockName" jdbcType="VARCHAR" property="stockName" />
     <result column="fieldName" jdbcType="VARCHAR" property="fieldName" />
     <result column="todayValue" jdbcType="INTEGER" property="todayValue" />
     <result column="preValue" jdbcType="INTEGER" property="preValue" />
@@ -72,7 +72,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, stockName, stockCode, fieldName, todayValue, preValue, changeValue, totalScore, 
+    id, stockCode, stockName, fieldName, todayValue, preValue, changeValue, totalScore, 
     date, updateTime
   </sql>
   <select id="selectByExample" parameterType="com.pers.yefei.supper.stock.model.gen.pojo.TblStockScoreChangeExample" resultMap="BaseResultMap">
@@ -97,17 +97,15 @@
       </if>
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="com.pers.yefei.supper.stock.model.gen.pojo.TblStockScoreChangeKey" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from tbl_stock_score_change
     where id = #{id,jdbcType=INTEGER}
-      and stockName = #{stockName,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="com.pers.yefei.supper.stock.model.gen.pojo.TblStockScoreChangeKey">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tbl_stock_score_change
     where id = #{id,jdbcType=INTEGER}
-      and stockName = #{stockName,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pers.yefei.supper.stock.model.gen.pojo.TblStockScoreChangeExample">
     delete from tbl_stock_score_change
@@ -119,11 +117,11 @@
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into tbl_stock_score_change (stockName, stockCode, fieldName, 
+    insert into tbl_stock_score_change (stockCode, stockName, fieldName, 
       todayValue, preValue, changeValue, 
       totalScore, date, updateTime
       )
-    values (#{stockName,jdbcType=VARCHAR}, #{stockCode,jdbcType=VARCHAR}, #{fieldName,jdbcType=VARCHAR}, 
+    values (#{stockCode,jdbcType=VARCHAR}, #{stockName,jdbcType=VARCHAR}, #{fieldName,jdbcType=VARCHAR}, 
       #{todayValue,jdbcType=INTEGER}, #{preValue,jdbcType=INTEGER}, #{changeValue,jdbcType=INTEGER}, 
       #{totalScore,jdbcType=DOUBLE}, #{date,jdbcType=DATE}, #{updateTime,jdbcType=TIMESTAMP}
       )
@@ -134,11 +132,11 @@
     </selectKey>
     insert into tbl_stock_score_change
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="stockName != null">
-        stockName,
-      </if>
       <if test="stockCode != null">
         stockCode,
+      </if>
+      <if test="stockName != null">
+        stockName,
       </if>
       <if test="fieldName != null">
         fieldName,
@@ -163,11 +161,11 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="stockName != null">
-        #{stockName,jdbcType=VARCHAR},
-      </if>
       <if test="stockCode != null">
         #{stockCode,jdbcType=VARCHAR},
+      </if>
+      <if test="stockName != null">
+        #{stockName,jdbcType=VARCHAR},
       </if>
       <if test="fieldName != null">
         #{fieldName,jdbcType=VARCHAR},
@@ -204,11 +202,11 @@
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.stockName != null">
-        stockName = #{record.stockName,jdbcType=VARCHAR},
-      </if>
       <if test="record.stockCode != null">
         stockCode = #{record.stockCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stockName != null">
+        stockName = #{record.stockName,jdbcType=VARCHAR},
       </if>
       <if test="record.fieldName != null">
         fieldName = #{record.fieldName,jdbcType=VARCHAR},
@@ -239,8 +237,8 @@
   <update id="updateByExample" parameterType="map">
     update tbl_stock_score_change
     set id = #{record.id,jdbcType=INTEGER},
-      stockName = #{record.stockName,jdbcType=VARCHAR},
       stockCode = #{record.stockCode,jdbcType=VARCHAR},
+      stockName = #{record.stockName,jdbcType=VARCHAR},
       fieldName = #{record.fieldName,jdbcType=VARCHAR},
       todayValue = #{record.todayValue,jdbcType=INTEGER},
       preValue = #{record.preValue,jdbcType=INTEGER},
@@ -257,6 +255,9 @@
     <set>
       <if test="stockCode != null">
         stockCode = #{stockCode,jdbcType=VARCHAR},
+      </if>
+      <if test="stockName != null">
+        stockName = #{stockName,jdbcType=VARCHAR},
       </if>
       <if test="fieldName != null">
         fieldName = #{fieldName,jdbcType=VARCHAR},
@@ -281,11 +282,11 @@
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
-      and stockName = #{stockName,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pers.yefei.supper.stock.model.gen.pojo.TblStockScoreChange">
     update tbl_stock_score_change
     set stockCode = #{stockCode,jdbcType=VARCHAR},
+      stockName = #{stockName,jdbcType=VARCHAR},
       fieldName = #{fieldName,jdbcType=VARCHAR},
       todayValue = #{todayValue,jdbcType=INTEGER},
       preValue = #{preValue,jdbcType=INTEGER},
@@ -294,6 +295,5 @@
       date = #{date,jdbcType=DATE},
       updateTime = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
-      and stockName = #{stockName,jdbcType=VARCHAR}
   </update>
 </mapper>

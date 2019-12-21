@@ -212,76 +212,6 @@ public class TblStockScoreChangeExample {
             return (Criteria) this;
         }
 
-        public Criteria andStockNameIsNull() {
-            addCriterion("stockName is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andStockNameIsNotNull() {
-            addCriterion("stockName is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andStockNameEqualTo(String value) {
-            addCriterion("stockName =", value, "stockName");
-            return (Criteria) this;
-        }
-
-        public Criteria andStockNameNotEqualTo(String value) {
-            addCriterion("stockName <>", value, "stockName");
-            return (Criteria) this;
-        }
-
-        public Criteria andStockNameGreaterThan(String value) {
-            addCriterion("stockName >", value, "stockName");
-            return (Criteria) this;
-        }
-
-        public Criteria andStockNameGreaterThanOrEqualTo(String value) {
-            addCriterion("stockName >=", value, "stockName");
-            return (Criteria) this;
-        }
-
-        public Criteria andStockNameLessThan(String value) {
-            addCriterion("stockName <", value, "stockName");
-            return (Criteria) this;
-        }
-
-        public Criteria andStockNameLessThanOrEqualTo(String value) {
-            addCriterion("stockName <=", value, "stockName");
-            return (Criteria) this;
-        }
-
-        public Criteria andStockNameLike(String value) {
-            addCriterion("stockName like", value, "stockName");
-            return (Criteria) this;
-        }
-
-        public Criteria andStockNameNotLike(String value) {
-            addCriterion("stockName not like", value, "stockName");
-            return (Criteria) this;
-        }
-
-        public Criteria andStockNameIn(List<String> values) {
-            addCriterion("stockName in", values, "stockName");
-            return (Criteria) this;
-        }
-
-        public Criteria andStockNameNotIn(List<String> values) {
-            addCriterion("stockName not in", values, "stockName");
-            return (Criteria) this;
-        }
-
-        public Criteria andStockNameBetween(String value1, String value2) {
-            addCriterion("stockName between", value1, value2, "stockName");
-            return (Criteria) this;
-        }
-
-        public Criteria andStockNameNotBetween(String value1, String value2) {
-            addCriterion("stockName not between", value1, value2, "stockName");
-            return (Criteria) this;
-        }
-
         public Criteria andStockCodeIsNull() {
             addCriterion("stockCode is null");
             return (Criteria) this;
@@ -349,6 +279,76 @@ public class TblStockScoreChangeExample {
 
         public Criteria andStockCodeNotBetween(String value1, String value2) {
             addCriterion("stockCode not between", value1, value2, "stockCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andStockNameIsNull() {
+            addCriterion("stockName is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStockNameIsNotNull() {
+            addCriterion("stockName is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStockNameEqualTo(String value) {
+            addCriterion("stockName =", value, "stockName");
+            return (Criteria) this;
+        }
+
+        public Criteria andStockNameNotEqualTo(String value) {
+            addCriterion("stockName <>", value, "stockName");
+            return (Criteria) this;
+        }
+
+        public Criteria andStockNameGreaterThan(String value) {
+            addCriterion("stockName >", value, "stockName");
+            return (Criteria) this;
+        }
+
+        public Criteria andStockNameGreaterThanOrEqualTo(String value) {
+            addCriterion("stockName >=", value, "stockName");
+            return (Criteria) this;
+        }
+
+        public Criteria andStockNameLessThan(String value) {
+            addCriterion("stockName <", value, "stockName");
+            return (Criteria) this;
+        }
+
+        public Criteria andStockNameLessThanOrEqualTo(String value) {
+            addCriterion("stockName <=", value, "stockName");
+            return (Criteria) this;
+        }
+
+        public Criteria andStockNameLike(String value) {
+            addCriterion("stockName like", value, "stockName");
+            return (Criteria) this;
+        }
+
+        public Criteria andStockNameNotLike(String value) {
+            addCriterion("stockName not like", value, "stockName");
+            return (Criteria) this;
+        }
+
+        public Criteria andStockNameIn(List<String> values) {
+            addCriterion("stockName in", values, "stockName");
+            return (Criteria) this;
+        }
+
+        public Criteria andStockNameNotIn(List<String> values) {
+            addCriterion("stockName not in", values, "stockName");
+            return (Criteria) this;
+        }
+
+        public Criteria andStockNameBetween(String value1, String value2) {
+            addCriterion("stockName between", value1, value2, "stockName");
+            return (Criteria) this;
+        }
+
+        public Criteria andStockNameNotBetween(String value1, String value2) {
+            addCriterion("stockName not between", value1, value2, "stockName");
             return (Criteria) this;
         }
 

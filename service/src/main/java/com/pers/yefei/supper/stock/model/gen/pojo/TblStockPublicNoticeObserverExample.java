@@ -254,146 +254,6 @@ public class TblStockPublicNoticeObserverExample {
             return (Criteria) this;
         }
 
-        public Criteria andMessagePushTypeIsNull() {
-            addCriterion("messagePushType is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andMessagePushTypeIsNotNull() {
-            addCriterion("messagePushType is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andMessagePushTypeEqualTo(String value) {
-            addCriterion("messagePushType =", value, "messagePushType");
-            return (Criteria) this;
-        }
-
-        public Criteria andMessagePushTypeNotEqualTo(String value) {
-            addCriterion("messagePushType <>", value, "messagePushType");
-            return (Criteria) this;
-        }
-
-        public Criteria andMessagePushTypeGreaterThan(String value) {
-            addCriterion("messagePushType >", value, "messagePushType");
-            return (Criteria) this;
-        }
-
-        public Criteria andMessagePushTypeGreaterThanOrEqualTo(String value) {
-            addCriterion("messagePushType >=", value, "messagePushType");
-            return (Criteria) this;
-        }
-
-        public Criteria andMessagePushTypeLessThan(String value) {
-            addCriterion("messagePushType <", value, "messagePushType");
-            return (Criteria) this;
-        }
-
-        public Criteria andMessagePushTypeLessThanOrEqualTo(String value) {
-            addCriterion("messagePushType <=", value, "messagePushType");
-            return (Criteria) this;
-        }
-
-        public Criteria andMessagePushTypeLike(String value) {
-            addCriterion("messagePushType like", value, "messagePushType");
-            return (Criteria) this;
-        }
-
-        public Criteria andMessagePushTypeNotLike(String value) {
-            addCriterion("messagePushType not like", value, "messagePushType");
-            return (Criteria) this;
-        }
-
-        public Criteria andMessagePushTypeIn(List<String> values) {
-            addCriterion("messagePushType in", values, "messagePushType");
-            return (Criteria) this;
-        }
-
-        public Criteria andMessagePushTypeNotIn(List<String> values) {
-            addCriterion("messagePushType not in", values, "messagePushType");
-            return (Criteria) this;
-        }
-
-        public Criteria andMessagePushTypeBetween(String value1, String value2) {
-            addCriterion("messagePushType between", value1, value2, "messagePushType");
-            return (Criteria) this;
-        }
-
-        public Criteria andMessagePushTypeNotBetween(String value1, String value2) {
-            addCriterion("messagePushType not between", value1, value2, "messagePushType");
-            return (Criteria) this;
-        }
-
-        public Criteria andThirdTokenIsNull() {
-            addCriterion("thirdToken is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andThirdTokenIsNotNull() {
-            addCriterion("thirdToken is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andThirdTokenEqualTo(String value) {
-            addCriterion("thirdToken =", value, "thirdToken");
-            return (Criteria) this;
-        }
-
-        public Criteria andThirdTokenNotEqualTo(String value) {
-            addCriterion("thirdToken <>", value, "thirdToken");
-            return (Criteria) this;
-        }
-
-        public Criteria andThirdTokenGreaterThan(String value) {
-            addCriterion("thirdToken >", value, "thirdToken");
-            return (Criteria) this;
-        }
-
-        public Criteria andThirdTokenGreaterThanOrEqualTo(String value) {
-            addCriterion("thirdToken >=", value, "thirdToken");
-            return (Criteria) this;
-        }
-
-        public Criteria andThirdTokenLessThan(String value) {
-            addCriterion("thirdToken <", value, "thirdToken");
-            return (Criteria) this;
-        }
-
-        public Criteria andThirdTokenLessThanOrEqualTo(String value) {
-            addCriterion("thirdToken <=", value, "thirdToken");
-            return (Criteria) this;
-        }
-
-        public Criteria andThirdTokenLike(String value) {
-            addCriterion("thirdToken like", value, "thirdToken");
-            return (Criteria) this;
-        }
-
-        public Criteria andThirdTokenNotLike(String value) {
-            addCriterion("thirdToken not like", value, "thirdToken");
-            return (Criteria) this;
-        }
-
-        public Criteria andThirdTokenIn(List<String> values) {
-            addCriterion("thirdToken in", values, "thirdToken");
-            return (Criteria) this;
-        }
-
-        public Criteria andThirdTokenNotIn(List<String> values) {
-            addCriterion("thirdToken not in", values, "thirdToken");
-            return (Criteria) this;
-        }
-
-        public Criteria andThirdTokenBetween(String value1, String value2) {
-            addCriterion("thirdToken between", value1, value2, "thirdToken");
-            return (Criteria) this;
-        }
-
-        public Criteria andThirdTokenNotBetween(String value1, String value2) {
-            addCriterion("thirdToken not between", value1, value2, "thirdToken");
-            return (Criteria) this;
-        }
-
         public Criteria andMemoIsNull() {
             addCriterion("memo is null");
             return (Criteria) this;
@@ -461,6 +321,66 @@ public class TblStockPublicNoticeObserverExample {
 
         public Criteria andMemoNotBetween(String value1, String value2) {
             addCriterion("memo not between", value1, value2, "memo");
+            return (Criteria) this;
+        }
+
+        public Criteria andPushConfigIDIsNull() {
+            addCriterion("pushConfigID is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPushConfigIDIsNotNull() {
+            addCriterion("pushConfigID is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPushConfigIDEqualTo(Integer value) {
+            addCriterion("pushConfigID =", value, "pushConfigID");
+            return (Criteria) this;
+        }
+
+        public Criteria andPushConfigIDNotEqualTo(Integer value) {
+            addCriterion("pushConfigID <>", value, "pushConfigID");
+            return (Criteria) this;
+        }
+
+        public Criteria andPushConfigIDGreaterThan(Integer value) {
+            addCriterion("pushConfigID >", value, "pushConfigID");
+            return (Criteria) this;
+        }
+
+        public Criteria andPushConfigIDGreaterThanOrEqualTo(Integer value) {
+            addCriterion("pushConfigID >=", value, "pushConfigID");
+            return (Criteria) this;
+        }
+
+        public Criteria andPushConfigIDLessThan(Integer value) {
+            addCriterion("pushConfigID <", value, "pushConfigID");
+            return (Criteria) this;
+        }
+
+        public Criteria andPushConfigIDLessThanOrEqualTo(Integer value) {
+            addCriterion("pushConfigID <=", value, "pushConfigID");
+            return (Criteria) this;
+        }
+
+        public Criteria andPushConfigIDIn(List<Integer> values) {
+            addCriterion("pushConfigID in", values, "pushConfigID");
+            return (Criteria) this;
+        }
+
+        public Criteria andPushConfigIDNotIn(List<Integer> values) {
+            addCriterion("pushConfigID not in", values, "pushConfigID");
+            return (Criteria) this;
+        }
+
+        public Criteria andPushConfigIDBetween(Integer value1, Integer value2) {
+            addCriterion("pushConfigID between", value1, value2, "pushConfigID");
+            return (Criteria) this;
+        }
+
+        public Criteria andPushConfigIDNotBetween(Integer value1, Integer value2) {
+            addCriterion("pushConfigID not between", value1, value2, "pushConfigID");
             return (Criteria) this;
         }
 
