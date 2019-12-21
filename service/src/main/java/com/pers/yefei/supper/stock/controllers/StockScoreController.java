@@ -164,7 +164,7 @@ public class StockScoreController {
 
 
 
-    @RequestMapping(value = "/stock_score/get")
+    @RequestMapping(value = "/get")
     @ResponseBody
     public Object getStockScore(String stockCode) {
         try {
