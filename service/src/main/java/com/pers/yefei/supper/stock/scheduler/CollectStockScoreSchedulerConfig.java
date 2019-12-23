@@ -90,7 +90,7 @@ public class CollectStockScoreSchedulerConfig {
      * 定时拉取公告
      * @throws InterruptedException
      */
-    @Scheduled(cron = "1 10 6,22 * * ?")
+    @Scheduled(cron = "1 10 6,22 * *")
 //    @Scheduled(fixedRate = 60 * 60 * 1000, initialDelay =  1 * 1000)
     public void conllectStockPublicNoticeByCron() {
         Date lessTime = new Date();

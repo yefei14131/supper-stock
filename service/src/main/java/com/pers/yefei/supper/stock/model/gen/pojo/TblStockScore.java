@@ -77,8 +77,6 @@ public class TblStockScore {
 
     private Double price;
 
-    private Double syl;
-
     public Integer getId() {
         return id;
     }
@@ -373,13 +371,5 @@ public class TblStockScore {
 
     public void setPrice(Double price) {
         this.price = price;
-    }
-
-    public Double getSyl() {
-        return syl;
-    }
-
-    public void setSyl(Double syl) {
-        this.syl = syl;
     }
 }
