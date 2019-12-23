@@ -10,16 +10,17 @@ import com.pers.yefei.supper.stock.service.IStockPublicNoticeService;
 import com.pers.yefei.supper.stock.third.message.MessageSender;
 import com.pers.yefei.supper.stock.third.public_notice.PublicNoticeCollector;
 import com.pers.yefei.supper.stock.utils.DateUtils;
+import com.pers.yefei.supper.stock.utils.RandomSleep;
 import com.pers.yefei.supper.stock.utils.StockBaseInfoUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 /**
  * @author yefei
@@ -72,14 +73,7 @@ public class StockPublicNoticeBiz {
         while (page < pageTotal) {
 
             // 随机延时 1s - 30s 执行
-            int delay = RandomUtils.nextInt(1000, 30 * 1000);
-            log.info("随机延时 {}s 执行", delay / 1000);
-            try {
-                Thread.sleep((long)delay);
-
-            } catch (InterruptedException e) {
-                log.error("", e);
-            }
+            RandomSleep.sleep(1000, 30 * 1000);
 
             log.info("获取 {} 公告, page:{}, pageTotal:{}", DateFormatUtils.format(date, "yyyy-MM-dd"), page, pageTotal);
             eastMoneyPublicNoticeInfo = publicNoticeCollector.fetchNotice(pageSize, page, date);

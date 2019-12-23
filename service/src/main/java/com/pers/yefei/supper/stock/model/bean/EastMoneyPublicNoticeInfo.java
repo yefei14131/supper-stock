@@ -31,7 +31,7 @@ public class EastMoneyPublicNoticeInfo {
     public static EastMoneyPublicNoticeInfo from(String eastMoneyRespContent, String callback) throws Exception {
         EastMoneyPublicNoticeInfo eastMoneyPublicNoticeInfo = new EastMoneyPublicNoticeInfo();
 
-        eastMoneyRespContent = eastMoneyRespContent.replaceAll("^var "+ callback +" = (.+?);$", "$1");
+        eastMoneyRespContent = eastMoneyRespContent.replaceAll("^var "+ callback +" = (.+?);?$", "$1");
 
         JSONObject eastMoneyResp = new ObjectMapper().readValue(eastMoneyRespContent, JSONObject.class);
         eastMoneyPublicNoticeInfo.setPageTotal( eastMoneyResp.getInteger("pages"));

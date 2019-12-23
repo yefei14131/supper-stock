@@ -1,17 +1,15 @@
 package com.pers.yefei.supper.stock.scheduler;
 
 
+import com.pers.yefei.supper.stock.biz.StockInfoBiz;
 import com.pers.yefei.supper.stock.biz.StockPublicNoticeBiz;
 import com.pers.yefei.supper.stock.biz.StockScoreBiz;
 import com.pers.yefei.supper.stock.biz.StockTacticsBiz;
 import com.pers.yefei.supper.stock.model.bean.MessageObserver.StockScoreInfoObserver;
 import com.pers.yefei.supper.stock.model.bean.StockScoreChangeSummary;
 import com.pers.yefei.supper.stock.service.IStockStatisticService;
-import com.pers.yefei.supper.stock.utils.DateUtils;
 import com.pers.yefei.supper.stock.utils.RandomSleep;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.RandomUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -48,12 +46,13 @@ public class CollectStockScoreSchedulerConfig {
     @Autowired
     private StockScoreBiz stockScoreBiz;
 
-//
+    @Autowired
+    private StockInfoBiz stockInfoBiz;
+
 //    @Scheduled(fixedRate = 60 * 60 * 1000, initialDelay =  1 * 1000)
 //    private void process(){
-//        log.info("spring boot scheduler running: CollectStockScoreSchedulerConfig ");
-//        stockTacticsBiz.repareTransPrice();
-//
+//        log.info("spring boot scheduler running: stockInfoBiz.fetchNewStock() ");
+//        stockInfoBiz.fetchNewStock();
 //    }
 
 
@@ -86,15 +85,30 @@ public class CollectStockScoreSchedulerConfig {
     }
 
 
-    /**
-     * 定时拉取公告
-     * @throws InterruptedException
-     */
-    @Scheduled(cron = "1 10 6,22 * *")
-//    @Scheduled(fixedRate = 60 * 60 * 1000, initialDelay =  1 * 1000)
+
+    @Scheduled(cron = "1 10 6 * * *")
     public void conllectStockPublicNoticeByCron() {
+        /**
+         * 定时拉取公告
+         */
         Date lessTime = new Date();
         stockPublicNoticeBiz.fetchStockPublicNotice();
+        stockPublicNoticeBiz.publishStockNoticeByLessDate(lessTime);
+
+        /**
+         * 获取新股票
+         */
+        stockInfoBiz.fetchNewStock();
+    }
+
+
+    /**
+     * 定时拉取公告
+     */
+    @Scheduled(cron = "1 10 22 * * *")
+    public void conllectStockPublicNoticeByCron2() {
+        Date lessTime = new Date();
+        stockPublicNoticeBiz.fetchStockPublicNoticeByDate(new Date());
         stockPublicNoticeBiz.publishStockNoticeByLessDate(lessTime);
     }
 

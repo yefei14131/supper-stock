@@ -85,7 +85,7 @@ public class EastMoneyStockInfo {
             throw new EastMoneyDataParseException(eastMoneyData);
         }
         try {
-            eastMoneyData = eastMoneyData.replaceAll("^" + callbackFunc + "\\((.+?)data\":(.*?)\\}\\);$", "$2");
+            eastMoneyData = eastMoneyData.replaceAll("^" + callbackFunc + "\\((.+?)data\":(.*?)\\}\\);?$", "$2");
             Iterator<Map.Entry<String, String>> iterator = fieldMapping.entrySet().iterator();
             while (iterator.hasNext()) {
                 Map.Entry<String, String> entry = iterator.next();
