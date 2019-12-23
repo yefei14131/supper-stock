@@ -39,6 +39,7 @@
     <result column="maxPrice" jdbcType="DOUBLE" property="maxPrice" />
     <result column="minPrice" jdbcType="DOUBLE" property="minPrice" />
     <result column="price" jdbcType="DOUBLE" property="price" />
+    <result column="syl" jdbcType="DOUBLE" property="syl" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -105,7 +106,7 @@
     stockValuationScore, totalScore, marketRank, industryRank, industryDetail, date, 
     updateTime, totalValue, flowValue, priceProfitAssetRatio, priceNetAssetRatio, dealQuantity, 
     dealAmount, priceChange, priceChangeRatio, turnoverRatio, mainInflowAmount, mainOutflowAmount, 
-    netInflow, openPrice, maxPrice, minPrice, price
+    netInflow, openPrice, maxPrice, minPrice, price, syl
   </sql>
   <select id="selectByExample" parameterType="com.pers.yefei.supper.stock.model.gen.pojo.TblStockScoreExample" resultMap="BaseResultMap">
     select
@@ -162,8 +163,8 @@
       dealQuantity, dealAmount, priceChange, 
       priceChangeRatio, turnoverRatio, mainInflowAmount, 
       mainOutflowAmount, netInflow, openPrice, 
-      maxPrice, minPrice, price
-      )
+      maxPrice, minPrice, price, 
+      syl)
     values (#{stockCode,jdbcType=VARCHAR}, #{stockName,jdbcType=VARCHAR}, #{companyHonorScore,jdbcType=INTEGER}, 
       #{businessStatusScore,jdbcType=INTEGER}, #{achievementsAppraisalScore,jdbcType=INTEGER}, 
       #{achievementsGrowupScore,jdbcType=INTEGER}, #{profitAbilityScore,jdbcType=INTEGER}, 
@@ -177,8 +178,8 @@
       #{dealQuantity,jdbcType=DOUBLE}, #{dealAmount,jdbcType=DOUBLE}, #{priceChange,jdbcType=DOUBLE}, 
       #{priceChangeRatio,jdbcType=DOUBLE}, #{turnoverRatio,jdbcType=DOUBLE}, #{mainInflowAmount,jdbcType=DOUBLE}, 
       #{mainOutflowAmount,jdbcType=DOUBLE}, #{netInflow,jdbcType=DOUBLE}, #{openPrice,jdbcType=DOUBLE}, 
-      #{maxPrice,jdbcType=DOUBLE}, #{minPrice,jdbcType=DOUBLE}, #{price,jdbcType=DOUBLE}
-      )
+      #{maxPrice,jdbcType=DOUBLE}, #{minPrice,jdbcType=DOUBLE}, #{price,jdbcType=DOUBLE}, 
+      #{syl,jdbcType=DOUBLE})
   </insert>
   <insert id="insertSelective" parameterType="com.pers.yefei.supper.stock.model.gen.pojo.TblStockScore">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -294,6 +295,9 @@
       <if test="price != null">
         price,
       </if>
+      <if test="syl != null">
+        syl,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="stockCode != null">
@@ -403,6 +407,9 @@
       </if>
       <if test="price != null">
         #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="syl != null">
+        #{syl,jdbcType=DOUBLE},
       </if>
     </trim>
   </insert>
@@ -526,6 +533,9 @@
       <if test="record.price != null">
         price = #{record.price,jdbcType=DOUBLE},
       </if>
+      <if test="record.syl != null">
+        syl = #{record.syl,jdbcType=DOUBLE},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -569,7 +579,8 @@
       openPrice = #{record.openPrice,jdbcType=DOUBLE},
       maxPrice = #{record.maxPrice,jdbcType=DOUBLE},
       minPrice = #{record.minPrice,jdbcType=DOUBLE},
-      price = #{record.price,jdbcType=DOUBLE}
+      price = #{record.price,jdbcType=DOUBLE},
+      syl = #{record.syl,jdbcType=DOUBLE}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -685,6 +696,9 @@
       <if test="price != null">
         price = #{price,jdbcType=DOUBLE},
       </if>
+      <if test="syl != null">
+        syl = #{syl,jdbcType=DOUBLE},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -725,7 +739,8 @@
       openPrice = #{openPrice,jdbcType=DOUBLE},
       maxPrice = #{maxPrice,jdbcType=DOUBLE},
       minPrice = #{minPrice,jdbcType=DOUBLE},
-      price = #{price,jdbcType=DOUBLE}
+      price = #{price,jdbcType=DOUBLE},
+      syl = #{syl,jdbcType=DOUBLE}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
