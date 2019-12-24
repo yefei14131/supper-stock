@@ -233,7 +233,7 @@ public class StockScoreBiz {
 
             }
 
-            RandomSleep.sleep(500, 3500);
+            RandomSleep.sleep(500, 1500);
             return stockScore;
 
         } catch (Exception e) {

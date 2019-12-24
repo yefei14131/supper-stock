@@ -92,7 +92,7 @@ public class StockPublicNoticeBiz {
      */
     public void publishStockNoticeByLessDate(Date lessTime) {
         List<StockPublicNoticeObserver> stockPublicNoticeObservers = queryStockPublicNoticeObserver( (keywords, tblStockPublicNotices) -> {
-            stockPublicNoticeService.queryStockPublicNoticeByLessTime(keywords, lessTime);
+            tblStockPublicNotices.addAll(stockPublicNoticeService.queryStockPublicNoticeByLessTime(keywords, lessTime));
         });
         pushToObservers(stockPublicNoticeObservers);
     }

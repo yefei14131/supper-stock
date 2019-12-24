@@ -40,10 +40,6 @@ public class StockInfoController {
     @Autowired
     private StockInfoBiz stockInfoBiz;
 
-    @Autowired
-    private StockPublicNoticeBiz stockPublicNoticeBiz;
-
-
     /**
      * 采集所有股票基本信息并更新
      * @return
