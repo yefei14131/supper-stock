@@ -62,7 +62,7 @@ public class EastMoneyStockInfoCollector {
          *
          */
 
-
+        stockScore.setStockName(eastMoneyStockInfo.getStockName());
         stockScore.setMaxPrice(((double)eastMoneyStockInfo.getMaxPrice())/100);
         stockScore.setMinPrice(((double)eastMoneyStockInfo.getMinPrice())/100);
         stockScore.setOpenPrice(((double)eastMoneyStockInfo.getOpenPrice())/100);

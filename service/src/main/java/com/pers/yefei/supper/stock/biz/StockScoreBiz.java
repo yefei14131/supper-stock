@@ -229,6 +229,8 @@ public class StockScoreBiz {
                 // 价格
                 stockInfo.setPrice(stockScore.getPrice());
 
+                stockInfo.setStockName(stockScore.getStockName());
+
                 stockDataService.saveStockInfo(stockInfo);
 
             }
