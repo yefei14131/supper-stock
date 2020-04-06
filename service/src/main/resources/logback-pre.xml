@@ -73,7 +73,7 @@
         <appender-ref ref="FILE_STDOUT" />
     </logger>
 
-    <root level="DEBUG">
+    <root level="info">
         <!--<appender-ref ref="STDOUT" />-->
         <appender-ref ref="FILE_STDOUT" />
     </root>
