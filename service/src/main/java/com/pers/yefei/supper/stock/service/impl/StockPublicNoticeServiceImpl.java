@@ -33,6 +33,7 @@ public class StockPublicNoticeServiceImpl implements IStockPublicNoticeService {
 
         stockPublicNoticeList.stream().forEach(stockPublicNotice->{
             try {
+                stockPublicNotice.setUpdateTime(new Date());
                 stockPublicNoticeDao.insertStockPublicNotice(stockPublicNotice);
 
             } catch (DuplicateKeyException e) {
