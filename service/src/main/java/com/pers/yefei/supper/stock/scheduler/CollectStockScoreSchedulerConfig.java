@@ -92,7 +92,9 @@ public class CollectStockScoreSchedulerConfig {
          * 定时拉取公告
          */
         Date lessTime = new Date();
+        log.info("开始定时拉取公告");
         stockPublicNoticeBiz.fetchStockPublicNotice();
+        log.info("开始定时推送公告");
         stockPublicNoticeBiz.publishStockNoticeByLessDate(lessTime);
 
         /**
@@ -108,12 +110,10 @@ public class CollectStockScoreSchedulerConfig {
     @Scheduled(cron = "1 10 22 * * *")
     public void conllectStockPublicNoticeByCron2() {
         Date lessTime = new Date();
+        log.info("开始定时拉取公告");
         stockPublicNoticeBiz.fetchStockPublicNoticeByDate(new Date());
+        log.info("开始定时推送公告");
         stockPublicNoticeBiz.publishStockNoticeByLessDate(lessTime);
     }
-
-
-
-
 
 }

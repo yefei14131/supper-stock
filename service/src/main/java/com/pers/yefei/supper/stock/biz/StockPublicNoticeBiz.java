@@ -92,7 +92,9 @@ public class StockPublicNoticeBiz {
      */
     public void publishStockNoticeByLessDate(Date lessTime) {
         List<StockPublicNoticeObserver> stockPublicNoticeObservers = queryStockPublicNoticeObserver( (keywords, tblStockPublicNotices) -> {
-            tblStockPublicNotices.addAll(stockPublicNoticeService.queryStockPublicNoticeByLessTime(keywords, lessTime));
+            List<TblStockPublicNotice> noticeList = stockPublicNoticeService.queryStockPublicNoticeByLessTime(keywords, lessTime);
+            tblStockPublicNotices.addAll(noticeList);
+            log.info("查询到符合条件的公告数：{}, {}, {}", keywords, DateFormatUtils.format(lessTime, "YYYY-MM-dd HH:mm:ss"), noticeList.size());
         });
         pushToObservers(stockPublicNoticeObservers);
     }
