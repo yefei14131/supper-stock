@@ -49,7 +49,7 @@ public class PublicNoticeEasyMoneyCollector {
         }
 
         String content = okHttpHelper.getResponseString(url, "gbk");
-        log.info("调用东方财富接口获取公告，返回内容：{}", content);
+//        log.info("调用东方财富接口获取公告，返回内容：{}", content);
         return content;
     }
 }
