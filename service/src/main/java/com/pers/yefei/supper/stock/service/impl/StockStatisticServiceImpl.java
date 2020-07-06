@@ -49,7 +49,7 @@ public class StockStatisticServiceImpl implements IStockStatisticService {
 
     @Override
     public StockScoreChangeSummary queryStockScoreChangeInfoByDate(Date date){
-        log.info("开始查询{}的评分变化");
+        log.info("开始查询{}的评分变化", date);
         date = DateUtils.getZeroDate(date);
         StockScoreChangeSummary stockScoreChangeSummary = new StockScoreChangeSummary();
         stockScoreChangeSummary.setDate(date);
@@ -77,7 +77,7 @@ public class StockStatisticServiceImpl implements IStockStatisticService {
                 stockScoreChangeSummary.getReduceList().add(stockScoreChangeInfo);
             }
         });
-
+        log.info("评分新增数量：{}, 减少数量：{}", stockScoreChangeSummary.getIncreaseList().size(), stockScoreChangeSummary.getReduceList().size());
 
         return stockScoreChangeSummary;
     }

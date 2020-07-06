@@ -32,6 +32,8 @@ public class MessageSender {
 
 
     public void sendStockScoreChange(StockSoreChangeObserver stockSoreChangeObserver) {
+        log.info("需要推送的评分变化情况，增加：{}, 减少：{}", stockSoreChangeObserver.getStockScoreChangeSummary().getIncreaseList().size()
+        , stockSoreChangeObserver.getStockScoreChangeSummary().getReduceList().size());
 
         if (MessagePushTypeEnum.DingTalk.equals(stockSoreChangeObserver.getPushConfig().getMessagePushType())){
             dingTalkMessageSender.sendStockScoreChange(stockSoreChangeObserver);

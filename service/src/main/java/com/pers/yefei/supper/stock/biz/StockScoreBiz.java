@@ -68,7 +68,7 @@ public class StockScoreBiz {
                 log.error("采集任务正在执行，不可重复执行");
                 return;
             }
-
+            log.info("开始执行股价采集任务");
             collectorRunning = true;
 
             // 获取需要更新的股票列表，目前取全量
@@ -326,14 +326,15 @@ public class StockScoreBiz {
 
 
     public void pushStockScoreChangeSummary(StockScoreChangeSummary stockScoreChangeSummary) {
+        log.info("开始推送评分变化情况");
         StockSoreChangeObserver stockSoreChangeObserver = new StockSoreChangeObserver();
         stockSoreChangeObserver.fromStockScoreChangeSummary(stockScoreChangeSummary);
 
         stockSoreChangeObserver.setPushConfig(pushConfigService.getPushConfig(SystemConstant.Default_PushConfigID));
 
         // 过滤
-        StockBaseInfoUtils.filterTotalValeTop10AndTotalScoreTop10(stockSoreChangeObserver.getStockScoreChangeSummary().getIncreaseList());
-        StockBaseInfoUtils.filterTotalValeTop10AndTotalScoreTop10(stockSoreChangeObserver.getStockScoreChangeSummary().getReduceList());
+//        StockBaseInfoUtils.filterTotalValeTop10AndTotalScoreTop10(stockSoreChangeObserver.getStockScoreChangeSummary().getIncreaseList());
+//        StockBaseInfoUtils.filterTotalValeTop10AndTotalScoreTop10(stockSoreChangeObserver.getStockScoreChangeSummary().getReduceList());
 
         messageSender.sendStockScoreChange(stockSoreChangeObserver);
     }
@@ -347,7 +348,7 @@ public class StockScoreBiz {
     public List<StockScoreInfoObserver> queryStockObserversFromDB(Date date) {
 
         List<StockScoreInfoObserver> stockScoreInfoObservers = stockScoreService.queryStockObserversFromDB(date);
-
+        log.info("查询基本信息订阅者数量：{}", stockScoreInfoObservers.size());
         int observerLength = stockScoreInfoObservers.size();
         for (int observerIndex=0; observerIndex<observerLength; observerIndex++) {
 
@@ -417,6 +418,7 @@ public class StockScoreBiz {
      * @param stockScoreInfoObservers
      */
     public void pushStockScoreInfoObserver(List<StockScoreInfoObserver> stockScoreInfoObservers){
+        log.info("开始推送订阅消息");
         for (StockScoreInfoObserver stockScoreInfoObserver : stockScoreInfoObservers) {
             messageSender.sendStockScore(stockScoreInfoObserver);
             try {
