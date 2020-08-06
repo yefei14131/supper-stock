@@ -21,7 +21,7 @@ import java.util.Date;
 @Component
 public class PublicNoticeEasyMoneyCollector {
 
-    private static final String urlTemplate = "http://data.eastmoney.com/notices/getdata.ashx?StockCode=&FirstNodeType=0&CodeType=1&PageIndex={0}&PageSize={1}&jsObj={2}&SecNodeType=0&Time={3}&rt=52544429\n";
+    private static final String urlTemplate = "http://data.eastmoney.com/notices/getdata.ashx?StockCode=&FirstNodeType=0&CodeType=A&PageIndex={0}&PageSize={1}&jsObj={2}&SecNodeType=0&Time={3}&rt=52544429\n";
 
     @Autowired
     private OkHttpHelper okHttpHelper;
