@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -25,8 +27,9 @@ public class EastMoneyPublicNoticeInfo {
     private int pageSize = 50;
     private List<TblStockPublicNotice> publicNoticeList = new ArrayList<>();
 
-    private static final String dateTimeformat = "yyyy-MM-dd'T'HH:mm:ss'+08:00'";
+    private static final String dateTimeformat = "yyyy-MM-dd HH:mm:ss";
     private static final String noticeDetailUrl = "http://m.data.eastmoney.com/notices/detail/{0}/{1}";
+    private static final List<String> firstOfA = Arrays.asList(new String[]{"0", "3", "6"});
 
     public static EastMoneyPublicNoticeInfo from(String eastMoneyRespContent, String callback) throws Exception {
         EastMoneyPublicNoticeInfo eastMoneyPublicNoticeInfo = new EastMoneyPublicNoticeInfo();
@@ -44,28 +47,31 @@ public class EastMoneyPublicNoticeInfo {
             TblStockPublicNotice tblStockPublicNotice = new TblStockPublicNotice();
             eastMoneyPublicNoticeInfo.getPublicNoticeList().add(tblStockPublicNotice);
 
-            tblStockPublicNotice.setTitle(dataItem.getString("NOTICETITLE"));
-            tblStockPublicNotice.setNoticeDate(DateUtils.getZeroDate(DateUtils.parseDate(dataItem.getString("NOTICEDATE"), dateTimeformat)));
-            tblStockPublicNotice.setPublicTime(DateUtils.parseDate(dataItem.getString("EUTIME"), dateTimeformat));
-            tblStockPublicNotice.setNoticeCode(dataItem.getString("INFOCODE"));
+            Date notice_date = DateUtils.getZeroDate(DateUtils.parseDate(dataItem.getString("notice_date"), dateTimeformat));
+            tblStockPublicNotice.setTitle(dataItem.getString("title"));
+            tblStockPublicNotice.setNoticeDate(notice_date);
+            tblStockPublicNotice.setPublicTime(notice_date);
+            tblStockPublicNotice.setNoticeCode(dataItem.getString("art_code"));
 
             // 获取股票代码和股票名称
-            JSONArray cdsy_secucodes = dataItem.getJSONArray("CDSY_SECUCODES");
+            JSONArray cdsy_secucodes = dataItem.getJSONArray("codes");
             for (int j=0; j<cdsy_secucodes.size(); j++) {
                 JSONObject stockInfo = cdsy_secucodes.getJSONObject(j);
-                if (stockInfo.getString("SECURITYTYPE").equals("A股")){
-                    tblStockPublicNotice.setStockCode(stockInfo.getString("SECURITYCODE"));
-                    tblStockPublicNotice.setStockName(stockInfo.getString("SECURITYSHORTNAME"));
+                String stockCode = stockInfo.getString("stock_code");
+                if (firstOfA.contains(stockCode.substring(0, 1))){
+                    // A股股票
+                    tblStockPublicNotice.setStockCode(stockCode);
+                    tblStockPublicNotice.setStockName(stockInfo.getString("short_name"));
                     break;
                 }
             }
 
             // 公告标签
-            JSONArray ann_relcolumns = dataItem.getJSONArray("ANN_RELCOLUMNS");
+            JSONArray ann_relcolumns = dataItem.getJSONArray("columns");
             List<String> tags = new ArrayList<>();
             for (int k=0; k<ann_relcolumns.size(); k++) {
                 JSONObject jsonObject = ann_relcolumns.getJSONObject(k);
-                tags.add(jsonObject.getString("COLUMNNAME"));
+                tags.add(jsonObject.getString("column_name"));
             }
             tblStockPublicNotice.setKeywords(String.join(";", tags));
 
